@@ -1,20 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
+[System.Serializable]
 public class Item
 {
-    public readonly string name;
-    public readonly string description;
-    public readonly float potency;
-    public readonly float power;
-    public readonly float size;
+    public string name;
+    public string description;
+    public float potency;
+    public float power;
+    public float size;
 
-    private Action useAction;
-    private Action onCollision;
+    private Action<GameObject> useAction;
+    private Action<GameObject> onCollision;
     
-    public Item(string _name, string _description = "", float _potency = 0, float _power = 0, float _size = 0, Action _useAction = null, Action _onCollision = null)
+    public Item(string _name, string _description = "", float _potency = 0, float _power = 0, float _size = 0, Action<GameObject> _useAction = null, Action<GameObject> _onCollision = null)
     {
         name = _name;
         description = _description;
@@ -24,7 +26,29 @@ public class Item
         useAction = _useAction;
         onCollision = _onCollision;
     }
-    
+
+    public static bool operator ==(Item item1, Item item2)
+    {
+        return item1.name == item2.name;
+    }
+
+    public static bool operator !=(Item item1, Item item2)
+    {
+        return item1.name == item2.name;
+    }
+
+    public override bool Equals(object obj)
+    {
+        Item other = obj as Item;
+        return other.name == this.name;
+    }
+
+    public override int GetHashCode()
+    {
+        if (name == null) { return 0; }
+        return name.GetHashCode();
+    }
+
     public static Item Nectar
     {
         get

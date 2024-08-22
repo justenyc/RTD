@@ -5,7 +5,7 @@ using RotaryHeart.Lib.SerializableDictionary;
 
 public class Inventory : MonoBehaviour
 {
-    SerializableDictionaryBase<Item, int> inventory;
+    [SerializeField] SerializableDictionaryBase<Item, int> inventory;
 
     public void AddOrRemoveItemFromInventory(Item item, int amount)
     {
@@ -20,6 +20,6 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        inventory.Add(item, amount);
+        inventory.Add(item, 1);
     }
 }
