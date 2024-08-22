@@ -5,31 +5,31 @@ using UnityEngine.AI;
 
 public class AI_Entity : MonoBehaviour
 {
-    [SerializeField] NavMeshAgent m_agent;
-    [SerializeField] Transform m_patrolPointContainer;
-    [SerializeField] List<Transform> m_patrolPoints;
-    [SerializeField] bool detectedSomething;
+    [SerializeField] protected NavMeshAgent m_agent;
 
-    BehaviourTree m_behaviourTree = new BehaviourTree("baseTree");
+    protected BehaviourTree m_behaviourTree = new BehaviourTree("baseTree");
+
+    [SerializeField] string treeStatus;
     
-    private void Start()
+    protected virtual void Start()
     {
 
-        m_behaviourTree.AddChild(new Leaf("Patrol", new IStrategy.PatrolStrategy(this.transform, m_agent, m_patrolPoints)));
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-        m_behaviourTree.Process();
+        treeStatus = m_behaviourTree.Process().ToString();
     }
 
-    IEnumerator DelayAction(float time)
+    protected List<Vector3> ParsePatrolPoints(List<Transform> points)
     {
-        while (time > 0)
+        List<Vector3> listToReturn = new();
+
+        foreach(Transform t in points)
         {
-            yield return new WaitForSeconds(1);
-            time--;
+            listToReturn.Add(t.position);
         }
-        m_behaviourTree.children[0].ForceComplete();
+
+        return listToReturn;
     }
 }

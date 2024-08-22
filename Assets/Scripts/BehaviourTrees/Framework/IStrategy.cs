@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -37,18 +38,17 @@ public interface IStrategy
         }
     }
 
-    public class PatrolStrategy : IStrategy
+    public class MoveBetweenPoints : IStrategy
     {
-        Transform entity;
         NavMeshAgent agent;
-        List<Transform> patrolPoints;
+        List<Vector3> patrolPoints;
         float patrolSpeed;
+
         int currentIndex;
         bool isPathCalculated;
 
-        public PatrolStrategy(Transform _entity, NavMeshAgent _agent, List<Transform> _patrolPoints, float _patrolSpeed = 2f)
+        public MoveBetweenPoints(NavMeshAgent _agent, List<Vector3> _patrolPoints, float _patrolSpeed = 2f)
         {
-            entity = _entity;
             agent = _agent;
             patrolPoints = _patrolPoints;
             patrolSpeed = _patrolSpeed;
@@ -58,13 +58,12 @@ public interface IStrategy
         {
             if (currentIndex == patrolPoints.Count)
             {
-                //Reset();
+                Reset();
                 return Node.Status.Success;
             }
 
             var target = patrolPoints[currentIndex];
-            agent.SetDestination(target.position);
-            //entity.LookAt(target);
+            agent.SetDestination(target);
 
             if(isPathCalculated && agent.remainingDistance < 0.1f)
             {
@@ -83,6 +82,23 @@ public interface IStrategy
         public void Reset()
         {
             currentIndex = 0;
+        }
+    }
+
+    public class Stalk : IStrategy
+    {
+        NavMeshAgent agent;
+        Vector3 destination;
+
+        public Stalk(NavMeshAgent _agent, Vector3 _destination) 
+        {
+            agent= _agent;
+            destination = _destination;
+        }
+
+        public Node.Status Process()
+        { 
+            throw new NotImplementedException();
         }
     }
 }

@@ -80,6 +80,7 @@ public class BehaviourTree : Node
             }
             currentChild++;
         }
+        Reset();
         return Status.Success;
     }
 }
@@ -140,6 +141,8 @@ public class Selector : Node
 
 public class PrioritySelector  : Node
 {
+    public PrioritySelector(string _name) : base(_name) { }
+
     List<Node> sortedChildren;
     List<Node> SortedChildren => sortedChildren ??= SortChildren();
 
@@ -167,6 +170,8 @@ public class PrioritySelector  : Node
 
 public class RandomSelector : PrioritySelector
 {
+    public RandomSelector(string _name) : base(_name) { }
+
     protected override List<Node> SortChildren() => children.Shuffle().ToList();
 }
 
