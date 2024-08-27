@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,90 +6,91 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
-    public Vector2 m_moveVector;// { get; private set; }
-    public Vector2 m_lookVector;// { get; private set; }
-    public bool m_useWeapon;
-    public bool m_guard;
-    public bool m_turnAround;
-    public bool m_aim;
-    public bool m_sprint;
-    public bool m_cycleCurrentItemLeft;
-    public bool m_cycleCurrentItemRight;
-    public bool m_interact;
-    public bool m_useCurrentItem;
-    public bool m_orbInteract;
-    public bool m_burst;
-    public bool m_openMenu;
+    public Vector2 moveVector;// { get; private set; }
+    public Vector2 lookVector;// { get; private set; }
+    public Action<InputAction.CallbackContext> UseWeapon;
+    public Action<InputAction.CallbackContext> Guard;
+    public Action<InputAction.CallbackContext> TurnAround;
+    public Action<InputAction.CallbackContext> Aim;
+    public Action<InputAction.CallbackContext> Sprint;
+    public Action<InputAction.CallbackContext> CycleItemLeft;
+    public Action<InputAction.CallbackContext> CycleItemRight;
+    public Action<InputAction.CallbackContext> Interact;
+    public Action<InputAction.CallbackContext> UseCurrentItem;
+    public Action<InputAction.CallbackContext> OrbInteract;
+    public Action<InputAction.CallbackContext> Burst;
+    public Action<InputAction.CallbackContext> OpenMenu;
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
-        m_moveVector = ctx.ReadValue<Vector2>();
+        moveVector = ctx.ReadValue<Vector2>();
         //Debug.Log(m_moveVector);
     }
 
     public void OnLook(InputAction.CallbackContext ctx)
     {
-        m_lookVector = ctx.ReadValue<Vector2>();
+        lookVector = ctx.ReadValue<Vector2>();
         //Debug.Log(m_lookVector);
     }
 
     public void OnUseWeapon(InputAction.CallbackContext ctx)
     {
-        m_useWeapon = ctx.performed;
+        UseWeapon?.Invoke(ctx);
     }
 
-    public void Guard(InputAction.CallbackContext ctx)
+    public void OnGuard(InputAction.CallbackContext ctx)
     {
-        m_guard = ctx.performed;
+        Guard?.Invoke(ctx);
     }
 
-    public void TurnAround(InputAction.CallbackContext ctx)
+    public void OnTurnAround(InputAction.CallbackContext ctx)
     {
-        m_turnAround = ctx.performed;
+        TurnAround?.Invoke(ctx);
     }
 
-    public void Aim(InputAction.CallbackContext ctx)
+    public void OnAim(InputAction.CallbackContext ctx)
     {
-        m_aim = ctx.performed;
+        Debug.Log(ctx.phase);
+        Aim?.Invoke(ctx);
     }
 
-    public void Sprint(InputAction.CallbackContext ctx)
+    public void OnSprint(InputAction.CallbackContext ctx)
     {
-        m_sprint = ctx.performed;
+        Sprint?.Invoke(ctx);
     }
 
-    public void CycleCurrentItemLeft(InputAction.CallbackContext ctx)
+    public void OnCycleCurrentItemLeft(InputAction.CallbackContext ctx)
     {
-        m_cycleCurrentItemLeft = ctx.performed;
+        CycleItemLeft?.Invoke(ctx);
     }
 
-    public void CycleCurrentItemRight(InputAction.CallbackContext ctx)
+    public void OnCycleCurrentItemRight(InputAction.CallbackContext ctx)
     {
-        m_cycleCurrentItemRight = ctx.performed;
+        CycleItemRight?.Invoke(ctx);
     }
 
-    public void Interact(InputAction.CallbackContext ctx)
+    public void OnInteract(InputAction.CallbackContext ctx)
     {
-        m_interact = ctx.performed;
+        Interact?.Invoke(ctx);
     }
 
-    public void UseCurrentItem(InputAction.CallbackContext ctx)
+    public void OnUseCurrentItem(InputAction.CallbackContext ctx)
     {
-        m_useCurrentItem = ctx.performed;
+        UseCurrentItem?.Invoke(ctx);
     }
 
-    public void OrbInteract(InputAction.CallbackContext ctx)
+    public void OnOrbInteract(InputAction.CallbackContext ctx)
     {
-        m_orbInteract = ctx.performed;
+        OrbInteract?.Invoke(ctx);
     }
 
-    public void Burst(InputAction.CallbackContext ctx)
+    public void OnBurst(InputAction.CallbackContext ctx)
     {
-        m_burst = ctx.performed;
+        Burst?.Invoke(ctx);
     }
 
-    public void OpenMenu(InputAction.CallbackContext ctx)
+    public void OnOpenMenu(InputAction.CallbackContext ctx)
     {
-        m_openMenu = ctx.performed;
+        OpenMenu?.Invoke(ctx);
     }
 }

@@ -3,17 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
 
 namespace Player
 {
-    public class FreeMovementState : IPlayerState
+    public class AimState : IPlayerState
     {
         PlayerController m_manager;
+        private Cinemachine3rdPersonFollow _3rdPersonFollow;
 
-        bool m_sprintInputState;
-
-        public FreeMovementState(PlayerController manager)
+        public AimState(PlayerController manager)
         {
             m_manager = manager;
             StateStart();
@@ -21,22 +19,23 @@ namespace Player
 
         public void StateStart()
         {
-            Debug.Log("Starting FreeMovement State");
-            m_manager.currentState = "FreeMovement";
-            m_manager.inputHandler.Sprint += OnSprint;
+            Debug.Log("Starting Aim State");
+            m_manager.currentState = "Aim";
             m_manager.inputHandler.Aim += OnAim;
+            _3rdPersonFollow = CameraManager.instance.VirtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
+            _3rdPersonFollow.ShoulderOffset = m_manager.aimProperties.cameraPos;
         }
 
         public void StateEnd()
         {
-            Debug.Log("Ending FreeMovement State");
-            m_manager.inputHandler.Sprint -= OnSprint;
+            Debug.Log("Ending Aim State");
             m_manager.inputHandler.Aim -= OnAim;
+            _3rdPersonFollow.ShoulderOffset = m_manager.sharedProperties.cameraPos;
         }
 
         public void StateUpdate()
         {
-
+            
         }
 
         public void StateFixedUpdate()
@@ -45,9 +44,11 @@ namespace Player
             ControlCamera();
         }
 
+        #region State Inputs
+
         private void Move()
         {
-            float speed = m_sprintInputState ? m_manager.freeMovementProperties.sprintSpeed :  m_manager.freeMovementProperties.moveSpeed;
+            float speed = m_manager.aimProperties.moveSpeed;
 
             Vector3 cameraForward = Camera.main.transform.forward;
             Vector3 cameraRight = Camera.main.transform.right;
@@ -67,29 +68,22 @@ namespace Player
         {
             Vector2 inputVector = m_manager.inputHandler.lookVector;
             Vector3 currentPlayerRot = m_manager.playerTransform.rotation.eulerAngles;
-            Vector3 newPlayerRot = currentPlayerRot + Vector3.up * inputVector.x * m_manager.freeMovementProperties.rotateSpeed * Time.fixedDeltaTime;
+            Vector3 newPlayerRot = currentPlayerRot + Vector3.up * inputVector.x * m_manager.aimProperties.rotateSpeed * Time.fixedDeltaTime;
             m_manager.playerTransform.rotation = Quaternion.Euler(newPlayerRot);
 
             Vector3 currentCameraFollowRot = m_manager.cameraFollow.rotation.eulerAngles;
-            Vector3 newCameraFollowRot = currentCameraFollowRot + Vector3.right * -inputVector.y * m_manager.freeMovementProperties.rotateSpeed * Time.fixedDeltaTime;
+            Vector3 newCameraFollowRot = currentCameraFollowRot + Vector3.right * -inputVector.y * m_manager.aimProperties.rotateSpeed * Time.fixedDeltaTime;
             //Debug.Log(newCameraFollowRot);
             newCameraFollowRot.x = (newCameraFollowRot.x > 180) ? newCameraFollowRot.x - 360 : newCameraFollowRot.x;
-            newCameraFollowRot.x = Mathf.Clamp(newCameraFollowRot.x, m_manager.freeMovementProperties.minCameraVert, m_manager.freeMovementProperties.maxCameraVert);
+            newCameraFollowRot.x = Mathf.Clamp(newCameraFollowRot.x, m_manager.aimProperties.minCameraVert, m_manager.aimProperties.maxCameraVert);
             m_manager.cameraFollow.rotation = Quaternion.Euler(newCameraFollowRot);
-        }
-
-        #region State Inputs
-
-        void OnSprint(InputAction.CallbackContext context)
-        {
-            m_sprintInputState = context.performed;
         }
 
         void OnAim(InputAction.CallbackContext context)
         {
-            if (context.started)
+            if(context.canceled)
             {
-                m_manager.SetState(new AimState(m_manager));
+                m_manager.SetState(new FreeMovementState(m_manager));
             }
         }
 

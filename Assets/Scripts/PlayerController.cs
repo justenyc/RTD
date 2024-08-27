@@ -7,34 +7,58 @@ namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
+        public string currentState;
         IPlayerState m_currentState;
-        public CharacterController m_controller {get; private set;}
-        public InputHandler m_inputHandler { get; private set; }
+        public CharacterController controller {get; private set;}
+        public InputHandler inputHandler { get; private set; }
 
         [Header("References")]
-        public Transform m_playerTransform;
-        public Transform m_cameraFollow;
-        public Transform m_cameraTarget;
+        public Transform playerTransform;
+        public Transform cameraFollow;
+        public Transform cameraTarget;
 
-        public MovementProperties m_moveProperties;
+        [Header("State Properties")]
+        public MovementProperties freeMovementProperties;
+        public AimProperties aimProperties;
+        public SharedProperties sharedProperties;
+
+        #region State Properties
 
         [System.Serializable]
         public class MovementProperties
         {
-            public float m_moveSpeed = 1;
-            public float m_sprintSpeed = 1;
-            public float m_rotateSpeed = 1;
-            public float m_maxCameraVert = 75f;
-            public float m_minCameraVert = -75f;
+            public float moveSpeed = 1;
+            public float sprintSpeed = 1;
+            public float rotateSpeed = 1;
+            public float maxCameraVert = 75f;
+            public float minCameraVert = -75f;
         }
+        
+        [System.Serializable]
+        public class AimProperties
+        {
+            public float moveSpeed = 1;
+            public float rotateSpeed = 1;
+            public Vector3 cameraPos = new Vector3(1, -0.4f, 0.5f);
+            public float maxCameraVert = 75f;
+            public float minCameraVert = -75f;
+        }
+
+        [System.Serializable]
+        public class SharedProperties
+        {
+            public Vector3 cameraPos = new Vector3(1, -0.4f, -0.5f);
+        }
+
+        #endregion
 
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
-            m_controller = GetComponent<CharacterController>();
-            m_inputHandler = GetComponent<InputHandler>();
+            controller = GetComponent<CharacterController>();
+            inputHandler = GetComponent<InputHandler>();
 
             m_currentState = new FreeMovementState(this);
         }
@@ -46,6 +70,7 @@ namespace Player
 
         public void SetState(IPlayerState newState)
         {
+            m_currentState.StateEnd();
             m_currentState = newState;
         }
 

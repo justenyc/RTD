@@ -991,7 +991,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 2.5, z: -2.45}
+  m_LocalPosition: {x: 1, y: 2.5, z: -2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1850,7 +1850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damping: {x: 0.1, y: 0.5, z: 0.3}
-  ShoulderOffset: {x: 1, y: -0.4, z: -0.45}
+  ShoulderOffset: {x: 1, y: -0.4, z: -0.5}
   VerticalArmLength: 0.4
   CameraSide: 1
   CameraDistance: 2
@@ -2525,7 +2525,7 @@ Transform:
   m_GameObject: {fileID: 1454894497}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 2.5, z: -2.45}
+  m_LocalPosition: {x: 1, y: 2.5, z: -2.5}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2552,7 +2552,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &1485424511
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2963,7 +2963,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1656542578}
         m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
-        m_MethodName: Guard
+        m_MethodName: OnGuard
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2979,7 +2979,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1656542578}
         m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
-        m_MethodName: TurnAround
+        m_MethodName: OnTurnAround
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2995,7 +2995,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1656542578}
         m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
-        m_MethodName: Aim
+        m_MethodName: OnAim
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3011,7 +3011,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1656542578}
         m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
-        m_MethodName: Sprint
+        m_MethodName: OnSprint
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3027,7 +3027,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1656542578}
         m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
-        m_MethodName: CycleCurrentItemLeft
+        m_MethodName: OnCycleCurrentItemLeft
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3043,7 +3043,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1656542578}
         m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
-        m_MethodName: CycleCurrentItemRight
+        m_MethodName: OnCycleCurrentItemRight
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3059,7 +3059,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1656542578}
         m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
-        m_MethodName: Interact
+        m_MethodName: OnInteract
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3075,7 +3075,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1656542578}
         m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
-        m_MethodName: UseCurrentItem
+        m_MethodName: OnUseCurrentItem
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3091,7 +3091,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1656542578}
         m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
-        m_MethodName: OrbInteract
+        m_MethodName: OnOrbInteract
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3107,7 +3107,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1656542578}
         m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
-        m_MethodName: Burst
+        m_MethodName: OnBurst
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3123,7 +3123,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1656542578}
         m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
-        m_MethodName: OpenMenu
+        m_MethodName: OnOpenMenu
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3152,20 +3152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8928b12696f931f45aab84a0f88cc35d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_moveVector: {x: 0, y: 0}
-  m_lookVector: {x: 0, y: 0}
-  m_useWeapon: 0
-  m_guard: 0
-  m_turnAround: 0
-  m_aim: 0
-  m_sprint: 0
-  m_cycleCurrentItemLeft: 0
-  m_cycleCurrentItemRight: 0
-  m_interact: 0
-  m_useCurrentItem: 0
-  m_orbInteract: 0
-  m_burst: 0
-  m_openMenu: 0
+  moveVector: {x: 0, y: 0}
+  lookVector: {x: 0, y: 0}
 --- !u!143 &1656542579
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3204,15 +3192,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99edf3748a7b97a4886cd0b9e3f15e64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerTransform: {fileID: 1656542573}
-  m_cameraFollow: {fileID: 755887972}
-  m_cameraTarget: {fileID: 1203875696}
-  m_moveProperties:
-    m_moveSpeed: 3
-    m_sprintSpeed: 15
-    m_rotateSpeed: 3
-    m_maxCameraVert: 75
-    m_minCameraVert: -75
+  currentState: 
+  playerTransform: {fileID: 1656542573}
+  cameraFollow: {fileID: 755887972}
+  cameraTarget: {fileID: 1203875696}
+  freeMovementProperties:
+    moveSpeed: 3
+    sprintSpeed: 10
+    rotateSpeed: 3
+    maxCameraVert: 75
+    minCameraVert: -75
+  aimProperties:
+    moveSpeed: 1
+    rotateSpeed: 1
+    cameraPos: {x: 1, y: -0.4, z: 0.5}
+    maxCameraVert: 75
+    minCameraVert: -75
+  sharedProperties:
+    cameraPos: {x: 1, y: -0.4, z: -0.5}
 --- !u!114 &1656542581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3295,7 +3292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c0b50d5dda17347b29b60cb4c57b5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerCamera: {fileID: 0}
+  m_playerCamera: {fileID: 1454894498}
 --- !u!1 &1853847068
 GameObject:
   m_ObjectHideFlags: 0

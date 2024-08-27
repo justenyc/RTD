@@ -10,5 +10,6 @@ namespace Player
         public void StateStart();
         public void StateUpdate();
         public void StateFixedUpdate();
+        public void StateEnd();
     }
 }
