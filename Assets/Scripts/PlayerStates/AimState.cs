@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 namespace Player
 {
@@ -19,18 +20,22 @@ namespace Player
 
         public void StateStart()
         {
-            Debug.Log("Starting Aim State");
+            //Debug.Log("Starting Aim State");
             m_manager.currentState = "Aim";
             m_manager.inputHandler.Aim += OnAim;
+            m_manager.inputHandler.UseCurrentItem += OnUseCurrentItem;
+
             _3rdPersonFollow = CameraManager.instance.VirtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
-            _3rdPersonFollow.ShoulderOffset = m_manager.aimProperties.cameraPos;
+            //_3rdPersonFollow.ShoulderOffset = m_manager.aimProperties.cameraPos;
+            DOTween.To(() => _3rdPersonFollow.ShoulderOffset, e => _3rdPersonFollow.ShoulderOffset = e, m_manager.aimProperties.cameraPos, 0.1f);
         }
 
         public void StateEnd()
         {
-            Debug.Log("Ending Aim State");
+            //Debug.Log("Ending Aim State");
             m_manager.inputHandler.Aim -= OnAim;
-            _3rdPersonFollow.ShoulderOffset = m_manager.sharedProperties.cameraPos;
+            m_manager.inputHandler.UseCurrentItem -= OnUseCurrentItem;
+            _3rdPersonFollow.ShoulderOffset = m_manager.sharedProperties.defaultCameraPos;
         }
 
         public void StateUpdate()
@@ -87,6 +92,15 @@ namespace Player
             }
         }
 
+        void OnUseCurrentItem(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                var item = m_manager.inventory.currentItem;
+                var data = Item_Data.GetItemData(item.data);
+                Debug.Log($"THROW ITEM: {data.itemName}");
+            }
+        }
         #endregion
     }
 }

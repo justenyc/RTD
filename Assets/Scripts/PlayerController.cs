@@ -9,18 +9,30 @@ namespace Player
     {
         public string currentState;
         IPlayerState m_currentState;
-        public CharacterController controller {get; private set;}
-        public InputHandler inputHandler { get; private set; }
 
         [Header("References")]
-        public Transform playerTransform;
-        public Transform cameraFollow;
-        public Transform cameraTarget;
+        [SerializeField] CharacterController m_controller;
+        [SerializeField] InputHandler m_inputHandler;
+        [SerializeField] Inventory m_inventory;
+        [SerializeField] Transform m_playerTransform;
+        [SerializeField] Transform m_cameraFollow;
+        [SerializeField] Transform m_cameraTarget;
 
         [Header("State Properties")]
         public MovementProperties freeMovementProperties;
         public AimProperties aimProperties;
         public SharedProperties sharedProperties;
+
+        #region Public References
+
+        public CharacterController controller => m_controller;
+        public InputHandler inputHandler => m_inputHandler;
+        public Inventory inventory => m_inventory;
+        public Transform playerTransform => m_playerTransform;
+        public Transform cameraFollow => m_cameraFollow;
+        public Transform cameraTarget => m_cameraTarget;
+
+        #endregion
 
         #region State Properties
 
@@ -47,7 +59,7 @@ namespace Player
         [System.Serializable]
         public class SharedProperties
         {
-            public Vector3 cameraPos = new Vector3(1, -0.4f, -0.5f);
+            public Vector3 defaultCameraPos = new Vector3(1, -0.4f, -0.5f);
         }
 
         #endregion
@@ -56,9 +68,6 @@ namespace Player
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-
-            controller = GetComponent<CharacterController>();
-            inputHandler = GetComponent<InputHandler>();
 
             m_currentState = new FreeMovementState(this);
         }

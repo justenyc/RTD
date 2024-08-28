@@ -11,7 +11,11 @@ namespace Player
     {
         PlayerController m_manager;
 
+        #region State Input Values (if needed)
+
         bool m_sprintInputState;
+
+        #endregion 
 
         public FreeMovementState(PlayerController manager)
         {
@@ -21,17 +25,19 @@ namespace Player
 
         public void StateStart()
         {
-            Debug.Log("Starting FreeMovement State");
+            //Debug.Log("Starting FreeMovement State");
             m_manager.currentState = "FreeMovement";
             m_manager.inputHandler.Sprint += OnSprint;
             m_manager.inputHandler.Aim += OnAim;
+            m_manager.inputHandler.UseCurrentItem += OnUseCurrentItem;
         }
 
         public void StateEnd()
         {
-            Debug.Log("Ending FreeMovement State");
+            //Debug.Log("Ending FreeMovement State");
             m_manager.inputHandler.Sprint -= OnSprint;
             m_manager.inputHandler.Aim -= OnAim;
+            m_manager.inputHandler.UseCurrentItem -= OnUseCurrentItem;
         }
 
         public void StateUpdate()
@@ -60,6 +66,7 @@ namespace Player
             Vector3 rightRelative = cameraRight * inputVector.x;
 
             Vector3 moveVector = forwardRelative + rightRelative;
+            moveVector.y = -9.81f;
             m_manager.controller.Move(moveVector * Time.fixedDeltaTime);
         }
 
@@ -78,7 +85,7 @@ namespace Player
             m_manager.cameraFollow.rotation = Quaternion.Euler(newCameraFollowRot);
         }
 
-        #region State Inputs
+        #region State Input Listeners
 
         void OnSprint(InputAction.CallbackContext context)
         {
@@ -90,6 +97,20 @@ namespace Player
             if (context.started)
             {
                 m_manager.SetState(new AimState(m_manager));
+            }
+        }
+
+        void OnUseCurrentItem(InputAction.CallbackContext context)
+        {
+            if(context.performed)
+            {
+                var item = m_manager.inventory.currentItem;
+                var result = Item_Data.GetItemData(item.data).useAction(m_manager.gameObject);
+
+                if(result)
+                {
+                    m_manager.inventory.AddOrRemoveItemFromInventory(item, -1);
+                }
             }
         }
 

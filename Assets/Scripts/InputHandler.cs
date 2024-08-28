@@ -50,7 +50,7 @@ public class InputHandler : MonoBehaviour
 
     public void OnAim(InputAction.CallbackContext ctx)
     {
-        Debug.Log(ctx.phase);
+        //Debug.Log(ctx.phase);
         Aim?.Invoke(ctx);
     }
 

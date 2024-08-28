@@ -1,2 +1,5 @@
 Refactor InputHandler to use Events instead of Bools - Done
-Finish Aim State
+Free Movement - Done
+Finish Aim State - Done
+Throw Item
+Interactable System
