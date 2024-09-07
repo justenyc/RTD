@@ -8,4 +8,15 @@ using UnityEngine;
 public class ItemFactory : ScriptableObject
 {
     [SerializeField] SerializableDictionaryBase<string, Item> Items = new SerializableDictionaryBase<string, Item>();
+
+    public Item GetItemByName(string name)
+    {
+        if (Items.ContainsKey(name))
+        {
+            return Items[name];
+        }
+
+        Debug.LogError($"No item with name [{name}] found");
+        return null;
+    }
 }

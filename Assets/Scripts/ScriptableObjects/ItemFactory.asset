@@ -49,7 +49,8 @@ MonoBehaviour:
     - ParadiseLost
     _values:
     - data: 0
-      modelPrefab: {fileID: 0}
+      modelPrefab: {fileID: 6417772369610588347, guid: f5e018c7ae0437d439ad6fde20182dcc,
+        type: 3}
     - data: 1
       modelPrefab: {fileID: 0}
     - data: 2

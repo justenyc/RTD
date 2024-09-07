@@ -13,10 +13,12 @@ namespace Player
         [Header("References")]
         [SerializeField] CharacterController m_controller;
         [SerializeField] InputHandler m_inputHandler;
+        [SerializeField] InteractionHub m_interactionHub;
         [SerializeField] Inventory m_inventory;
         [SerializeField] Transform m_playerTransform;
         [SerializeField] Transform m_cameraFollow;
         [SerializeField] Transform m_cameraTarget;
+        [SerializeField] Transform m_throwPoint;
 
         [Header("State Properties")]
         public MovementProperties freeMovementProperties;
@@ -27,10 +29,12 @@ namespace Player
 
         public CharacterController controller => m_controller;
         public InputHandler inputHandler => m_inputHandler;
+        public InteractionHub interactionHub => m_interactionHub;
         public Inventory inventory => m_inventory;
         public Transform playerTransform => m_playerTransform;
         public Transform cameraFollow => m_cameraFollow;
         public Transform cameraTarget => m_cameraTarget;
+        public Transform throwPoint => m_throwPoint;
 
         #endregion
 
@@ -54,6 +58,7 @@ namespace Player
             public Vector3 cameraPos = new Vector3(1, -0.4f, 0.5f);
             public float maxCameraVert = 75f;
             public float minCameraVert = -75f;
+            public float throwStrength = 10f;
         }
 
         [System.Serializable]

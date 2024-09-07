@@ -27,9 +27,11 @@ namespace Player
         {
             //Debug.Log("Starting FreeMovement State");
             m_manager.currentState = "FreeMovement";
+
             m_manager.inputHandler.Sprint += OnSprint;
             m_manager.inputHandler.Aim += OnAim;
             m_manager.inputHandler.UseCurrentItem += OnUseCurrentItem;
+            m_manager.inputHandler.Interact += OnInteract;
         }
 
         public void StateEnd()
@@ -38,6 +40,7 @@ namespace Player
             m_manager.inputHandler.Sprint -= OnSprint;
             m_manager.inputHandler.Aim -= OnAim;
             m_manager.inputHandler.UseCurrentItem -= OnUseCurrentItem;
+            m_manager.inputHandler.Interact -= OnInteract;
         }
 
         public void StateUpdate()
@@ -111,6 +114,15 @@ namespace Player
                 {
                     m_manager.inventory.AddOrRemoveItemFromInventory(item, -1);
                 }
+            }
+        }
+
+        void OnInteract(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                var nearest = m_manager.interactionHub.GetNearestInteractable();
+                nearest?.Interact(m_manager);
             }
         }
 

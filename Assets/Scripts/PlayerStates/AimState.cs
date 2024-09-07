@@ -98,7 +98,26 @@ namespace Player
             {
                 var item = m_manager.inventory.currentItem;
                 var data = Item_Data.GetItemData(item.data);
-                Debug.Log($"THROW ITEM: {data.itemName}");
+
+                var thrownItem = Object.Instantiate(item.modelPrefab, m_manager.throwPoint.transform.position, Quaternion.identity);
+
+                if(thrownItem.TryGetComponent(out Rigidbody rb))
+                {
+                    RaycastHit hit;
+                    Transform cameraTransform = CameraManager.instance.VirtualCamera.transform;
+
+                    var throwVector = (cameraTransform.forward * 1000 - m_manager.throwPoint.position).normalized;
+
+                    if (Physics.Raycast(cameraTransform.position, cameraTransform.forward * 1000, out hit, 1000))
+                    {
+                        throwVector = (hit.collider.transform.position - m_manager.throwPoint.position).normalized;
+                    }
+
+                    Debug.DrawRay(m_manager.throwPoint.position, throwVector * 1000, Color.magenta, 5f);
+
+                    rb.AddForce((throwVector + Vector3.up * 0.5f) * m_manager.aimProperties.throwStrength, ForceMode.Impulse);
+                }
+                //Debug.Log($"THROW ITEM: {data.itemName}");
             }
         }
         #endregion

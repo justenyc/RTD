@@ -28,11 +28,11 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        inventory.Add(new InventorySlot(inventory.Count, new Item(Item_Data.ItemData.Nectar), 10));
-        inventory.Add(new InventorySlot(inventory.Count, new Item(Item_Data.ItemData.Soul), 3));
-        inventory.Add(new InventorySlot(inventory.Count, new Item(Item_Data.ItemData.Torch), 20));
-        inventory.Add(new InventorySlot(inventory.Count, new Item(Item_Data.ItemData.Firebomb), 5));
-        inventory.Add(new InventorySlot(inventory.Count, new Item(Item_Data.ItemData.ParadiseLost), 2));
+        inventory.Add(new InventorySlot(inventory.Count, itemFactory.GetItemByName("Nectar"), 10));
+        inventory.Add(new InventorySlot(inventory.Count, itemFactory.GetItemByName("Soul"), 3));
+        inventory.Add(new InventorySlot(inventory.Count, itemFactory.GetItemByName("Torch"), 20));
+        inventory.Add(new InventorySlot(inventory.Count, itemFactory.GetItemByName("Firebomb"), 5));
+        inventory.Add(new InventorySlot(inventory.Count, itemFactory.GetItemByName("ParadiseLost"), 2));
 
         m_currentItem = inventory[0].item;
     }
