@@ -65,13 +65,14 @@ public interface IStrategy
             var target = patrolPoints[currentIndex];
             agent.SetDestination(target);
 
-            if(isPathCalculated && agent.remainingDistance < 0.1f)
+            var distance = Vector3.Distance(agent.transform.position - Vector3.up * agent.baseOffset, agent.destination);
+            if(isPathCalculated && distance < 0.1f)
             {
                 currentIndex++;
                 isPathCalculated = false;
             }
 
-            if(agent.pathPending)
+            if (!agent.pathPending)
             {
                 isPathCalculated = true;
             }

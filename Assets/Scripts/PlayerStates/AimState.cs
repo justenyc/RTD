@@ -24,6 +24,9 @@ namespace Player
             m_manager.currentState = "Aim";
             m_manager.inputHandler.Aim += OnAim;
             m_manager.inputHandler.UseCurrentItem += OnUseCurrentItem;
+            m_manager.inputHandler.UseWeapon += OnUseWeapon;
+
+            m_manager.Sword.SetActive(true);
 
             _3rdPersonFollow = CameraManager.instance.VirtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
             //_3rdPersonFollow.ShoulderOffset = m_manager.aimProperties.cameraPos;
@@ -35,6 +38,11 @@ namespace Player
             //Debug.Log("Ending Aim State");
             m_manager.inputHandler.Aim -= OnAim;
             m_manager.inputHandler.UseCurrentItem -= OnUseCurrentItem;
+            m_manager.inputHandler.UseWeapon -= OnUseWeapon;
+
+            m_manager.Sword.GetComponent<Collider>().enabled = false;
+            m_manager.Sword.SetActive(false);
+
             _3rdPersonFollow.ShoulderOffset = m_manager.sharedProperties.defaultCameraPos;
         }
 
@@ -112,12 +120,21 @@ namespace Player
                     {
                         throwVector = (hit.collider.transform.position - m_manager.throwPoint.position).normalized;
                     }
-
+                    
                     Debug.DrawRay(m_manager.throwPoint.position, throwVector * 1000, Color.magenta, 5f);
 
                     rb.AddForce((throwVector + Vector3.up * 0.5f) * m_manager.aimProperties.throwStrength, ForceMode.Impulse);
                 }
                 //Debug.Log($"THROW ITEM: {data.itemName}");
+            }
+        }
+
+        void OnUseWeapon(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                m_manager.Sword.GetComponent<Collider>().enabled = true;
+                m_manager.Animator.SetTrigger("Attack");
             }
         }
         #endregion

@@ -25,12 +25,12 @@
                 },
                 {
                     "name": "UseWeapon",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "6c2ab1b8-8984-453a-af3d-a3c78ae1679a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Guard",
@@ -92,7 +92,7 @@
                     "id": "45e61519-c70e-4b75-bbc9-317356731b2b",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 },
                 {

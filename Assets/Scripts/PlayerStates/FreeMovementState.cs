@@ -56,21 +56,23 @@ namespace Player
 
         private void Move()
         {
-            float speed = m_sprintInputState ? m_manager.freeMovementProperties.sprintSpeed :  m_manager.freeMovementProperties.moveSpeed;
+            m_manager.Animator.SetFloat("MovementX", Mathf.Round(m_manager.inputHandler.moveVector.x));
+            m_manager.Animator.SetFloat("MovementY", Mathf.Round(m_manager.inputHandler.moveVector.y));
+            //float speed = m_sprintInputState ? m_manager.freeMovementProperties.sprintSpeed :  m_manager.freeMovementProperties.moveSpeed;
 
-            Vector3 cameraForward = Camera.main.transform.forward;
-            Vector3 cameraRight = Camera.main.transform.right;
-            Vector3 inputVector = m_manager.inputHandler.moveVector * speed;
+            //Vector3 cameraForward = Camera.main.transform.forward;
+            //Vector3 cameraRight = Camera.main.transform.right;
+            //Vector3 inputVector = m_manager.inputHandler.moveVector * speed;
 
-            cameraForward.y = 0;
-            cameraRight.y = 0;
+            //cameraForward.y = 0;
+            //cameraRight.y = 0;
 
-            Vector3 forwardRelative = cameraForward * inputVector.y;
-            Vector3 rightRelative = cameraRight * inputVector.x;
+            //Vector3 forwardRelative = cameraForward * inputVector.y;
+            //Vector3 rightRelative = cameraRight * inputVector.x;
 
-            Vector3 moveVector = forwardRelative + rightRelative;
-            moveVector.y = -9.81f;
-            m_manager.controller.Move(moveVector * Time.fixedDeltaTime);
+            //Vector3 moveVector = forwardRelative + rightRelative;
+            //moveVector.y = -9.81f;
+            //m_manager.controller.Move(moveVector * Time.fixedDeltaTime);
         }
 
         private void ControlCamera()

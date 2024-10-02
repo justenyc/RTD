@@ -7,13 +7,22 @@ public class Shambler : AI_Entity
 {
     [Header("Properties")]
     [SerializeField] float m_moveSpeed = 2;
+    [SerializeField] float m_turnSpeed = 1;
     [SerializeField] LayerMask m_layerMask;
 
     [Header("References")]
+    [SerializeField] Transform m_mainTransform;
     [SerializeField] List<Transform> m_patrolPoints;
     [SerializeField] Detector m_detector;
+    [SerializeField] Animator m_animator;
 
     Blackboard m_blackboard = new();
+
+    #region Public Accessors
+
+    public Animator Animator => m_animator;
+
+    #endregion
 
     protected override void Start()
     {
@@ -43,6 +52,9 @@ public class Shambler : AI_Entity
 
     protected override void Update()
     {
+        var lookVector = m_agent.steeringTarget - m_mainTransform.position;
+        m_mainTransform.rotation = Quaternion.LookRotation(lookVector.normalized);
+        m_animator.SetFloat("Movement", 0.5f);
         base.Update();
     }
 
@@ -79,6 +91,7 @@ public class Shambler : AI_Entity
 
             var searchCollider = m_blackboard.GetEntryByKey<Collider>("detectedCollider") as BlackboardEntry<Collider>;
             Debug.Log(searchCollider.value.transform.position);
+            searchCollider.value = null;
             this.StopAllCoroutines();
             StartCoroutine(Helper.DelayActionByTime(act, 5));
         }

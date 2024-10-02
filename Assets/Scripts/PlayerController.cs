@@ -12,6 +12,7 @@ namespace Player
 
         [Header("References")]
         [SerializeField] CharacterController m_controller;
+        [SerializeField] Animator m_animator;
         [SerializeField] InputHandler m_inputHandler;
         [SerializeField] InteractionHub m_interactionHub;
         [SerializeField] Inventory m_inventory;
@@ -20,14 +21,18 @@ namespace Player
         [SerializeField] Transform m_cameraTarget;
         [SerializeField] Transform m_throwPoint;
 
+        [Header("Props")]
+        public GameObject Sword;
+
         [Header("State Properties")]
-        public MovementProperties freeMovementProperties;
-        public AimProperties aimProperties;
-        public SharedProperties sharedProperties;
+        [SerializeField] MovementProperties m_freeMovementProperties;
+        [SerializeField] AimProperties m_aimProperties;
+        [SerializeField] SharedProperties m_sharedProperties;
 
         #region Public References
 
         public CharacterController controller => m_controller;
+        public Animator Animator => m_animator;
         public InputHandler inputHandler => m_inputHandler;
         public InteractionHub interactionHub => m_interactionHub;
         public Inventory inventory => m_inventory;
@@ -35,6 +40,9 @@ namespace Player
         public Transform cameraFollow => m_cameraFollow;
         public Transform cameraTarget => m_cameraTarget;
         public Transform throwPoint => m_throwPoint;
+        public MovementProperties freeMovementProperties => m_freeMovementProperties;
+        public AimProperties aimProperties => m_aimProperties;
+        public SharedProperties sharedProperties => m_sharedProperties;
 
         #endregion
 
