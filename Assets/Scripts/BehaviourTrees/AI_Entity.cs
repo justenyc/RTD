@@ -8,9 +8,11 @@ public class AI_Entity : MonoBehaviour
     [SerializeField] protected NavMeshAgent m_agent;
 
     protected BehaviourTree m_behaviourTree = new BehaviourTree("baseTree");
+    protected Blackboard m_blackboard = new();
 
+    [SerializeField] string currentBehaviour;
     [SerializeField] string treeStatus;
-    
+
     protected virtual void Start()
     {
 

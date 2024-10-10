@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Node
 {
-    public enum Status { Success, Failure, Running}
+    public enum Status { Success, Failure, Running }
 
     public readonly string name;
     public readonly int priority;
@@ -18,6 +18,15 @@ public class Node
     {
         name = _name;
         priority = _priority;
+    }
+
+    public virtual void OnTransition()
+    {
+        if(currentChild == children.Count)
+        {
+            return;
+        }
+        children[currentChild].OnTransition();
     }
 
     public void AddChild(Node newChild)
@@ -54,8 +63,14 @@ public class Leaf : Node
         this.strategy = _strategy;
     }
 
+    public override void OnTransition()
+    {
+        strategy.OnTransition();
+    }
+
     public override Status Process()
     {
+        //Debug.Log(name);
         return strategy.Process();
     }
 
@@ -71,14 +86,15 @@ public class BehaviourTree : Node
 
     public override Status Process()
     {
-        while(currentChild < children.Count)
+        while (currentChild < children.Count)
         {
             var status = children[currentChild].Process();
-            if(status != Status.Success)
+            if (status != Status.Success)
             {
                 return status;
             }
             currentChild++;
+            OnTransition();
         }
         Reset();
         return Status.Success;
@@ -91,9 +107,9 @@ public class Sequence : Node
 
     public override Status Process()
     {
-        if(currentChild < children.Count)
+        if (currentChild < children.Count)
         {
-            switch(children[currentChild].Process())
+            switch (children[currentChild].Process())
             {
                 case Status.Running:
                     return Status.Running;
@@ -102,6 +118,7 @@ public class Sequence : Node
                     return Status.Failure;
                 default:
                     currentChild++;
+                    OnTransition();
                     return currentChild == children.Count ? Status.Success : Status.Running;
             }
         }
@@ -130,6 +147,7 @@ public class Selector : Node
 
                 default:
                     currentChild++;
+                    OnTransition();
                     return Status.Running;
             }
         }
@@ -139,7 +157,7 @@ public class Selector : Node
     }
 }
 
-public class PrioritySelector  : Node
+public class PrioritySelector : Node
 {
     public PrioritySelector(string _name) : base(_name) { }
 
@@ -150,20 +168,22 @@ public class PrioritySelector  : Node
 
     public override Status Process()
     {
-        foreach(var child in SortedChildren) {
-            switch(child.Process())
+        foreach (var child in SortedChildren)
+        {
+            switch (child.Process())
             {
                 case Status.Running:
                     return Status.Running;
 
                 case Status.Success:
+                    Reset();
                     return Status.Success;
 
                 default:
                     continue;
             }
         }
-
+        Reset();
         return Status.Failure;
     }
 }
@@ -173,23 +193,29 @@ public class RandomSelector : PrioritySelector
     public RandomSelector(string _name) : base(_name) { }
 
     protected override List<Node> SortChildren() => children.Shuffle().ToList();
+
+    public override void Reset()
+    {
+        base.Reset();
+        SortChildren();
+    }
 }
 
 public class Inverter : Node
-{ 
+{
     public Inverter(string _name) : base(_name) { }
 
     public override Status Process()
     {
-        switch(children[0].Process())
+        switch (children[0].Process())
         {
-            case Status.Running: 
+            case Status.Running:
                 return Status.Running;
 
-            case Status.Failure: 
+            case Status.Failure:
                 return Status.Success;
 
-            default: 
+            default:
                 return Status.Failure;
         }
     }
@@ -214,15 +240,15 @@ public class UntilFail : Node
 public class Repeat : Node
 {
     int repititions;
-    public Repeat(string _name, int _repititions) : base(_name) 
-    { 
+    public Repeat(string _name, int _repititions) : base(_name)
+    {
         repititions = _repititions;
     }
 
     public override Status Process()
     {
         int currentRep = 0;
-        switch(children[0].Process())
+        switch (children[0].Process())
         {
             case Status.Running:
                 return Status.Running;
@@ -231,19 +257,47 @@ public class Repeat : Node
                 return Status.Failure;
 
             default:
-                if(repititions < 0)
+                if (repititions < 0)
                 {
                     Reset();
                     return Status.Running;
                 }
 
                 currentRep++;
-                if(currentRep < repititions)
+                if (currentRep < repititions)
                 {
                     Reset();
                     return Status.Running;
                 }
                 return Status.Success;
         }
+    }
+}
+
+public class RepeatForSeconds : Node
+{
+    float duration;
+    float time = 0;
+    public RepeatForSeconds(string _name, float _duration) : base(_name)
+    {
+        duration = _duration;
+    }
+
+    public override Status Process()
+    {
+        if(time < duration)
+        {
+            time += Time.deltaTime;
+            children[currentChild].Process();
+            return Status.Running;
+        }
+        Reset();
+        return Status.Success;
+    }
+
+    public override void Reset()
+    {
+        time = 0;
+        base.Reset();
     }
 }

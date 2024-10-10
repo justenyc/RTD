@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.AI;
 
 public interface IStrategy
 {
     Node.Status Process();
+    void OnTransition() { }
     void Reset() { }
 
     public class Condition : IStrategy
@@ -20,6 +22,52 @@ public interface IStrategy
         }
 
         public Node.Status Process() => predicate() ? Node.Status.Success : Node.Status.Failure;
+    }
+
+    public class DelayUntil : IStrategy
+    {
+        readonly Func<bool> predicate;
+
+        public DelayUntil(Func<bool> _predicate)
+        {
+            predicate = _predicate;
+        }
+
+        public Node.Status Process()
+        {
+            if(!predicate())
+            {
+                return Node.Status.Running;
+            }
+            return Node.Status.Success;
+        }
+    }
+
+    public class DelayForSeconds : IStrategy
+    {
+        float duration;
+        float time = 0;
+
+        public DelayForSeconds(float _duration)
+        {
+            duration = _duration;
+        }
+
+        public Node.Status Process()
+        {
+            if(time < duration)
+            {
+                time += Time.deltaTime;
+                return Node.Status.Running;
+            }
+            Reset();
+            return Node.Status.Success;
+        }
+
+        public void Reset()
+        {
+            time = 0;
+        }
     }
 
     public class ActionStrategy : IStrategy
@@ -42,7 +90,7 @@ public interface IStrategy
     {
         NavMeshAgent agent;
         List<Vector3> patrolPoints;
-        float patrolSpeed;
+        //float patrolSpeed;
 
         int currentIndex;
         bool isPathCalculated;
@@ -51,7 +99,7 @@ public interface IStrategy
         {
             agent = _agent;
             patrolPoints = _patrolPoints;
-            patrolSpeed = _patrolSpeed;
+            //patrolSpeed = _patrolSpeed;
         }
 
         public Node.Status Process()
@@ -89,17 +137,52 @@ public interface IStrategy
     public class Stalk : IStrategy
     {
         NavMeshAgent agent;
-        Vector3 destination;
+        Blackboard blackboard;
+        float range;
 
-        public Stalk(NavMeshAgent _agent, Vector3 _destination) 
+        public Stalk(NavMeshAgent _agent, Blackboard _blackBoard, float _range) 
         {
             agent= _agent;
-            destination = _destination;
+            blackboard = _blackBoard;
+            range = _range;
         }
 
         public Node.Status Process()
-        { 
-            throw new NotImplementedException();
+        {
+            blackboard.SetValue(Shambler.TRACK_ROTATION, true);
+            var target = blackboard.GetEntryByKey<Vector3>(Shambler.DETECTED_POSITION) as BlackboardEntry<Vector3>;
+
+            //Debug.Log($"{range} : {Vector3.Distance(agent.transform.position, target.value)}");
+            if (Vector3.Distance(agent.transform.position, target.value) > range)
+            {
+                agent.SetDestination(target.value);
+                return Node.Status.Running;
+            }
+            return Node.Status.Success;
+        }
+    }
+
+    public class TimedLoop : IStrategy
+    {
+        float timePerTick;
+        float currentTime = 0;
+        Action action;
+
+        public TimedLoop(float _timePerTick, Action _action)
+        {
+            timePerTick = _timePerTick;
+            action = _action;
+        }
+
+        public Node.Status Process()
+        {
+            if(currentTime > timePerTick)
+            {
+                currentTime = 0;
+                action();
+            }
+            currentTime += Time.deltaTime;
+            return Node.Status.Running;
         }
     }
 }

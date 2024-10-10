@@ -38,17 +38,22 @@ public class Blackboard
             entries[key] = new BlackboardEntry<T>(key, value);
         }
     }
+
+    public void RemoveEntry(string key)
+    {
+        entries.Remove(key);
+    }
 }
 
 public class BlackboardEntry<T>
 {
-    public string name;
+    public string key;
     public T value;
     public Type type;
 
     public BlackboardEntry(string name, T value)
     {
-        this.name = name;
+        this.key = name;
         this.value = value;
         this.type = typeof(T);
     }
