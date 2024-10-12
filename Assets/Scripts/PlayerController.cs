@@ -20,6 +20,7 @@ namespace Player
         [SerializeField] Transform m_cameraFollow;
         [SerializeField] Transform m_cameraTarget;
         [SerializeField] Transform m_throwPoint;
+        [SerializeField] Hitbox m_hitbox;
 
         [Header("Props")]
         public GameObject Sword;
@@ -79,6 +80,7 @@ namespace Player
 
         private void Start()
         {
+            m_hitbox.OnHit += OnHit;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
@@ -87,6 +89,7 @@ namespace Player
 
         private void FixedUpdate()
         {
+            m_controller.Move(-Vector3.up * 9.81f);
             m_currentState.StateFixedUpdate();
         }
 
@@ -96,9 +99,10 @@ namespace Player
             m_currentState = newState;
         }
 
-        public void Test(InputAction.CallbackContext ctx)
+        void OnHit(Hurtbox hurtbox)
         {
-            Debug.Log("Test!");
+            var args = new Hitbox.Args(10);
+            hurtbox.PostOnHurt(args);
         }
     }
 }

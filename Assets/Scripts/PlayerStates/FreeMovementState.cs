@@ -95,11 +95,12 @@ namespace Player
         void OnSprint(InputAction.CallbackContext context)
         {
             m_sprintInputState = context.performed;
+            m_manager.Animator.SetBool("Sprint", m_sprintInputState);
         }
 
         void OnAim(InputAction.CallbackContext context)
         {
-            if (context.started)
+            if (context.performed)
             {
                 m_manager.SetState(new AimState(m_manager));
             }
@@ -107,12 +108,12 @@ namespace Player
 
         void OnUseCurrentItem(InputAction.CallbackContext context)
         {
-            if(context.performed)
+            if (context.performed)
             {
                 var item = m_manager.inventory.currentItem;
                 var result = Item_Data.GetItemData(item.data).useAction(m_manager.gameObject);
 
-                if(result)
+                if (result)
                 {
                     m_manager.inventory.AddOrRemoveItemFromInventory(item, -1);
                 }

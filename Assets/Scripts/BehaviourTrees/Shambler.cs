@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 public class Shambler : AI_Entity
 {
-    [Header("Properties")]
+    [Header("Aggression Properties")]
     //[SerializeField] float m_moveSpeed = 2;
     //[SerializeField] float m_turnSpeed = 1;
     
@@ -28,6 +29,13 @@ public class Shambler : AI_Entity
     [SerializeField]
     [Tooltip("The range of randomness multiplied to the attack frequency. Lower numbers increase frequency, higher numbers decrease frequency")]
     Vector2 m_attackFrequencyRandomness = Vector2.one;
+
+    [Header("Defensive Properties")]
+    [SerializeField] float m_knockdownValue;
+    [SerializeField] float m_knockdownValueRecovery = 1;
+    [SerializeField] float m_hitstunResist = 2;
+    [SerializeField] float m_hitstaggerResist = 4;
+    [SerializeField] float m_knockdownThreshold = 6;
     
     [SerializeField] LayerMask m_layerMask;
 
@@ -37,6 +45,8 @@ public class Shambler : AI_Entity
     [SerializeField] AnimationHooks m_animationHooks;
     [SerializeField] List<Transform> m_patrolPoints;
     [SerializeField] Detector m_detector;
+    [SerializeField] Health m_health;
+    [SerializeField] Hurtbox m_hurtbox;
 
     #region Animation
 
@@ -60,12 +70,17 @@ public class Shambler : AI_Entity
         m_animator.SetInteger(name, i);
     }
 
+    void ResetAnimatorParams()
+    {
+        SetAnimatorBool("InAttackRange", false);
+    }
+
     public void OnAttackFinish()
     {
         Debug.Log("OnAttackFinish() called");
         m_blackboard.SetValue(ATTACKING, false);
         m_blackboard.SetValue(TRACK_ROTATION, true);
-        SetAnimatorBool("InAttackRange", false);
+        ResetAnimatorParams();
     }
 
     #endregion
@@ -92,8 +107,14 @@ public class Shambler : AI_Entity
         m_detector.OnTriggerEnterPost += OnDetect;
         m_detector.OnTriggerExitPost += SearchLost;
 
+        m_hurtbox.OnHurt += OnHurt;
         m_animationHooks.AttackFinishedPost += OnAttackFinish;
 
+        InitStandardAI();
+    }
+
+    void InitStandardAI()
+    {
         var patrolPoints = base.ParsePatrolPoints(m_patrolPoints);
 
         var shamblerAiSelector = new PrioritySelector("ShamblerAiSelector");
@@ -117,7 +138,7 @@ public class Shambler : AI_Entity
             m_blackboard.SetValue(TRACK_ROTATION, false);
             return;
         })));
-        
+
         tackleSequence.AddChild(new Leaf("Delay Until Attack Finish", new IStrategy.DelayUntil(() =>
         {
             var entry = m_blackboard.GetEntryByKey<bool>(ATTACKING) as BlackboardEntry<bool>;
@@ -131,8 +152,9 @@ public class Shambler : AI_Entity
         swipeSequence.AddChild(repeatForSeconds);
         swipeSequence.AddChild(new Leaf("MeleeDistanceCheck", new IStrategy.Condition(() =>
         {
-            Debug.Log(Vector3.Distance(m_agent.destination, m_mainTransform.position));
-            return Vector3.Distance(m_agent.destination, m_mainTransform.position) < m_meleeRange;
+            //Debug.Log(Vector3.Distance(m_agent.destination, m_mainTransform.position));
+            var detection = m_blackboard.GetEntryByKey<bool>(DETECTED_SOMETHING) as BlackboardEntry<bool>;
+            return Vector3.Distance(m_agent.destination, m_mainTransform.position) < m_meleeRange && detection.value;
         })));
         swipeSequence.AddChild(new Leaf("Swipe", new IStrategy.ActionStrategy(() =>
         {
@@ -143,7 +165,7 @@ public class Shambler : AI_Entity
             m_blackboard.SetValue(TRACK_ROTATION, false);
             return;
         })));
-        randomSelector.AddChild(swipeSequence);
+        //randomSelector.AddChild(swipeSequence);
         seq.AddChild(randomSelector);
 
         shamblerAiSelector.AddChild(seq);
@@ -153,10 +175,37 @@ public class Shambler : AI_Entity
 
     protected override void Update()
     {
-        //ApplyGravity();
+        UpdateKnockdownValue();
         TrackRotation();
-        SetAnimatorFloat("Movement", 0.5f);
+        SetAnimatorFloat("Movement", ScaleMoveSpeedToDistance());
         base.Update();
+    }
+
+    float ScaleMoveSpeedToDistance()
+    {
+        float scale = 0;
+        if (Vector3.Distance(m_agent.destination, m_mainTransform.position) > 10)
+        {
+            scale = 1;
+        }
+        else if (Vector3.Distance(m_agent.destination, m_mainTransform.position) > 1f)
+        {
+            scale = 0.5f;
+        }
+        else
+        {
+            scale = 0;
+        }
+        return scale;
+    }
+
+    void UpdateKnockdownValue()
+    {
+        m_knockdownValue = Mathf.Clamp(m_knockdownValue - Time.deltaTime * m_knockdownValueRecovery, 0, 999);
+        if (m_knockdownValue > m_knockdownThreshold)
+        {
+            m_knockdownValue = 0;
+        }
     }
 
     void ApplyGravity()
@@ -167,11 +216,14 @@ public class Shambler : AI_Entity
     void TrackRotation()
     {
         var track = m_blackboard.GetEntryByKey<bool>(TRACK_ROTATION) as BlackboardEntry<bool>;
+        Debug.Log(track.value);
         if (track.value)
         {
             var lookVector = m_agent.steeringTarget - m_mainTransform.position;
-            
-            m_mainTransform.rotation = Quaternion.LookRotation(lookVector.normalized);
+            if (lookVector.magnitude > 0)
+            {
+                m_mainTransform.rotation = Quaternion.LookRotation(lookVector.normalized);
+            }
         }
     }
 
@@ -225,5 +277,27 @@ public class Shambler : AI_Entity
                 () => m_blackboard.SetValue(DETECTED_SOMETHING, false), 
                 m_aggroTime)
             );
+    }
+
+    void OnHurt(Hitbox.Args args)
+    {
+        //m_health.ChangeCurrentHealth(-args.power);
+        m_knockdownValue += 2;
+        m_animator.SetTrigger("GotHit");
+        if (m_knockdownValue >= m_knockdownThreshold)
+        {
+            m_animator.SetTrigger("Knockdown");
+            ResetAnimatorParams();
+        }
+        else if (m_knockdownValue >= m_hitstaggerResist)
+        {
+            m_animator.SetTrigger("HitStagger");
+            ResetAnimatorParams();
+        }
+        else if (m_knockdownValue >= m_hitstunResist)
+        {
+            m_animator.SetTrigger("HitStun");
+            ResetAnimatorParams();
+        }
     }
 }

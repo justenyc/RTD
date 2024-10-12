@@ -12,6 +12,8 @@ namespace Player
         PlayerController m_manager;
         private Cinemachine3rdPersonFollow _3rdPersonFollow;
 
+        List<Tween> tweens = new();
+
         public AimState(PlayerController manager)
         {
             m_manager = manager;
@@ -30,7 +32,9 @@ namespace Player
 
             _3rdPersonFollow = CameraManager.instance.VirtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
             //_3rdPersonFollow.ShoulderOffset = m_manager.aimProperties.cameraPos;
-            DOTween.To(() => _3rdPersonFollow.ShoulderOffset, e => _3rdPersonFollow.ShoulderOffset = e, m_manager.aimProperties.cameraPos, 0.1f);
+            var tween = DOTween.To(() => _3rdPersonFollow.ShoulderOffset, e => _3rdPersonFollow.ShoulderOffset = e, m_manager.aimProperties.cameraPos, 0.1f);
+            
+            tweens.Add(tween);
         }
 
         public void StateEnd()
@@ -43,6 +47,10 @@ namespace Player
             m_manager.Sword.GetComponent<Collider>().enabled = false;
             m_manager.Sword.SetActive(false);
 
+            foreach(var tween in tweens)
+            {
+                tween.Kill();
+            }
             _3rdPersonFollow.ShoulderOffset = m_manager.sharedProperties.defaultCameraPos;
         }
 
@@ -94,7 +102,7 @@ namespace Player
 
         void OnAim(InputAction.CallbackContext context)
         {
-            if(context.canceled)
+            if(context.performed)
             {
                 m_manager.SetState(new FreeMovementState(m_manager));
             }
@@ -133,7 +141,6 @@ namespace Player
         {
             if (context.performed)
             {
-                m_manager.Sword.GetComponent<Collider>().enabled = true;
                 m_manager.Animator.SetTrigger("Attack");
             }
         }
