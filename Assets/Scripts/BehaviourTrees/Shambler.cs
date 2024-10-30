@@ -165,7 +165,7 @@ public class Shambler : AI_Entity
             m_blackboard.SetValue(TRACK_ROTATION, false);
             return;
         })));
-        //randomSelector.AddChild(swipeSequence);
+        randomSelector.AddChild(swipeSequence);
         seq.AddChild(randomSelector);
 
         shamblerAiSelector.AddChild(seq);
@@ -184,11 +184,11 @@ public class Shambler : AI_Entity
     float ScaleMoveSpeedToDistance()
     {
         float scale = 0;
-        if (Vector3.Distance(m_agent.destination, m_mainTransform.position) > 10)
+        if (m_agent.remainingDistance > 10)
         {
             scale = 1;
         }
-        else if (Vector3.Distance(m_agent.destination, m_mainTransform.position) > 1f)
+        else if (m_agent.remainingDistance > 1f)
         {
             scale = 0.5f;
         }
@@ -216,7 +216,7 @@ public class Shambler : AI_Entity
     void TrackRotation()
     {
         var track = m_blackboard.GetEntryByKey<bool>(TRACK_ROTATION) as BlackboardEntry<bool>;
-        Debug.Log(track.value);
+        //Debug.Log(track.value);
         if (track.value)
         {
             var lookVector = m_agent.steeringTarget - m_mainTransform.position;

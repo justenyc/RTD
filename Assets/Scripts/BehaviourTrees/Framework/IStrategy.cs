@@ -94,6 +94,7 @@ public interface IStrategy
 
         int currentIndex;
         bool isPathCalculated;
+        float delayUntilNextPointSet = 1;
 
         public MoveBetweenPoints(NavMeshAgent _agent, List<Vector3> _patrolPoints, float _patrolSpeed = 2f)
         {
@@ -113,11 +114,17 @@ public interface IStrategy
             var target = patrolPoints[currentIndex];
             agent.SetDestination(target);
 
-            var distance = Vector3.Distance(agent.transform.position - Vector3.up * agent.baseOffset, agent.destination);
-            if(isPathCalculated && distance < 0.1f)
+            var distance = Vector3.Distance(agent.transform.position, agent.destination) < 1;
+            if(isPathCalculated && distance)
             {
+                if(delayUntilNextPointSet > 0)
+                {
+                    delayUntilNextPointSet -= Time.deltaTime;
+                    return Node.Status.Running;
+                }
                 currentIndex++;
                 isPathCalculated = false;
+                delayUntilNextPointSet = 1;
             }
 
             if (!agent.pathPending)
@@ -147,9 +154,13 @@ public interface IStrategy
             range = _range;
         }
 
-        public Node.Status Process()
+        void OnTransition()
         {
             blackboard.SetValue(Shambler.TRACK_ROTATION, true);
+        }
+
+        public Node.Status Process()
+        {
             var target = blackboard.GetEntryByKey<Vector3>(Shambler.DETECTED_POSITION) as BlackboardEntry<Vector3>;
 
             //Debug.Log($"{range} : {Vector3.Distance(agent.transform.position, target.value)}");

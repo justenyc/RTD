@@ -65,6 +65,7 @@ public class Leaf : Node
 
     public override void OnTransition()
     {
+        Debug.Log(name);
         strategy.OnTransition();
     }
 
@@ -165,6 +166,11 @@ public class PrioritySelector : Node
     List<Node> SortedChildren => sortedChildren ??= SortChildren();
 
     protected virtual List<Node> SortChildren() => children.OrderByDescending(child => child.priority).ToList();
+
+    public override void OnTransition()
+    {
+        base.OnTransition();
+    }
 
     public override Status Process()
     {
