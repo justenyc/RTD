@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 1b14564eb51b4e84a9d53fbe2093656c,
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 0324ba3eaa2ef754fa4d4cc8a5e05d47,
     type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -665,7 +665,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &189022442
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1888,7 +1888,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &410087040
 Light:
   m_ObjectHideFlags: 0
@@ -4344,7 +4344,7 @@ PrefabInstance:
     - target: {fileID: 2447193126686464896, guid: bd68d14391acdfa44a842bb7abae5172,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2458480987041672580, guid: bd68d14391acdfa44a842bb7abae5172,
         type: 3}
@@ -6914,7 +6914,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1837309184
 Transform:
   m_ObjectHideFlags: 0
