@@ -82,7 +82,7 @@ namespace Player
             Vector3 rightRelative = cameraRight * inputVector.x;
 
             Vector3 moveVector = forwardRelative + rightRelative;
-            m_manager.controller.Move(moveVector * Time.fixedDeltaTime);
+            //m_manager.controller.Move(moveVector * Time.fixedDeltaTime);
         }
 
         private void ControlCamera()
