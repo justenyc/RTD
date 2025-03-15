@@ -105,6 +105,7 @@ namespace Player
                 m_manager.Animator.SetFloat("MovementX", 0);
                 m_manager.Animator.SetFloat("MovementY", 0);
                 m_manager.Animator.SetBool("Sprint", false);
+                m_manager.Animator.SetBool("Aim", true);
                 m_manager.SetState(new AimState(m_manager));
             }
         }

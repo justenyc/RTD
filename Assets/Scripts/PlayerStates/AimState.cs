@@ -27,13 +27,14 @@ namespace Player
             m_manager.inputHandler.Aim += OnAim;
             m_manager.inputHandler.UseCurrentItem += OnUseCurrentItem;
             m_manager.inputHandler.UseWeapon += OnUseWeapon;
+            m_manager.inputHandler.Guard += OnGuard;
 
-            m_manager.Sword.SetActive(true);
+            m_manager.SetSwordPosition(true);
 
             _3rdPersonFollow = CameraManager.instance.VirtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
             //_3rdPersonFollow.ShoulderOffset = m_manager.aimProperties.cameraPos;
             var tween = DOTween.To(() => _3rdPersonFollow.ShoulderOffset, e => _3rdPersonFollow.ShoulderOffset = e, m_manager.aimProperties.cameraPos, 0.1f);
-            
+
             tweens.Add(tween);
         }
 
@@ -43,11 +44,13 @@ namespace Player
             m_manager.inputHandler.Aim -= OnAim;
             m_manager.inputHandler.UseCurrentItem -= OnUseCurrentItem;
             m_manager.inputHandler.UseWeapon -= OnUseWeapon;
+            m_manager.inputHandler.Guard -= OnGuard;
 
             m_manager.Sword.GetComponent<Collider>().enabled = false;
-            m_manager.Sword.SetActive(false);
+            m_manager.SetSwordPosition(false);
 
-            foreach(var tween in tweens)
+
+            foreach (var tween in tweens)
             {
                 tween.Kill();
             }
@@ -83,6 +86,8 @@ namespace Player
 
             Vector3 moveVector = forwardRelative + rightRelative;
             //m_manager.controller.Move(moveVector * Time.fixedDeltaTime);
+            m_manager.Animator.SetFloat("MovementX", Mathf.Round(m_manager.inputHandler.moveVector.x));
+            m_manager.Animator.SetFloat("MovementY", Mathf.Round(m_manager.inputHandler.moveVector.y));
         }
 
         private void ControlCamera()
@@ -105,6 +110,7 @@ namespace Player
             if(context.performed)
             {
                 m_manager.SetState(new FreeMovementState(m_manager));
+                m_manager.Animator.SetBool("Aim", false);
             }
         }
 
@@ -139,9 +145,28 @@ namespace Player
 
         void OnUseWeapon(InputAction.CallbackContext context)
         {
+            //TODO: Use AnimatorStateInfo.NormalizedTime instead to set the AnimationBool for canceling
             if (context.performed)
             {
-                m_manager.Animator.SetTrigger("Attack");
+                m_manager.Animator.SetBool("Attack", true);
+            }
+
+            if (context.canceled)
+            {
+                m_manager.Animator.SetBool("Attack", false);
+            }
+        }
+
+        void OnGuard(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                m_manager.Animator.SetBool("Guard", true);
+            }
+
+            if (context.canceled)
+            {
+                m_manager.Animator.SetBool("Guard", false);
             }
         }
         #endregion
