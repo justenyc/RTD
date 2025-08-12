@@ -25,4 +25,14 @@ public class AnimationHooks : MonoBehaviour
             CanCancel();
         }
     }
+
+    public void Active()
+    {
+
+    }
+
+    public void InActive()
+    {
+
+    }
 }

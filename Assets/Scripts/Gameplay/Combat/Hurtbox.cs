@@ -2,16 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Hurtbox : MonoBehaviour
 {
-    public Action<Hitbox.Args> OnHurt;
+    [SerializeField] UnityEvent<Hitbox.Args> OnHurt;
 
     public void PostOnHurt(Hitbox.Args hitboxArgs)
     {
-        if(OnHurt != null)
+        if(OnHurt != null && hitboxArgs != null)
         {
-            OnHurt(hitboxArgs);
+            OnHurt.Invoke(hitboxArgs);
         }
     }
 }

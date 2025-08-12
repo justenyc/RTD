@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
+using System.Net;
 
 namespace Player
 {
@@ -145,7 +146,6 @@ namespace Player
 
         void OnUseWeapon(InputAction.CallbackContext context)
         {
-            //TODO: Use AnimatorStateInfo.NormalizedTime instead to set the AnimationBool for canceling
             if (context.performed)
             {
                 m_manager.Animator.SetBool("Attack", true);

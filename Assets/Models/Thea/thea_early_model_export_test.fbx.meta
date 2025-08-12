@@ -181,6 +181,22 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.21100666
+        functionName: Active
+        data: 
+        objectReferenceParameter: {fileID: 2070777405718413192, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.2548519
+        functionName: InActive
+        data: 
+        objectReferenceParameter: {fileID: 2070777405718413192, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -636,7 +652,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.01
+    globalScale: 1
     rootMotionBoneName: Spine.1
     hasTranslationDoF: 0
     hasExtraRoot: 0

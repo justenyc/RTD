@@ -23,7 +23,7 @@ namespace Player
         [SerializeField] Transform m_throwPoint;
         [SerializeField] Transform m_swordInHandPoint;
         [SerializeField] Transform m_swordRestPoint;
-        [SerializeField] Hitbox m_hitbox;
+        [SerializeField] AttackDB_SO m_attackDB;
 
         [Header("Props")]
         public GameObject Sword;
@@ -71,6 +71,7 @@ namespace Player
             public float maxCameraVert = 75f;
             public float minCameraVert = -75f;
             public float throwStrength = 10f;
+            public int currentAttackindex = -1;
         }
 
         [System.Serializable]
@@ -83,7 +84,6 @@ namespace Player
 
         private void Start()
         {
-            //m_hitbox.OnHit += OnHit;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
@@ -114,10 +114,21 @@ namespace Player
             Sword.transform.localRotation = Quaternion.identity;
         }
 
-        void OnHit(Hurtbox hurtbox)
+        public void SetCurrentAttackIndex(int index)
         {
-            var args = new Hitbox.Args(10);
-            hurtbox.PostOnHurt(args);
+            if(index < 0 || index >= m_attackDB.GetDbLength())
+            {
+                Debug.LogError($"Invalid index: {index} - SCAI110");
+                return;
+            }
+
+            m_aimProperties.currentAttackindex = index;
+        }
+
+        public void OnHit(Hurtbox hurtbox)
+        {
+            var a = m_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+            hurtbox.PostOnHurt(m_attackDB.GetArgsByName(a));
         }
 
         void OnCanCancel()

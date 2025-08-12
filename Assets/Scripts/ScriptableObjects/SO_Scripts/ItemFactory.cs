@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor.Search;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ItemFactory", menuName = "Factories/ItemFactory")]
+[CreateAssetMenu(fileName = "ItemFactory", menuName = "ScriptableObjects/Factories/ItemFactory")]
 public class ItemFactory : ScriptableObject
 {
     [SerializeField] SerializableDictionaryBase<string, Item> Items = new SerializableDictionaryBase<string, Item>();

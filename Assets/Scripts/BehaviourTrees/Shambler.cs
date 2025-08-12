@@ -46,7 +46,6 @@ public class Shambler : AI_Entity
     [SerializeField] List<Transform> m_patrolPoints;
     [SerializeField] Detector m_detector;
     [SerializeField] Health m_health;
-    [SerializeField] Hurtbox m_hurtbox;
 
     #region Animation
 
@@ -107,7 +106,6 @@ public class Shambler : AI_Entity
         m_detector.OnTriggerEnterPost += OnDetect;
         m_detector.OnTriggerExitPost += SearchLost;
 
-        m_hurtbox.OnHurt += OnHurt;
         m_animationHooks.AttackFinishedPost += OnAttackFinish;
 
         InitStandardAI();

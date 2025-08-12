@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
@@ -10,7 +11,12 @@ public class Health : MonoBehaviour
 
     public float maxHealth => m_maxHealth;
     public float currentHealth => m_currentHealth;
-    public Action healthHitZero;
+    public UnityEvent healthHitZero;
+
+    private void OnValidate()
+    {
+        m_currentHealth = m_maxHealth;
+    }
 
     public void ChangeMaxHealth(float value)
     {
@@ -25,8 +31,19 @@ public class Health : MonoBehaviour
         {
             if (healthHitZero != null)
             {
-                healthHitZero();
+                healthHitZero.Invoke();
             }
         }
+    }
+
+    public void TakeDamage(Hitbox.Args args)
+    {
+        ChangeCurrentHealth(-args.power);
+    }
+
+    public void GenericDie()
+    {
+        healthHitZero.RemoveAllListeners();
+        Destroy(this.gameObject);
     }
 }

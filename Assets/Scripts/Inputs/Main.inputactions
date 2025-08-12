@@ -1160,6 +1160,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Dpad Action",
+                    "type": "Value",
+                    "id": "811a68af-e3a5-45d2-b3e1-beb34e07f7f2",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -1199,7 +1208,7 @@
                 {
                     "name": "",
                     "id": "b97728be-5374-4e84-8df2-53189bc00eeb",
-                    "path": "<Gamepad>/leftShoulder",
+                    "path": "<XInputController>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -1215,6 +1224,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "MouseAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "44a39a93-92a5-484c-b33c-cc1168cb4d47",
+                    "path": "<XInputController>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dpad Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
