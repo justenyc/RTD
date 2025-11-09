@@ -58,7 +58,8 @@ namespace Player
         {
             m_manager.Animator.SetFloat("MovementX", Mathf.Round(m_manager.inputHandler.moveVector.x));
             m_manager.Animator.SetFloat("MovementY", Mathf.Round(m_manager.inputHandler.moveVector.y));
-            //float speed = m_sprintInputState ? m_manager.freeMovementProperties.sprintSpeed :  m_manager.freeMovementProperties.moveSpeed;
+
+            //float speed = m_sprintInputState ? m_manager.freeMovementProperties.sprintSpeed : m_manager.freeMovementProperties.moveSpeed;
 
             //Vector3 cameraForward = Camera.main.transform.forward;
             //Vector3 cameraRight = Camera.main.transform.right;

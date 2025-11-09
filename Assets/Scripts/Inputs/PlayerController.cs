@@ -87,7 +87,7 @@ namespace Player
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
-            m_animationHooks.CanCancel += OnCanCancel;
+            //m_animationHooks.CanCancel += OnCanCancel;
             m_currentState = new FreeMovementState(this);
         }
 

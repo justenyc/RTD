@@ -1,5 +1,23 @@
 Refactor InputHandler to use Events instead of Bools - Done
+ 
 Free Movement - Done
+
 Finish Aim State - Done
-Throw Item
-Interactable System
+
+Throw Item - Done
+
+Interactable System - Done
+
+Dialogue System
+
+Shambler AI/Movement - Done
+ - Use NavMeshAgent.steeringTarget to turn - Worked
+  > Holy shit we fucking did it
+ - Fix transition between Patrol and Stalk - Done
+  > Try using a Coroutine every place where we set "DetectedSomething" to false - Worked
+ - Figure out how to decide between "Swipe" and "Tackle" - Done
+  > RandomSelector Node - Working?
+   > Does not reshuffle on Reset - Fixed?
+ - Track Rotation rarely does not Reset after tackle for some reason - Fixed
+ - Sometimes RNG only picks tackle
+ - Animation Event was not successfully triggered off of Tackle (sometimes)
