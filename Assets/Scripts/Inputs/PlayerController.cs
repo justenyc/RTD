@@ -58,6 +58,10 @@ namespace Player
             public float moveSpeed = 1;
             public float sprintSpeed = 1;
             public float rotateSpeed = 1;
+            public float accelerationStrength = 1;
+            public float decelerationStrength = 1;
+            public float easeInAnimationStrength = 1;
+            public float easeOutAnimationStrength = 1;
             public float maxCameraVert = 75f;
             public float minCameraVert = -75f;
         }

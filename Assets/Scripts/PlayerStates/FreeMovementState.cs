@@ -14,6 +14,9 @@ namespace Player
         #region State Input Values (if needed)
 
         bool m_sprintInputState;
+        Vector2 animationVector;
+        Vector2 movementVector;
+        bool isMoving = false;
 
         #endregion 
 
@@ -29,7 +32,7 @@ namespace Player
             m_manager.currentState = "FreeMovement";
 
             m_manager.inputHandler.Sprint += OnSprint;
-            m_manager.inputHandler.Aim += OnAim;
+            //m_manager.inputHandler.Aim += OnAim;
             m_manager.inputHandler.UseCurrentItem += OnUseCurrentItem;
             m_manager.inputHandler.Interact += OnInteract;
         }
@@ -38,7 +41,7 @@ namespace Player
         {
             //Debug.Log("Ending FreeMovement State");
             m_manager.inputHandler.Sprint -= OnSprint;
-            m_manager.inputHandler.Aim -= OnAim;
+            //m_manager.inputHandler.Aim -= OnAim;
             m_manager.inputHandler.UseCurrentItem -= OnUseCurrentItem;
             m_manager.inputHandler.Interact -= OnInteract;
         }
@@ -56,24 +59,43 @@ namespace Player
 
         private void Move()
         {
-            m_manager.Animator.SetFloat("MovementX", Mathf.Round(m_manager.inputHandler.moveVector.x));
-            m_manager.Animator.SetFloat("MovementY", Mathf.Round(m_manager.inputHandler.moveVector.y));
+            Vector2 targetVector = m_manager.inputHandler.moveVector;
+            targetVector.y *= m_sprintInputState && targetVector.y > 0 ? m_manager.freeMovementProperties.sprintSpeed : m_manager.freeMovementProperties.moveSpeed;
 
-            //float speed = m_sprintInputState ? m_manager.freeMovementProperties.sprintSpeed : m_manager.freeMovementProperties.moveSpeed;
+            isMoving = m_manager.inputHandler.moveVector != Vector2.zero;
+            float easeTime = isMoving ? 
+                Time.fixedDeltaTime * m_manager.freeMovementProperties.accelerationStrength :
+                Time.fixedDeltaTime * m_manager.freeMovementProperties.decelerationStrength;
 
-            //Vector3 cameraForward = Camera.main.transform.forward;
-            //Vector3 cameraRight = Camera.main.transform.right;
-            //Vector3 inputVector = m_manager.inputHandler.moveVector * speed;
+            Vector3 cameraForward = Camera.main.transform.forward;
+            Vector3 cameraRight = Camera.main.transform.right;
 
-            //cameraForward.y = 0;
-            //cameraRight.y = 0;
+            movementVector.x = Mathf.Lerp(movementVector.x, targetVector.x, easeTime);
+            movementVector.y = Mathf.Lerp(movementVector.y, targetVector.y, easeTime);
 
-            //Vector3 forwardRelative = cameraForward * inputVector.y;
-            //Vector3 rightRelative = cameraRight * inputVector.x;
+            cameraForward.y = 0;
+            cameraRight.y = 0;
 
-            //Vector3 moveVector = forwardRelative + rightRelative;
-            //moveVector.y = -9.81f;
-            //m_manager.controller.Move(moveVector * Time.fixedDeltaTime);
+            Vector3 forwardRelative = cameraForward * movementVector.y;
+            Vector3 rightRelative = cameraRight * movementVector.x;
+
+            Vector3 moveVector = forwardRelative + rightRelative;
+            moveVector.y = -9.81f;
+            m_manager.controller.Move(moveVector * Time.fixedDeltaTime);
+
+            AnimateMovement();
+        }
+
+        void AnimateMovement()
+        {
+            float easeTime = isMoving ? Time.fixedDeltaTime * m_manager.freeMovementProperties.easeInAnimationStrength : Time.fixedDeltaTime * m_manager.freeMovementProperties.easeOutAnimationStrength;
+
+            animationVector.x = Mathf.Lerp(animationVector.x, m_manager.inputHandler.moveVector.x, easeTime);
+            animationVector.y = Mathf.Lerp(animationVector.y, m_manager.inputHandler.moveVector.y, easeTime);
+
+            m_manager.Animator.SetBool("IsMoving", m_manager.inputHandler.moveVector != Vector2.zero);
+            m_manager.Animator.SetFloat("MovementX", animationVector.x);
+            m_manager.Animator.SetFloat("MovementY", animationVector.y);
         }
 
         private void ControlCamera()
