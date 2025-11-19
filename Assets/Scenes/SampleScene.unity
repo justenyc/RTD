@@ -4625,56 +4625,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 361677365776527987, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: m_freeMovementProperties.movementEasingMultiplier
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 361677365776527987, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: m_freeMovementProperties.movementEasing.m_Curve.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 361677365776527987, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: m_freeMovementProperties.movementEasing.m_Curve.Array.data[1].time
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 361677365776527987, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: m_freeMovementProperties.movementEasing.m_Curve.Array.data[1].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 361677365776527987, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: m_freeMovementProperties.movementEasing.m_Curve.Array.data[0].inSlope
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 361677365776527987, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: m_freeMovementProperties.movementEasing.m_Curve.Array.data[1].inSlope
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 361677365776527987, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: m_freeMovementProperties.movementEasing.m_Curve.Array.data[0].outSlope
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 361677365776527987, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: m_freeMovementProperties.movementEasing.m_Curve.Array.data[1].outSlope
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 361677365776527987, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: m_freeMovementProperties.movementEasing.m_Curve.Array.data[0].tangentMode
-      value: 34
-      objectReference: {fileID: 0}
-    - target: {fileID: 361677365776527987, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: m_freeMovementProperties.movementEasing.m_Curve.Array.data[1].tangentMode
-      value: 34
-      objectReference: {fileID: 0}
     - target: {fileID: 1726903651256001842, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4729,11 +4679,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player_CharacterController
-      objectReference: {fileID: 0}
-    - target: {fileID: 4690249887211437896, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
