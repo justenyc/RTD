@@ -32,7 +32,7 @@ namespace Player
             m_manager.currentState = "FreeMovement";
 
             m_manager.inputHandler.Sprint += OnSprint;
-            //m_manager.inputHandler.Aim += OnAim;
+            m_manager.inputHandler.Aim += OnAim;
             m_manager.inputHandler.UseCurrentItem += OnUseCurrentItem;
             m_manager.inputHandler.Interact += OnInteract;
         }
@@ -41,7 +41,7 @@ namespace Player
         {
             //Debug.Log("Ending FreeMovement State");
             m_manager.inputHandler.Sprint -= OnSprint;
-            //m_manager.inputHandler.Aim -= OnAim;
+            m_manager.inputHandler.Aim -= OnAim;
             m_manager.inputHandler.UseCurrentItem -= OnUseCurrentItem;
             m_manager.inputHandler.Interact -= OnInteract;
         }
@@ -59,8 +59,8 @@ namespace Player
 
         private void Move()
         {
-            Vector2 targetVector = m_manager.inputHandler.moveVector;
-            targetVector.y *= m_sprintInputState && targetVector.y > 0 ? m_manager.freeMovementProperties.sprintSpeed : m_manager.freeMovementProperties.moveSpeed;
+            Vector2 targetVector = m_manager.inputHandler.moveVector * m_manager.freeMovementProperties.moveSpeed;
+            targetVector.y += m_sprintInputState && targetVector.y > 0 ? m_manager.freeMovementProperties.sprintSpeed - m_manager.freeMovementProperties.moveSpeed : 0;
 
             isMoving = m_manager.inputHandler.moveVector != Vector2.zero;
             float easeTime = isMoving ? 
@@ -80,7 +80,6 @@ namespace Player
             Vector3 rightRelative = cameraRight * movementVector.x;
 
             Vector3 moveVector = forwardRelative + rightRelative;
-            moveVector.y = -9.81f;
             m_manager.controller.Move(moveVector * Time.fixedDeltaTime);
 
             AnimateMovement();
@@ -89,7 +88,6 @@ namespace Player
         void AnimateMovement()
         {
             float easeTime = isMoving ? Time.fixedDeltaTime * m_manager.freeMovementProperties.easeInAnimationStrength : Time.fixedDeltaTime * m_manager.freeMovementProperties.easeOutAnimationStrength;
-
             animationVector.x = Mathf.Lerp(animationVector.x, m_manager.inputHandler.moveVector.x, easeTime);
             animationVector.y = Mathf.Lerp(animationVector.y, m_manager.inputHandler.moveVector.y, easeTime);
 

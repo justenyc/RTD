@@ -71,6 +71,12 @@ namespace Player
         {
             public float moveSpeed = 1;
             public float rotateSpeed = 1;
+            public int delayMovementByFrames = 0;
+            public bool canMove = false;
+            public float accelerationStrength = 1;
+            public float decelerationStrength = 1;
+            public float easeInAnimationStrength = 1;
+            public float easeOutAnimationStrength = 1;
             public Vector3 cameraPos = new Vector3(1, -0.4f, 0.5f);
             public float maxCameraVert = 75f;
             public float minCameraVert = -75f;
@@ -110,6 +116,7 @@ namespace Player
             m_currentState.StateEnd();
             m_currentState = newState;
         }
+
         public void SetSwordPosition(bool inHand)
         {
             var point = inHand ? m_swordInHandPoint : m_swordRestPoint;

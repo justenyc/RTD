@@ -5,40 +5,38 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    Blackboard bb = new Blackboard();
-
-    int[] ints = { 0, 1, 2, 3 };
-
-    void Start()
+    void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //foreach (int i in ints)
-        //{
-        //    switch(i)
-        //    {
-        //        case 0:
-        //            Debug.Log(i);
-        //            return;
-
-        //        case 1:
-        //            Debug.Log(i);
-        //            return;
-
-        //        case 2: 
-        //            Debug.Log(i);
-        //            return;
-
-        //        case 3:
-        //            Debug.Log(i);
-        //            return;
-        //    }
-        //}
-        //bb.AddEntry("Entry1", new BlackboardEntry<bool>("Entry1", true));
-        //var test = bb.GetEntryByKey<bool>("Entry1") as BlackboardEntry<bool>; 
-        //Debug.Log(test.value);
+        Debug.Log($"State {stateInfo.shortNameHash} finished on layer {layerIndex}");
     }
 
-    private void OnTriggerEnter(Collider other)
+    /***
+     * using UnityEngine;
+
+public class MyStateExitBehaviour : StateMachineBehaviour
+{
+    // Called when the state is about to exit (e.g., animation finishing and transitioning)
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        other.GetComponent<Rigidbody>().AddForce((other.transform.position - transform.position) * 100, ForceMode.Impulse);
+        Debug.Log($"Exited state: {stateInfo.shortNameHash} on layer {layerIndex} (normalized time: {stateInfo.normalizedTime})");
+        
+        // Your custom logic here, e.g.:
+        // HandleAnimationFinished();
     }
+
+    // Optional: For debugging entry
+    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        Debug.Log($"Entered state: {stateInfo.shortNameHash}");
+    }
+
+    // Optional: Check progress every frame
+    public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (stateInfo.normalizedTime >= 0.95f) // Near end
+        {
+            Debug.Log("Animation nearing completion");
+        }
+    }
+}***/
 }

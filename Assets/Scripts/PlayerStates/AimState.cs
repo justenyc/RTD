@@ -1,10 +1,8 @@
 using Cinemachine;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
-using System.Net;
 
 namespace Player
 {
@@ -12,6 +10,9 @@ namespace Player
     {
         PlayerController m_manager;
         private Cinemachine3rdPersonFollow _3rdPersonFollow;
+        Vector2 animationVector;
+        Vector2 movementVector;
+        bool isMoving;
 
         List<Tween> tweens = new();
 
@@ -30,13 +31,15 @@ namespace Player
             m_manager.inputHandler.UseWeapon += OnUseWeapon;
             m_manager.inputHandler.Guard += OnGuard;
 
-            m_manager.SetSwordPosition(true);
+            m_manager.aimProperties.canMove = false;
+            //m_manager.SetSwordPosition(true);
 
             _3rdPersonFollow = CameraManager.instance.VirtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
             //_3rdPersonFollow.ShoulderOffset = m_manager.aimProperties.cameraPos;
             var tween = DOTween.To(() => _3rdPersonFollow.ShoulderOffset, e => _3rdPersonFollow.ShoulderOffset = e, m_manager.aimProperties.cameraPos, 0.1f);
 
             tweens.Add(tween);
+            m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => m_manager.aimProperties.canMove = true, m_manager.aimProperties.delayMovementByFrames));
         }
 
         public void StateEnd()
@@ -47,8 +50,8 @@ namespace Player
             m_manager.inputHandler.UseWeapon -= OnUseWeapon;
             m_manager.inputHandler.Guard -= OnGuard;
 
-            m_manager.Sword.GetComponent<Collider>().enabled = false;
-            m_manager.SetSwordPosition(false);
+            //m_manager.Sword.GetComponent<Collider>().enabled = false;
+            //m_manager.SetSwordPosition(false);
 
 
             foreach (var tween in tweens)
@@ -73,22 +76,45 @@ namespace Player
 
         private void Move()
         {
-            float speed = m_manager.aimProperties.moveSpeed;
+            if (!m_manager.aimProperties.canMove)
+            {
+                return;
+            }
+
+            Vector2 targetVector = m_manager.inputHandler.moveVector;
+
+            isMoving = m_manager.inputHandler.moveVector != Vector2.zero;
+            float easeTime = isMoving ?
+                Time.fixedDeltaTime * m_manager.aimProperties.accelerationStrength :
+                Time.fixedDeltaTime * m_manager.aimProperties.decelerationStrength;
 
             Vector3 cameraForward = Camera.main.transform.forward;
             Vector3 cameraRight = Camera.main.transform.right;
-            Vector3 inputVector = m_manager.inputHandler.moveVector * speed;
+
+            movementVector.x = Mathf.Lerp(movementVector.x, targetVector.x, easeTime);
+            movementVector.y = Mathf.Lerp(movementVector.y, targetVector.y, easeTime);
 
             cameraForward.y = 0;
             cameraRight.y = 0;
 
-            Vector3 forwardRelative = cameraForward * inputVector.y;
-            Vector3 rightRelative = cameraRight * inputVector.x;
+            Vector3 forwardRelative = cameraForward * movementVector.y;
+            Vector3 rightRelative = cameraRight * movementVector.x;
 
             Vector3 moveVector = forwardRelative + rightRelative;
-            //m_manager.controller.Move(moveVector * Time.fixedDeltaTime);
-            m_manager.Animator.SetFloat("MovementX", Mathf.Round(m_manager.inputHandler.moveVector.x));
-            m_manager.Animator.SetFloat("MovementY", Mathf.Round(m_manager.inputHandler.moveVector.y));
+            m_manager.controller.Move(moveVector * Time.fixedDeltaTime);
+
+            AnimateMovement();
+        }
+
+        void AnimateMovement()
+        {
+            float easeTime = isMoving ? Time.fixedDeltaTime * m_manager.aimProperties.easeInAnimationStrength : Time.fixedDeltaTime * m_manager.aimProperties.easeOutAnimationStrength;
+            animationVector.x = Mathf.Lerp(animationVector.x, m_manager.inputHandler.moveVector.x, easeTime);
+            animationVector.y = Mathf.Lerp(animationVector.y, m_manager.inputHandler.moveVector.y, easeTime);
+
+            m_manager.Animator.SetBool("IsMoving", m_manager.inputHandler.moveVector != Vector2.zero);
+            m_manager.Animator.SetFloat("MovementX", animationVector.x);
+            m_manager.Animator.SetFloat("MovementY", animationVector.y);
         }
 
         private void ControlCamera()
@@ -119,6 +145,8 @@ namespace Player
         {
             if (context.performed)
             {
+                m_manager.Animator.SetTrigger("UseItem");
+                return;
                 var item = m_manager.inventory.currentItem;
                 var data = Item_Data.GetItemData(item.data);
 
