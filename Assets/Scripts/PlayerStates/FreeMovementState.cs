@@ -99,12 +99,14 @@ namespace Player
         private void ControlCamera()
         {
             Vector2 inputVector = m_manager.inputHandler.lookVector;
+            float rotateSpeed = m_sprintInputState ? m_manager.freeMovementProperties.cameraRotateSpeedDuringSprint : m_manager.freeMovementProperties.cameraRotateSpeed;
+
             Vector3 currentPlayerRot = m_manager.playerTransform.rotation.eulerAngles;
-            Vector3 newPlayerRot = currentPlayerRot + Vector3.up * inputVector.x * m_manager.freeMovementProperties.rotateSpeed * Time.fixedDeltaTime;
+            Vector3 newPlayerRot = currentPlayerRot + Vector3.up * inputVector.x * rotateSpeed * Time.fixedDeltaTime;
             m_manager.playerTransform.rotation = Quaternion.Euler(newPlayerRot);
 
             Vector3 currentCameraFollowRot = m_manager.cameraFollow.rotation.eulerAngles;
-            Vector3 newCameraFollowRot = currentCameraFollowRot + Vector3.right * -inputVector.y * m_manager.freeMovementProperties.rotateSpeed * Time.fixedDeltaTime;
+            Vector3 newCameraFollowRot = currentCameraFollowRot + Vector3.right * -inputVector.y * rotateSpeed * Time.fixedDeltaTime;
             //Debug.Log(newCameraFollowRot);
             newCameraFollowRot.x = (newCameraFollowRot.x > 180) ? newCameraFollowRot.x - 360 : newCameraFollowRot.x;
             newCameraFollowRot.x = Mathf.Clamp(newCameraFollowRot.x, m_manager.freeMovementProperties.minCameraVert, m_manager.freeMovementProperties.maxCameraVert);
@@ -116,6 +118,7 @@ namespace Player
         void OnSprint(InputAction.CallbackContext context)
         {
             m_sprintInputState = context.performed;
+
             m_manager.Animator.SetBool("Sprint", m_sprintInputState);
         }
 
