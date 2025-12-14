@@ -92,7 +92,7 @@ namespace Player
             Vector3 cameraRight = Camera.main.transform.right;
 
             movementVector.x = Mathf.Lerp(movementVector.x, targetVector.x, easeTime);
-            movementVector.y = Mathf.Lerp(movementVector.y, targetVector.y, easeTime);
+            movementVector.y = m_manager.inputHandler.moveVector.x > 0f ? 0 : Mathf.Lerp(movementVector.y, targetVector.y, easeTime);
 
             cameraForward.y = 0;
             cameraRight.y = 0;
