@@ -12,7 +12,6 @@ namespace Player
 
         [Header("References")]
         [SerializeField] CharacterController m_controller;
-        [SerializeField] AnimationHooks m_animationHooks;
         [SerializeField] Animator m_animator;
         [SerializeField] InputHandler m_inputHandler;
         [SerializeField] InteractionHub m_interactionHub;
