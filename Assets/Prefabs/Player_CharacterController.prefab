@@ -109,7 +109,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: b852086c0476ee342b805d544e9dfdea, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
@@ -283,6 +283,7 @@ GameObject:
   - component: {fileID: 4805579727986716901}
   - component: {fileID: 1201555966412983173}
   - component: {fileID: 5724850283260637267}
+  - component: {fileID: 4680991544709003436}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -334,7 +335,8 @@ MonoBehaviour:
   m_freeMovementProperties:
     moveSpeed: 1
     sprintSpeed: 4
-    rotateSpeed: 1
+    cameraRotateSpeed: 1
+    cameraRotateSpeedDuringSprint: 0
     accelerationStrength: 5
     decelerationStrength: 3
     easeInAnimationStrength: 5
@@ -383,11 +385,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605de69224da6054d8cc270473b4c57a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemFactory: {fileID: 11400000, guid: bb4bc2997f0cc624888356067bd53c64, type: 2}
+  ItemDB: {fileID: 11400000, guid: bb4bc2997f0cc624888356067bd53c64, type: 2}
   inventory: []
-  m_currentItem:
-    data: 0
-    modelPrefab: {fileID: 0}
+  m_currentItem: 
 --- !u!114 &5724850283260637267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -699,6 +699,23 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &4680991544709003436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9192141823788128780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2129105fcc343b4ea4580dbe5a2f7cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  m_maxHealth: 100
+  m_currentHealth: 100
+  healthHitZero:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &2289139216421690425
 PrefabInstance:
   m_ObjectHideFlags: 0
