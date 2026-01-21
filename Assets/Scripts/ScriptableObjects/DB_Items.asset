@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6f1d5897ce6c8e4c82e354363dd909e, type: 3}
+  m_Name: DB_Items
+  m_EditorClassIdentifier: Assembly-CSharp::DB_Item
+  Items:
+  - itemName: Nectar
+    description: 
+    potency: 10
+    size: 1
+    consumptionRate: 1
+    maxStacks: 99
+    modelPrefab: {fileID: 6417772369610588347, guid: f5e018c7ae0437d439ad6fde20182dcc,
+      type: 3}
+    onUseEffect: 1
+    onCollisionEffect: 1
+  - itemName: Torch
+    description: 
+    potency: 0
+    size: 1
+    consumptionRate: 1
+    maxStacks: 99
+    modelPrefab: {fileID: 0}
+    onUseEffect: 0
+    onCollisionEffect: 0
+  - itemName: Soul
+    description: 
+    potency: 0
+    size: 1
+    consumptionRate: 1
+    maxStacks: 99
+    modelPrefab: {fileID: 0}
+    onUseEffect: 0
+    onCollisionEffect: 0
+  - itemName: Firebomb
+    description: 
+    potency: 5
+    size: 10
+    consumptionRate: 1
+    maxStacks: 99
+    modelPrefab: {fileID: 0}
+    onUseEffect: 0
+    onCollisionEffect: 0

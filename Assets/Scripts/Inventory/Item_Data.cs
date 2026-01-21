@@ -6,11 +6,10 @@
  * 
  * Might be able to abstract further and implement a Strategy Pattern depending on how the
  * OnUse() and OnCollision() actions end up looking
+ * 
+ * DEPRECATED
 */
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]

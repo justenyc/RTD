@@ -32,6 +32,7 @@ namespace Player
             m_manager.inputHandler.Guard += OnGuard;
 
             m_manager.aimProperties.canMove = false;
+            m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => m_manager.aimProperties.canMove = true, m_manager.aimProperties.delayMovementByFrames));
             //m_manager.SetSwordPosition(true);
 
             _3rdPersonFollow = CameraManager.instance.VirtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
@@ -39,7 +40,6 @@ namespace Player
             var tween = DOTween.To(() => _3rdPersonFollow.ShoulderOffset, e => _3rdPersonFollow.ShoulderOffset = e, m_manager.aimProperties.cameraPos, 0.1f);
 
             tweens.Add(tween);
-            m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => m_manager.aimProperties.canMove = true, m_manager.aimProperties.delayMovementByFrames));
         }
 
         public void StateEnd()
@@ -145,29 +145,54 @@ namespace Player
         {
             if (context.performed)
             {
-                m_manager.Animator.SetTrigger("UseItem");
-                return;
-                var item = m_manager.inventory.currentItem;
-                var data = Item_Data.GetItemData(item.data);
-
-                var thrownItem = Object.Instantiate(item.modelPrefab, m_manager.throwPoint.transform.position, Quaternion.identity);
-
-                if(thrownItem.TryGetComponent(out Rigidbody rb))
+                if (m_manager.aimProperties.canThrow)
                 {
-                    RaycastHit hit;
-                    Transform cameraTransform = CameraManager.instance.VirtualCamera.transform;
+                    m_manager.aimProperties.canThrow = false;
+                    m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => m_manager.aimProperties.canThrow = true, m_manager.aimProperties.throwCooldown));
+                    m_manager.Animator.SetTrigger("UseItem");
+                    var itemToThrow = m_manager.inventory.GetCurrentItem();
 
-                    var throwVector = (cameraTransform.forward * 1000 - m_manager.throwPoint.position).normalized;
+                    m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() =>
+                        {
+                            Vector3 throwDir = (Camera.main.transform.forward.normalized * m_manager.aimProperties.throwStrength) - (m_manager.rigidbodyThrower.transform.right + -Camera.main.transform.right);
+                            
+                            //RaycastHit hit;
+                            //if (Physics.Raycast(Camera.main.transform.position, throwDir, out hit, m_manager.aimProperties.throwStrength))
+                            //{
+                            //    throwDir = hit.point - m_manager.rigidbodyThrower.transform.position;
+                            //    itemToThrow.Throw(m_manager.rigidbodyThrower, throwDir, throwDir.magnitude);
+                            //    Debug.Log($"{hit.collider.name}");
+                            //    return;
+                            //}
 
-                    if (Physics.Raycast(cameraTransform.position, cameraTransform.forward * 1000, out hit, 1000))
-                    {
-                        throwVector = (hit.collider.transform.position - m_manager.throwPoint.position).normalized;
-                    }
-                    
-                    Debug.DrawRay(m_manager.throwPoint.position, throwVector * 1000, Color.magenta, 5f);
-
-                    rb.AddForce((throwVector + Vector3.up * 0.5f) * m_manager.aimProperties.throwStrength, ForceMode.Impulse);
+                            //throwDir = throwDir - m_manager.rigidbodyThrower.transform.position;
+                            itemToThrow.Throw(m_manager.rigidbodyThrower, throwDir, m_manager.aimProperties.throwStrength);
+                            return; 
+                        }, 
+                        m_manager.aimProperties.delayThrowByFrames));
                 }
+                return;
+                //var item = m_manager.inventory.currentItem;
+                //var data = Item_Data.GetItemData(item.data);
+
+                //var thrownItem = Object.Instantiate(item.modelPrefab, m_manager.throwPoint.transform.position, Quaternion.identity);
+
+                //if(thrownItem.TryGetComponent(out Rigidbody rb))
+                //{
+                //    RaycastHit hit;
+                //    Transform cameraTransform = CameraManager.instance.VirtualCamera.transform;
+
+                //    var throwVector = (cameraTransform.forward * 1000 - m_manager.throwPoint.position).normalized;
+
+                //    if (Physics.Raycast(cameraTransform.position, cameraTransform.forward * 1000, out hit, 1000))
+                //    {
+                //        throwVector = (hit.collider.transform.position - m_manager.throwPoint.position).normalized;
+                //    }
+                    
+                //    Debug.DrawRay(m_manager.throwPoint.position, throwVector * 1000, Color.magenta, 5f);
+
+                //    rb.AddForce((throwVector + Vector3.up * 0.5f) * m_manager.aimProperties.throwStrength, ForceMode.Impulse);
+                //}
                 //Debug.Log($"THROW ITEM: {data.itemName}");
             }
         }

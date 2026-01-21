@@ -10,26 +10,35 @@ public class Hitbox : MonoBehaviour
     public GameObject[] exceptions;
 
     [System.Serializable]
+    public enum DamageType
+    {
+        Slash,
+        Blunt,
+        Fire,
+        Light,
+        Dark,
+        InstantDeath
+    }
+
+    [System.Serializable]
     public class Args
     {
         public string attackName;
         public float power;
         public float knockback;
-        public Args(float _power, float _knockback, string _attackName = "")
+        public DamageType damageType;
+
+        public Args(float _power, float _knockback, string _attackName = "", DamageType _damageType = default)
         {
             attackName = _attackName;
             power = _power;
             knockback = _knockback;
+            damageType = _damageType;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(exceptions.Length < 1)
-        {
-            return;
-        }
-
         for (int i = 0; i < exceptions.Length; i++)
         {
             if (other.gameObject == exceptions[i])

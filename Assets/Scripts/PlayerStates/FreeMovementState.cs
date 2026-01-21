@@ -138,13 +138,11 @@ namespace Player
         {
             if (context.performed)
             {
-                var item = m_manager.inventory.currentItem;
-                var result = Item_Data.GetItemData(item.data).useAction(m_manager.gameObject);
-
-                if (result)
-                {
-                    m_manager.inventory.AddOrRemoveItemFromInventory(item, -1);
-                }
+                var inventory = m_manager.inventory;
+                var currentItem = inventory.GetCurrentItem();
+                m_manager.Animator.SetTrigger("UseItem");
+                m_manager.Animator.SetInteger("UseItemAnimID", 0);
+                inventory.UseCurrentItem(m_manager.gameObject);
             }
         }
 

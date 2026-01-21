@@ -20,6 +20,7 @@ namespace Player
         [SerializeField] Transform m_cameraFollow;
         [SerializeField] Transform m_cameraTarget;
         [SerializeField] Transform m_throwPoint;
+        [SerializeField] RigidbodyThrower m_rigidbodyThrower;
         [SerializeField] Transform m_swordInHandPoint;
         [SerializeField] Transform m_swordRestPoint;
         [SerializeField] AttackDB_SO m_attackDB;
@@ -43,6 +44,7 @@ namespace Player
         public Transform cameraFollow => m_cameraFollow;
         public Transform cameraTarget => m_cameraTarget;
         public Transform throwPoint => m_throwPoint;
+        public RigidbodyThrower rigidbodyThrower => m_rigidbodyThrower;
         public MovementProperties freeMovementProperties => m_freeMovementProperties;
         public AimProperties aimProperties => m_aimProperties;
         public SharedProperties sharedProperties => m_sharedProperties;
@@ -72,7 +74,10 @@ namespace Player
             public float moveSpeed = 1;
             public float rotateSpeed = 1;
             public int delayMovementByFrames = 0;
+            public int delayThrowByFrames = 0;
+            public int throwCooldown = 0;
             public bool canMove = false;
+            public bool canThrow = true;
             public float accelerationStrength = 1;
             public float decelerationStrength = 1;
             public float easeInAnimationStrength = 1;

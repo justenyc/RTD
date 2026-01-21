@@ -1,69 +1,104 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RotaryHeart.Lib.SerializableDictionary;
 
 public class Inventory : MonoBehaviour
 {
     //[SerializeField] SerializableDictionaryBase<Item, int> inventory;
-    [SerializeField] ItemFactory itemFactory;
+    [SerializeField] DB_Item ItemDB;
+    [SerializeField] int maxInventorySize = 10;
     [SerializeField] List<InventorySlot> inventory = new List<InventorySlot>();
-    [SerializeField] Item m_currentItem;
-    public Item currentItem => m_currentItem;
+    [SerializeField] string m_currentItem = null;
+    public string CurrentItem => m_currentItem;
 
     [System.Serializable]
     class InventorySlot
     {
-        public int index;
-        public Item item;
+        public int inventoryIndex;
+        public string itemName;
         public int amount;
+        public int max;
         
-        public InventorySlot(int index, Item item, int amount)
+        public InventorySlot(int index, string itemName, int amount, int max)
         {
-            this.index = index;
-            this.item = item;
+            this.inventoryIndex = index;
+            this.itemName = itemName;
             this.amount = amount;
+            this.max = max;
+        }
+    }
+
+    private void OnValidate()
+    {
+        if (ItemDB == null)
+        {
+            Debug.LogWarning($"<color=cyan>Inventory</color> component on <color=green>{gameObject.name}</color> is missing a reference to an <color=yellow>DB_Item</color>!");
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (ItemDB != null)
+        {
+            AddOrRemoveItemFromInventory(ItemDB.GetItem(0), 10);
         }
     }
 
     private void Start()
     {
-        inventory.Add(new InventorySlot(inventory.Count, itemFactory.GetItemByName("Nectar"), 10));
-        inventory.Add(new InventorySlot(inventory.Count, itemFactory.GetItemByName("Soul"), 3));
-        inventory.Add(new InventorySlot(inventory.Count, itemFactory.GetItemByName("Torch"), 20));
-        inventory.Add(new InventorySlot(inventory.Count, itemFactory.GetItemByName("Firebomb"), 5));
-        inventory.Add(new InventorySlot(inventory.Count, itemFactory.GetItemByName("ParadiseLost"), 2));
-
-        m_currentItem = inventory[0].item;
+        if (inventory.Count > 0)
+        {
+            m_currentItem = inventory[0].itemName;
+        }
     }
 
     InventorySlot IsInInventory(Item item)
     {
         foreach(InventorySlot slot in inventory)
         {
-            if(slot.item == item)
+            if(slot.itemName == item.itemName)
             {
                 return slot;
             }
         }
+        Debug.Log($"Item <color=cyan>{item.itemName}</color> was not found in the Inventory component of <color=green>{gameObject.name}</color>");
         return null;
     }
 
-    public void AddOrRemoveItemFromInventory(Item item, int amount = 1)
+    public int AddOrRemoveItemFromInventory(Item item, int amount = 1)
     {
         var slot = IsInInventory(item);
-        if (slot != null)
+        if (slot != null && slot.amount < slot.max)
         {
-            inventory[slot.index].amount += amount;
+            inventory[slot.inventoryIndex].amount += amount;
 
-            if (inventory[slot.index].amount < 1)
+            if (inventory[slot.inventoryIndex].amount < 1)
             {
+                if (item.OnUse != null)
+                {
+                    foreach (System.Delegate d in item.OnUse.GetInvocationList())
+                    {
+                        item.OnUse -= (System.Action<GameObject>)d;
+                    }
+                }
+
                 inventory.Remove(slot);
             }
-            return;
+            return 1;
         }
 
-        inventory.Add(new InventorySlot(inventory.Count, item, 1));
+        if(inventory.Count >= maxInventorySize)
+        {
+            Debug.Log($"<color=cyan>Inventory</color> on <color=green>{gameObject.name}</color> exceeded max number of slots");
+            return 2;
+        }
+
+        inventory.Add(new InventorySlot(inventory.Count, item.itemName, amount, item.maxStacks));
+        return 0;
+    }
+
+    public Item GetCurrentItem()
+    {
+        return ItemDB.GetItem(CurrentItem);
     }
 
     public Item RequestItem(Item item)
@@ -76,4 +111,23 @@ public class Inventory : MonoBehaviour
         }
         return null;
     }
+
+    public void UseCurrentItem(GameObject requester)
+    {
+        UseItem(requester, GetCurrentItem());
+    }
+
+    public void UseItem(GameObject requester, Item item)
+    {
+        if (IsInInventory(item) == null)
+        {
+            Debug.Log($"<color=cyan>{item.itemName}</color> was not found when attempting <color=yellow>UseItem()</color>");
+            return;
+        }
+
+        AddOrRemoveItemFromInventory(item, -item.consumptionRate);
+        Item_Effects.onUseEffects[item.onUseEffect].Invoke(requester, item);
+    }
+
+
 }
