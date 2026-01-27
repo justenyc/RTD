@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -5,7 +6,7 @@ using UnityEngine.Events;
 [System.Serializable]
 public static class Item_Effects
 {
-    public delegate void OnUseDelegate(GameObject go, Item item);
+    public delegate void OnUseDelegate(GameObject go, Item item, Action<bool> callback);
 
     public static Dictionary<OnUseEffect, OnUseDelegate> onUseEffects = new Dictionary<OnUseEffect, OnUseDelegate>
     {
@@ -33,16 +34,18 @@ public static class Item_Effects
         AOE_Light
     }
 
-    public static void Heal_Health(GameObject go, Item item)
+    public static void Heal_Health(GameObject go, Item item, Action<bool> callback = null)
     {
-        Health health = go.GetComponent<Health>();
+        Status status = go.GetComponent<Status>();
         if (!go)
         {
             Debug.LogError($"Did not find a Health component on {go.name}");
+            callback(false);
             return;
         }
 
-        health.ChangeCurrentHealth(item.potency);
+        status.ChangeCurrentHealth(item.potency);
+        callback(true);
     }
 
     public static void AOE_Fire(Collision collision)

@@ -16,16 +16,22 @@ public class Item
     public Item_Effects.OnUseEffect onUseEffect;
     public Item_Effects.OnCollisionEffect onCollisionEffect;
 
-    public Action<GameObject> OnUse;
+    public Action<GameObject> OnUseSuccess;
 
-    public void Use(GameObject go, Item item)
+    public void Use(GameObject go, Action<GameObject> onSuccessCallback = null)
     {
-        Item_Effects.onUseEffects[onUseEffect].Invoke(go, item);
+        OnUseSuccess += onSuccessCallback;
+        Item_Effects.onUseEffects[onUseEffect].Invoke(go, this,
+            (b) =>
+            {
+                if (OnUseSuccess != null && b)
+                {
+                    OnUseSuccess(go);
+                    return;
+                }
 
-        if(OnUse != null)
-        {
-            OnUse(go);
-        }
+                Debug.Log($"<color=yellow>{go}</color> Failed to use <color=cyan>{itemName}</color>");
+            });
     }
 
     public void Throw(RigidbodyThrower thrower, Vector3 direction, float throwStrength, int framesToDelayThrow = 0)

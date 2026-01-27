@@ -16,13 +16,13 @@ public class DB_Item : ScriptableObject
             }
         }
 
-        Debug.LogError($"No item with name [{name}]");
+        Debug.LogError($"No item with name [{name}] in DB_Item");
         return null;
     }
 
     public Item GetItem(int index)
     {
-        if(index  < 0 || index >= Items.Count) 
+        if(index < 0 || index >= Items.Count) 
         {
             Debug.LogError($"Invalid DB_Item index [{index}]");
             return null; 

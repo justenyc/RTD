@@ -73,11 +73,11 @@ public class Inventory : MonoBehaviour
 
             if (inventory[slot.inventoryIndex].amount < 1)
             {
-                if (item.OnUse != null)
+                if (item.OnUseSuccess != null)
                 {
-                    foreach (System.Delegate d in item.OnUse.GetInvocationList())
+                    foreach (System.Delegate d in item.OnUseSuccess.GetInvocationList())
                     {
-                        item.OnUse -= (System.Action<GameObject>)d;
+                        item.OnUseSuccess -= (System.Action<GameObject>)d;
                     }
                 }
 
@@ -125,8 +125,7 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        AddOrRemoveItemFromInventory(item, -item.consumptionRate);
-        Item_Effects.onUseEffects[item.onUseEffect].Invoke(requester, item);
+        item.Use(this.gameObject, (e) => AddOrRemoveItemFromInventory(item, -item.consumptionRate));
     }
 
 

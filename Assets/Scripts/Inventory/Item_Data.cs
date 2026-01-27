@@ -99,7 +99,7 @@ public class Item_Data
 
             nectar.useAction = (e) =>
             {
-                var hp = e.GetComponent<Health>();
+                var hp = e.GetComponent<Status>();
                 if(hp)
                 {
                     hp.ChangeCurrentHealth(nectar.potency);
@@ -110,7 +110,7 @@ public class Item_Data
 
             nectar.onCollision = (e) =>
             {
-                var hp = e.GetComponent<Health>();
+                var hp = e.GetComponent<Status>();
                 if (hp)
                 {
                     hp.ChangeCurrentHealth(-nectar.power);
