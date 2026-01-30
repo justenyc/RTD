@@ -7,6 +7,8 @@ public class RigidbodyThrower : MonoBehaviour
     [SerializeField] Rigidbody rigidbodyToThrow;
     CollisionOverrides collisionOverrides = new();
 
+    GameObject prewarm = null;
+
     public class CollisionOverrides
     {
         public UnityAction<Collision> onEnter;
@@ -26,6 +28,14 @@ public class RigidbodyThrower : MonoBehaviour
             onStay = null;
             onExit = null;
         }
+    }
+
+    public GameObject Prewarm(GameObject go)
+    {
+        var warmed = Instantiate(go, transform.position, Quaternion.identity);
+        warmed.SetActive(false);
+        prewarm = warmed;
+        return warmed;
     }
 
     public RigidbodyThrower SetRigidbodyToThrow(Rigidbody rb)
@@ -49,9 +59,11 @@ public class RigidbodyThrower : MonoBehaviour
     {
         if(go.TryGetComponent(out Rigidbody rb))
         {
-            var goInstance = Instantiate(go, transform.position, Quaternion.identity);
+            var goInstance = prewarm ?? Instantiate(go, transform.position, Quaternion.identity);
             SetRigidbodyToThrow(goInstance.GetComponent<Rigidbody>());
             AddCollisionOverrides();
+            goInstance.SetActive(true);
+            
             ThrowRigidbody(direction, forceMode);
 
             var col = go.GetComponentInChildren<Collider>();

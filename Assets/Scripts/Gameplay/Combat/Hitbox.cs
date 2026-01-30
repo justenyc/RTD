@@ -1,11 +1,12 @@
-using System.Runtime.InteropServices.WindowsRuntime;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Hitbox : MonoBehaviour
 {
     public UnityEvent<Hurtbox> OnHitEvent;
-    public GameObject[] exceptions;
+    public List<GameObject> exceptions;
 
     [System.Serializable]
     public enum DamageType
@@ -15,6 +16,7 @@ public class Hitbox : MonoBehaviour
         Fire,
         Light,
         Dark,
+        Explosive,
         InstantDeath
     }
 
@@ -100,7 +102,7 @@ public class Hitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        for (int i = 0; i < exceptions.Length; i++)
+        for (int i = 0; i < exceptions.Count; i++)
         {
             if (other.gameObject == exceptions[i])
             {
@@ -116,5 +118,22 @@ public class Hitbox : MonoBehaviour
                 OnHitEvent.Invoke(hurtbox);
             }
         }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.TryGetComponent(out Hurtbox hurtbox))
+        {
+            Debug.Log($"{this.name} : {other.gameObject.name}");
+            if (OnHitEvent != null)
+            {
+                OnHitEvent.Invoke(hurtbox);
+            }
+        }
+    }
+
+    public void ProcessHurtbox(Action<Hurtbox> process, Hurtbox hurtbox)
+    {
+        process?.Invoke(hurtbox);
     }
 }

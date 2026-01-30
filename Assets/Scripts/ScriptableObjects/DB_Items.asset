@@ -15,16 +15,17 @@ MonoBehaviour:
   Items:
   - itemName: Nectar
     description: 
+    damageType: 1
     potency: 10
     size: 1
     consumptionRate: 1
     maxStacks: 99
-    modelPrefab: {fileID: 6417772369610588347, guid: f5e018c7ae0437d439ad6fde20182dcc,
-      type: 3}
+    modelPrefab: {fileID: 0}
     onUseEffect: 1
     onCollisionEffect: 1
   - itemName: Torch
     description: 
+    damageType: 0
     potency: 0
     size: 1
     consumptionRate: 1
@@ -34,6 +35,7 @@ MonoBehaviour:
     onCollisionEffect: 0
   - itemName: Soul
     description: 
+    damageType: 0
     potency: 0
     size: 1
     consumptionRate: 1
@@ -43,10 +45,12 @@ MonoBehaviour:
     onCollisionEffect: 0
   - itemName: Firebomb
     description: 
+    damageType: 5
     potency: 5
-    size: 10
+    size: 1
     consumptionRate: 1
     maxStacks: 99
-    modelPrefab: {fileID: 0}
+    modelPrefab: {fileID: 6417772369610588347, guid: f5e018c7ae0437d439ad6fde20182dcc,
+      type: 3}
     onUseEffect: 0
-    onCollisionEffect: 0
+    onCollisionEffect: 3

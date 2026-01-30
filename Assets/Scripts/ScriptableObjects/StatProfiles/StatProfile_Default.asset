@@ -9,10 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9110ea1c9c9c51f4794d83b4a104d96d, type: 3}
-  m_Name: PlayerAttackDB
-  m_EditorClassIdentifier: 
-  DB:
+  m_Script: {fileID: 11500000, guid: a21d808603597d94dbf63a6e5094ccca, type: 3}
+  m_Name: StatProfile_Default
+  m_EditorClassIdentifier: Assembly-CSharp::BaseStatProfile
+  baseHp: 10
+  physDef: 0
+  elemDef: 0
+  physAtk: 0
+  elemAtk: 0
+  constitution: 0
+  toughness: 0
+  spirit: 0
+  strength: 0
+  mysticism: 0
+  resistances:
     reorderableList:
       canAdd: 1
       canRemove: 1
@@ -36,24 +46,6 @@ MonoBehaviour:
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
     isExpanded: 1
-    _keyValues:
-    - Armature|Thea_Sword_1B
-    - Armature|Thea_Sword_2
-    - Armature|Thea_Sword_3
-    _keys:
-    - Armature|Thea_Sword_1B
-    - Armature|Thea_Sword_2
-    - Armature|Thea_Sword_3
-    _values:
-    - attackName: Armature|Thea_Sword_1B
-      power: 2
-      knockback: 2
-      damageType: 0
-    - attackName: Armature|Thea_Sword_2
-      power: 3
-      knockback: 2
-      damageType: 0
-    - attackName: Armature|Thea_Sword_3
-      power: 5
-      knockback: 2
-      damageType: 0
+    _keyValues: 
+    _keys: 
+    _values: []

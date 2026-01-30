@@ -39,7 +39,7 @@ public class Inventory : MonoBehaviour
     {
         if (ItemDB != null)
         {
-            AddOrRemoveItemFromInventory(ItemDB.GetItem(0), 10);
+            AddOrRemoveItemFromInventory(ItemDB.GetItem("Firebomb"), 10);
         }
     }
 
@@ -127,6 +127,4 @@ public class Inventory : MonoBehaviour
 
         item.Use(this.gameObject, (e) => AddOrRemoveItemFromInventory(item, -item.consumptionRate));
     }
-
-
 }

@@ -7,6 +7,7 @@ public class Item
     public string itemName;
     [TextArea(3, 10)]
     public string description;
+    public Hitbox.DamageType damageType;
     public float potency;
     public float size = 1;
     public int consumptionRate = 1;
@@ -37,14 +38,14 @@ public class Item
     public void Throw(RigidbodyThrower thrower, Vector3 direction, float throwStrength, int framesToDelayThrow = 0)
     {
         var rb = modelPrefab?.GetComponent<Rigidbody>();
-        if(rb == null)
+        if (rb == null)
         {
             Debug.LogError($"A <color=cyan>Rigidbody</color> was not found on the Model Prefab: <color=yellow>{modelPrefab.name}</color>");
             return;
         }
 
-        thrower.OverrideCollisionEnter(Item_Effects.onCollisionEffects[onCollisionEffect]);
-
-        thrower.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => thrower.ThrowGameObject(modelPrefab, direction.normalized * throwStrength + Vector3.up * throwStrength * 0.1f), framesToDelayThrow)); 
+        var projectile = thrower.Prewarm(modelPrefab);
+        projectile.GetComponentInChildren<Item_Projectile>().InitProtocol(this, thrower.gameObject);
+        thrower.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => thrower.ThrowGameObject(projectile, direction.normalized * throwStrength + Vector3.up * throwStrength * 0.1f), framesToDelayThrow));
     }
 }

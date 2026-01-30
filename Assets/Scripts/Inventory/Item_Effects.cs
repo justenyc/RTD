@@ -7,14 +7,16 @@ using UnityEngine.Events;
 public static class Item_Effects
 {
     public delegate void OnUseDelegate(GameObject go, Item item, Action<bool> callback);
+    public delegate void OnCollisionDelegate(GameObject go, Item item, Action<bool> callback);
 
     public static Dictionary<OnUseEffect, OnUseDelegate> onUseEffects = new Dictionary<OnUseEffect, OnUseDelegate>
     {
         { OnUseEffect.Heal_Health, Heal_Health }
     };
 
-    public static Dictionary<OnCollisionEffect, UnityAction<Collision>> onCollisionEffects = new Dictionary<OnCollisionEffect, UnityAction<Collision>>
+    public static Dictionary<OnCollisionEffect, OnCollisionDelegate> onCollisionEffects = new Dictionary<OnCollisionEffect, OnCollisionDelegate>()
     {
+        { OnCollisionEffect.AOE_Damage, AOE_Damage },
         { OnCollisionEffect.AOE_Fire, AOE_Fire }
     };
 
@@ -31,7 +33,8 @@ public static class Item_Effects
     {
         None,
         AOE_Fire,
-        AOE_Light
+        AOE_Light,
+        AOE_Damage
     }
 
     public static void Heal_Health(GameObject go, Item item, Action<bool> callback = null)
@@ -48,8 +51,33 @@ public static class Item_Effects
         callback(true);
     }
 
-    public static void AOE_Fire(Collision collision)
+    public static void AOE_Fire(GameObject go, Item item, Action<bool> callback = null)
     {
-        Debug.Log("Collision Happened!");
+        
+    }
+
+    public static void AOE_Explode(GameObject go, Item item, Action<bool> callback = null)
+    {
+
+    }
+
+    public static void AOE_Damage(GameObject go, Item item, Action<bool> callback = null)
+    {
+        Collider[] overlaps = Physics.OverlapBox(go.transform.position, go.transform.lossyScale * item.size / 2);
+
+        Hitbox.Args args = new Hitbox.ArgsBuilder()
+                    .WithSize(item.size)
+                    .WithDamageType(item.damageType)
+                    .Build();
+
+        Debug.Log($"<color=yellow>AOE_Damage</color> overlaps length: {overlaps.Length}");
+        foreach (Collider c in overlaps)
+        {
+            if (c.TryGetComponent(out Hurtbox hurtbox))
+            {
+                hurtbox.PostOnHurt(args);
+            }
+
+        }
     }
 }
