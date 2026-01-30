@@ -45,7 +45,7 @@ public class Item
         }
 
         var projectile = thrower.Prewarm(modelPrefab);
-        projectile.GetComponentInChildren<Item_Projectile>().InitProtocol(this, thrower.gameObject);
+        projectile.GetComponentInChildren<Item_Projectile>().InitProtocol(this, thrower.gameObject, thrower.transform.root.GetComponentsInChildren<Collider>());
         thrower.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => thrower.ThrowGameObject(projectile, direction.normalized * throwStrength + Vector3.up * throwStrength * 0.1f), framesToDelayThrow));
     }
 }

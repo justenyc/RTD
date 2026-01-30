@@ -9,11 +9,18 @@ public class Item_Projectile : MonoBehaviour
     GameObject thrower;
     Item item;
     Hitbox.Args args;
+    Collider[] exceptions;
 
-    public void InitProtocol(Item _item, GameObject _thrower = null)
+    public void SetExceptions(Collider[] cols)
+    {
+        exceptions = cols;
+    }
+
+    public void InitProtocol(Item _item, GameObject _thrower = null, Collider[] _exceptions = null)
     {
         item = _item;
         thrower = _thrower;
+        exceptions = _exceptions;
         colliderRef.gameObject.transform.localScale *= _item.size;
 
         args = new Hitbox.ArgsBuilder()
@@ -37,15 +44,23 @@ public class Item_Projectile : MonoBehaviour
     public void OnCollisionEffect(Hurtbox hurtbox)
     {
         Item_Effects.onCollisionEffects[item.onCollisionEffect].Invoke(this.gameObject, item, null);
-        Destroy(gameObject);
+        Debug.Log(hurtbox.gameObject.name);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject == thrower)
+        if (other.gameObject == thrower)
         {
             return;
-        }    
+        }
+
+        foreach(var col in exceptions)
+        {
+            if(other == col)
+            {
+                return;
+            }
+        }
         Destroy(gameObject);
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class Hitbox : MonoBehaviour
 {
     public UnityEvent<Hurtbox> OnHitEvent;
-    public List<GameObject> exceptions;
+    public List<Collider> collisionExceptions;
 
     [System.Serializable]
     public enum DamageType
@@ -47,6 +47,7 @@ public class Hitbox : MonoBehaviour
         public float size { get; set; } = 0;
         public Vector3 rotation { get; set; } = Vector3.zero;
         public DamageType damageType { get; set; } = DamageType.Blunt;
+        public List<GameObject> exceptions { get; set; }
     }
     public class ArgsBuilder
     {
@@ -94,6 +95,12 @@ public class Hitbox : MonoBehaviour
             return this;
         }
 
+        public ArgsBuilder WithExceptions(List<GameObject> _exceptions)
+        {
+            args.exceptions = _exceptions;
+            return this;
+        }
+
         public Args Build()
         {
             return args;
@@ -102,9 +109,9 @@ public class Hitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        for (int i = 0; i < exceptions.Count; i++)
+        for (int i = 0; i < collisionExceptions.Count; i++)
         {
-            if (other.gameObject == exceptions[i])
+            if (other.gameObject == collisionExceptions[i])
             {
                 return;
             }

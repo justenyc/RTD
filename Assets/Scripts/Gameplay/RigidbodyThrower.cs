@@ -1,3 +1,4 @@
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -62,6 +63,7 @@ public class RigidbodyThrower : MonoBehaviour
             var goInstance = prewarm ?? Instantiate(go, transform.position, Quaternion.identity);
             SetRigidbodyToThrow(goInstance.GetComponent<Rigidbody>());
             AddCollisionOverrides();
+            CheckForHitbox(go);
             goInstance.SetActive(true);
             
             ThrowRigidbody(direction, forceMode);
@@ -72,6 +74,17 @@ public class RigidbodyThrower : MonoBehaviour
                 col.enabled = true;
             }
             collisionOverrides.Reset();
+        }
+    }
+
+    void CheckForHitbox(GameObject go)
+    {
+        var hitboxes = go.transform.root.GetComponentsInChildren<Hitbox>();
+        var originColliders = transform.root.GetComponentsInChildren<Collider>();
+
+        foreach(var hb in hitboxes)
+        {
+            hb.collisionExceptions = originColliders.ToList<Collider>();
         }
     }
 
