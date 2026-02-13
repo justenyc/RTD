@@ -20,7 +20,6 @@ public static class Item_Effects
         { OnCollisionEffect.AOE_Fire, AOE_Fire }
     };
 
-
     public enum OnUseEffect
     {
         None,

@@ -40,7 +40,7 @@ public class InputHandler : MonoBehaviour
 
     public void OnGuard(InputAction.CallbackContext ctx)
     {
-        Debug.Log(ctx.phase);
+        //Debug.Log(ctx.phase);
         Guard?.Invoke(ctx);
     }
 

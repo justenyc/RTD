@@ -20,35 +20,19 @@ public class Hitbox : MonoBehaviour
         InstantDeath
     }
 
-    //[System.Serializable]
-    //public class Args
-    //{
-    //    public string attackName;
-    //    public float power;
-    //    public float knockback;
-    //    public DamageType damageType;
-
-    //    public Args(float _power, float _knockback, string _attackName = "", DamageType _damageType = default)
-    //    {
-    //        attackName = _attackName;
-    //        power = _power;
-    //        knockback = _knockback;
-    //        damageType = _damageType;
-    //    }
-    //}
-
     [System.Serializable]
     public class Args
     {
-        public string name { get; set; } = "";
-        public float power { get; set; } = 0;
-        public float knockback { get; set; } = 0;
-        public Vector3 position { get; set; } = Vector3.zero;
-        public float size { get; set; } = 0;
-        public Vector3 rotation { get; set; } = Vector3.zero;
-        public DamageType damageType { get; set; } = DamageType.Blunt;
-        public List<GameObject> exceptions { get; set; }
+        public string name = "";
+        public float power = 0;
+        public float knockback = 0;
+        public Vector3 position = Vector3.zero;
+        public float size = 0;
+        public Vector3 rotation = Vector3.zero;
+        public DamageType damageType = DamageType.Blunt;
+        public List<GameObject> exceptions;
     }
+
     public class ArgsBuilder
     {
         Args args = new Args();

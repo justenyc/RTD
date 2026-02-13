@@ -15,7 +15,7 @@ public class Item
     public GameObject modelPrefab;
 
     public Item_Effects.OnUseEffect onUseEffect;
-    public Item_Effects.OnCollisionEffect onCollisionEffect;
+    public Item_Effects.OnCollisionEffect[] onCollisionEffects;
 
     public Action<GameObject> OnUseSuccess;
 

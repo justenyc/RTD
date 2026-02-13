@@ -12,9 +12,13 @@ namespace Player
         private Cinemachine3rdPersonFollow _3rdPersonFollow;
         Vector2 animationVector;
         Vector2 movementVector;
-        bool isMoving;
 
-        List<Tween> tweens = new();
+        bool inStartUp;
+        bool isMoving;
+        bool m_aimInputState = true;
+
+        List<Tween> cameraTweens = new();
+        Coroutine swordRoutine;
 
         public AimState(PlayerController manager)
         {
@@ -25,21 +29,42 @@ namespace Player
         public void StateStart()
         {
             //Debug.Log("Starting Aim State");
+
             m_manager.currentState = "Aim";
+            inStartUp = true;
+            m_manager.Animator.SetBool("Aim", true);
+            
             m_manager.inputHandler.Aim += OnAim;
             m_manager.inputHandler.UseCurrentItem += OnUseCurrentItem;
             m_manager.inputHandler.UseWeapon += OnUseWeapon;
             m_manager.inputHandler.Guard += OnGuard;
 
             m_manager.aimProperties.canMove = false;
-            m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => m_manager.aimProperties.canMove = true, m_manager.aimProperties.delayMovementByFrames));
-            //m_manager.SetSwordPosition(true);
+
+            m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() =>
+            {
+                m_manager.aimProperties.canMove = true;
+                inStartUp = false;
+
+                if(!m_aimInputState)
+                {
+                    GoToFreeMovementState();
+                }
+            }, 
+            m_manager.frameData.FrameDataDict[FrameDataAddresses.THEA_AIM_MOVESTARTUP]));
+
+            swordRoutine = m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => m_manager.eventBus.InvokeEvent(EventBus_Thea.EventId.SwordAppear), m_manager.frameData.FrameDataDict[FrameDataAddresses.THEA_AIM_SWORDAPPEAR]));
 
             _3rdPersonFollow = CameraManager.instance.VirtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
-            //_3rdPersonFollow.ShoulderOffset = m_manager.aimProperties.cameraPos;
-            var tween = DOTween.To(() => _3rdPersonFollow.ShoulderOffset, e => _3rdPersonFollow.ShoulderOffset = e, m_manager.aimProperties.cameraPos, 0.1f);
+            var tween = DOTween.To(
+                () => _3rdPersonFollow.ShoulderOffset,
+                e => _3rdPersonFollow.ShoulderOffset = e,
+                m_manager.aimProperties.cameraPos,
+                0.1f).Pause();
+            tween.OnComplete(() => cameraTweens.Remove(tween));
+            tween.Play();
 
-            tweens.Add(tween);
+            cameraTweens.Add(tween);
         }
 
         public void StateEnd()
@@ -50,15 +75,26 @@ namespace Player
             m_manager.inputHandler.UseWeapon -= OnUseWeapon;
             m_manager.inputHandler.Guard -= OnGuard;
 
+            m_manager.StopCoroutine(swordRoutine);
+            m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => m_manager.eventBus.InvokeEvent(EventBus_Thea.EventId.SwordDisappear), 0));
             //m_manager.Sword.GetComponent<Collider>().enabled = false;
             //m_manager.SetSwordPosition(false);
 
+            m_manager.Animator.SetBool("Guard", false);
 
-            foreach (var tween in tweens)
+            if (cameraTweens.Count > 0)
             {
-                tween.Kill();
+                foreach (var tween in cameraTweens)
+                {
+                    tween?.Kill();
+                }
             }
-            _3rdPersonFollow.ShoulderOffset = m_manager.sharedProperties.defaultCameraPos;
+
+            DOTween.To(
+                () => _3rdPersonFollow.ShoulderOffset,
+                e => _3rdPersonFollow.ShoulderOffset = e,
+                m_manager.sharedProperties.defaultCameraPos,
+                0.1f);
         }
 
         public void StateUpdate()
@@ -134,11 +170,17 @@ namespace Player
 
         void OnAim(InputAction.CallbackContext context)
         {
-            if(context.performed)
+            m_aimInputState = context.performed;
+            if(!context.action.IsPressed() && !inStartUp)
             {
-                m_manager.SetState(new FreeMovementState(m_manager));
-                m_manager.Animator.SetBool("Aim", false);
+                GoToFreeMovementState();
             }
+        }
+
+        void GoToFreeMovementState()
+        {
+            m_manager.SetState(new FreeMovementState(m_manager));
+            m_manager.Animator.SetBool("Aim", false);
         }
 
         void OnUseCurrentItem(InputAction.CallbackContext context)
@@ -148,52 +190,20 @@ namespace Player
                 if (m_manager.aimProperties.canThrow)
                 {
                     m_manager.aimProperties.canThrow = false;
-                    m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => m_manager.aimProperties.canThrow = true, m_manager.aimProperties.throwCooldown));
+                    m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => m_manager.aimProperties.canThrow = true, m_manager.frameData.FrameDataDict[FrameDataAddresses.THEA_AIM_THROWCOOLDOWN]));
                     m_manager.Animator.SetTrigger("UseItem");
                     var itemToThrow = m_manager.inventory.GetCurrentItem();
 
                     m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() =>
                         {
                             Vector3 throwDir = (Camera.main.transform.forward.normalized * m_manager.aimProperties.throwStrength) - (m_manager.rigidbodyThrower.transform.right + -Camera.main.transform.right);
-                            
-                            //RaycastHit hit;
-                            //if (Physics.Raycast(Camera.main.transform.position, throwDir, out hit, m_manager.aimProperties.throwStrength))
-                            //{
-                            //    throwDir = hit.point - m_manager.rigidbodyThrower.transform.position;
-                            //    itemToThrow.Throw(m_manager.rigidbodyThrower, throwDir, throwDir.magnitude);
-                            //    Debug.Log($"{hit.collider.name}");
-                            //    return;
-                            //}
 
-                            //throwDir = throwDir - m_manager.rigidbodyThrower.transform.position;
                             itemToThrow.Throw(m_manager.rigidbodyThrower, throwDir, m_manager.aimProperties.throwStrength);
                             return; 
-                        }, 
-                        m_manager.aimProperties.delayThrowByFrames));
+                        },
+                        m_manager.frameData.FrameDataDict[FrameDataAddresses.THEA_AIM_THROWSTARTUP]));
                 }
                 return;
-                //var item = m_manager.inventory.currentItem;
-                //var data = Item_Data.GetItemData(item.data);
-
-                //var thrownItem = Object.Instantiate(item.modelPrefab, m_manager.throwPoint.transform.position, Quaternion.identity);
-
-                //if(thrownItem.TryGetComponent(out Rigidbody rb))
-                //{
-                //    RaycastHit hit;
-                //    Transform cameraTransform = CameraManager.instance.VirtualCamera.transform;
-
-                //    var throwVector = (cameraTransform.forward * 1000 - m_manager.throwPoint.position).normalized;
-
-                //    if (Physics.Raycast(cameraTransform.position, cameraTransform.forward * 1000, out hit, 1000))
-                //    {
-                //        throwVector = (hit.collider.transform.position - m_manager.throwPoint.position).normalized;
-                //    }
-                    
-                //    Debug.DrawRay(m_manager.throwPoint.position, throwVector * 1000, Color.magenta, 5f);
-
-                //    rb.AddForce((throwVector + Vector3.up * 0.5f) * m_manager.aimProperties.throwStrength, ForceMode.Impulse);
-                //}
-                //Debug.Log($"THROW ITEM: {data.itemName}");
             }
         }
 

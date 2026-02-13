@@ -43,7 +43,10 @@ public class Item_Projectile : MonoBehaviour
     //Set in Inspector
     public void OnCollisionEffect(Hurtbox hurtbox)
     {
-        Item_Effects.onCollisionEffects[item.onCollisionEffect].Invoke(this.gameObject, item, null);
+        foreach (var collisionEffect in item.onCollisionEffects)
+        {
+            Item_Effects.onCollisionEffects[collisionEffect].Invoke(this.gameObject, item, null);
+        }
         Debug.Log(hurtbox.gameObject.name);
     }
 

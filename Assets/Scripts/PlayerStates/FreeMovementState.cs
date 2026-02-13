@@ -89,7 +89,8 @@ namespace Player
         {
             float easeTime = isMoving ? Time.fixedDeltaTime * m_manager.freeMovementProperties.easeInAnimationStrength : Time.fixedDeltaTime * m_manager.freeMovementProperties.easeOutAnimationStrength;
             animationVector.x = Mathf.Lerp(animationVector.x, m_manager.inputHandler.moveVector.x, easeTime);
-            animationVector.y = Mathf.Lerp(animationVector.y, m_manager.inputHandler.moveVector.y, easeTime);
+            float yFloat = m_sprintInputState ? m_manager.inputHandler.moveVector.y * 2 : m_manager.inputHandler.moveVector.y;
+            animationVector.y = Mathf.Lerp(animationVector.y, yFloat, easeTime);
 
             m_manager.Animator.SetBool("IsMoving", m_manager.inputHandler.moveVector != Vector2.zero);
             m_manager.Animator.SetFloat("MovementX", animationVector.x);
@@ -126,10 +127,9 @@ namespace Player
         {
             if (context.performed)
             {
+                m_manager.Animator.SetBool("Sprint", false);
                 m_manager.Animator.SetFloat("MovementX", 0);
                 m_manager.Animator.SetFloat("MovementY", 0);
-                m_manager.Animator.SetBool("Sprint", false);
-                m_manager.Animator.SetBool("Aim", true);
                 m_manager.SetState(new AimState(m_manager));
             }
         }

@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: f1449ce05a0b57f4485074396518d5f9
 ModelImporter:
-  serializedVersion: 22200
+  serializedVersion: 24200
   internalIDToNameTable: []
   externalObjects: {}
   materials:
@@ -16,8 +16,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -172,31 +170,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.4
-        functionName: OnCanCancel
-        data: 
-        objectReferenceParameter: {fileID: 2070777405718413192, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.21100666
-        functionName: Active
-        data: 
-        objectReferenceParameter: {fileID: 2070777405718413192, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.2548519
-        functionName: InActive
-        data: 
-        objectReferenceParameter: {fileID: 2070777405718413192, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -620,6 +594,9 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 0
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8

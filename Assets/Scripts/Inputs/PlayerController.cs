@@ -21,12 +21,9 @@ namespace Player
         [SerializeField] Transform m_cameraTarget;
         [SerializeField] Transform m_throwPoint;
         [SerializeField] RigidbodyThrower m_rigidbodyThrower;
-        [SerializeField] Transform m_swordInHandPoint;
-        [SerializeField] Transform m_swordRestPoint;
         [SerializeField] AttackDB_SO m_attackDB;
-
-        [Header("Props")]
-        public GameObject Sword;
+        [SerializeField] FrameData m_frameData;
+        [SerializeField] EventBus_Thea m_eventBus;
 
         [Header("State Properties")]
         [SerializeField] MovementProperties m_freeMovementProperties;
@@ -48,6 +45,8 @@ namespace Player
         public MovementProperties freeMovementProperties => m_freeMovementProperties;
         public AimProperties aimProperties => m_aimProperties;
         public SharedProperties sharedProperties => m_sharedProperties;
+        public FrameData frameData => m_frameData;
+        public EventBus_Thea eventBus => m_eventBus;
 
         #endregion
 
@@ -73,9 +72,6 @@ namespace Player
         {
             public float moveSpeed = 1;
             public float rotateSpeed = 1;
-            public int delayMovementByFrames = 0;
-            public int delayThrowByFrames = 0;
-            public int throwCooldown = 0;
             public bool canMove = false;
             public bool canThrow = true;
             public float accelerationStrength = 1;
@@ -120,14 +116,6 @@ namespace Player
         {
             m_currentState.StateEnd();
             m_currentState = newState;
-        }
-
-        public void SetSwordPosition(bool inHand)
-        {
-            var point = inHand ? m_swordInHandPoint : m_swordRestPoint;
-            Sword.transform.parent = point;
-            Sword.transform.localPosition = Vector3.zero;
-            Sword.transform.localRotation = Quaternion.identity;
         }
 
         public void SetCurrentAttackIndex(int index)

@@ -2,7 +2,7 @@ using UnityEngine;
 using RotaryHeart.Lib.SerializableDictionary;
 using System.Runtime.InteropServices.WindowsRuntime;
 
-[CreateAssetMenu(fileName = "StatProfile", menuName = "ScriptableObjects/StatProfile")]
+[CreateAssetMenu(fileName = "StatProfile", menuName = "Scriptable Objects/StatProfile")]
 public class BaseStatProfile : ScriptableObject
 {
     [Tooltip("The base amount of HP the character has at level 1")]

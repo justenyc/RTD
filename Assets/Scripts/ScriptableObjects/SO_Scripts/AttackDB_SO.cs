@@ -1,7 +1,7 @@
 using RotaryHeart.Lib.SerializableDictionary;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AttackDB", menuName = "ScriptableObjects/DB/AttackDB")]
+[CreateAssetMenu(fileName = "AttackDB", menuName = "Scriptable Objects/Database/AttackDB")]
 public class AttackDB_SO : ScriptableObject
 {
     [SerializeField] SerializableDictionaryBase<string, Hitbox.Args> DB = new();
