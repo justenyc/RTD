@@ -5485,7 +5485,8 @@ MonoBehaviour:
     moveSpeed: 1
     sprintSpeed: 4
     cameraRotateSpeed: 1
-    cameraRotateSpeedDuringSprint: 0
+    cameraRotateSpeedDuringSprint: 1
+    leonShuffleThreshold: 100
     accelerationStrength: 5
     decelerationStrength: 3
     easeInAnimationStrength: 5

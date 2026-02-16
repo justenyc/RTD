@@ -79,18 +79,28 @@ namespace Player
             Vector3 forwardRelative = cameraForward * movementVector.y;
             Vector3 rightRelative = cameraRight * movementVector.x;
 
-            Vector3 moveVector = forwardRelative + rightRelative;
+            Vector3 leonVector = new Vector3(m_manager.inputHandler.lookVector.x, 0);
+            bool leonShuffle = leonVector.magnitude > m_manager.freeMovementProperties.leonShuffleThreshold;
+            Vector3 moveVector = leonShuffle ?
+                Vector3.zero :
+                forwardRelative + rightRelative;
             m_manager.controller.Move(moveVector * Time.fixedDeltaTime);
 
-            AnimateMovement();
+            AnimateMovement(leonShuffle);
         }
 
-        void AnimateMovement()
+        void AnimateMovement(bool leonShuffle)
         {
             float easeTime = isMoving ? Time.fixedDeltaTime * m_manager.freeMovementProperties.easeInAnimationStrength : Time.fixedDeltaTime * m_manager.freeMovementProperties.easeOutAnimationStrength;
-            animationVector.x = Mathf.Lerp(animationVector.x, m_manager.inputHandler.moveVector.x, easeTime);
+            
+            animationVector.x = leonShuffle ? 
+                Mathf.Lerp(animationVector.x, 0, easeTime) : 
+                Mathf.Lerp(animationVector.x, m_manager.inputHandler.moveVector.x, easeTime);
+            
             float yFloat = m_sprintInputState ? m_manager.inputHandler.moveVector.y * 2 : m_manager.inputHandler.moveVector.y;
-            animationVector.y = Mathf.Lerp(animationVector.y, yFloat, easeTime);
+            animationVector.y = leonShuffle ? 
+                Mathf.Lerp(animationVector.y, 0, easeTime) : 
+                Mathf.Lerp(animationVector.y, yFloat, easeTime);
 
             m_manager.Animator.SetBool("IsMoving", m_manager.inputHandler.moveVector != Vector2.zero);
             m_manager.Animator.SetFloat("MovementX", animationVector.x);

@@ -59,6 +59,8 @@ namespace Player
             public float sprintSpeed = 1;
             public float cameraRotateSpeed = 1;
             public float cameraRotateSpeedDuringSprint = 0f;
+            [Tooltip("How strong the rotation of the camera needs to be before the player stops moving and only rotates. A.K.A \"The Leon Shuffle\"")]
+            public float leonShuffleThreshold = 100f;
             public float accelerationStrength = 1;
             public float decelerationStrength = 1;
             public float easeInAnimationStrength = 1;
