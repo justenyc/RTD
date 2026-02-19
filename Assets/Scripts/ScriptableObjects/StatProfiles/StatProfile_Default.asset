@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a21d808603597d94dbf63a6e5094ccca, type: 3}
   m_Name: StatProfile_Default
   m_EditorClassIdentifier: Assembly-CSharp::BaseStatProfile
-  baseHp: 10
+  baseHp: 100
   physDef: 0
   elemDef: 0
   physAtk: 0

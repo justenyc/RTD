@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Player
 {
@@ -31,7 +32,7 @@ namespace Player
             //Debug.Log("Starting Aim State");
 
             m_manager.currentState = "Aim";
-            inStartUp = true;
+            //inStartUp = true;
             m_manager.Animator.SetBool("Aim", true);
             
             m_manager.inputHandler.Aim += OnAim;
@@ -39,21 +40,23 @@ namespace Player
             m_manager.inputHandler.UseWeapon += OnUseWeapon;
             m_manager.inputHandler.Guard += OnGuard;
 
-            m_manager.aimProperties.canMove = false;
+            m_manager.eventBus.GetEvent(EventBus_Thea.EventId.EnableMovement).AddListener(CheckInputForStartupException);
 
-            m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() =>
-            {
-                m_manager.aimProperties.canMove = true;
-                inStartUp = false;
+            //m_manager.canMove = false;
 
-                if(!m_aimInputState)
-                {
-                    GoToFreeMovementState();
-                }
-            }, 
-            m_manager.frameData.FrameDataDict[FrameDataAddresses.THEA_AIM_MOVESTARTUP]));
+            //m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() =>
+            //{
+            //    m_manager.canMove = true;
+            //    inStartUp = false;
 
-            swordRoutine = m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => m_manager.eventBus.InvokeEvent(EventBus_Thea.EventId.SwordAppear), m_manager.frameData.FrameDataDict[FrameDataAddresses.THEA_AIM_SWORDAPPEAR]));
+            //    if(!m_aimInputState)
+            //    {
+            //        GoToFreeMovementState();
+            //    }
+            //}, 
+            //m_manager.frameData.FrameDataDict[FrameDataAddresses.THEA_AIM_MOVESTARTUP]));
+
+            //swordRoutine = m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => m_manager.eventBus.InvokeEvent(EventBus_Thea.EventId.SwordAppear), m_manager.frameData.FrameDataDict[FrameDataAddresses.THEA_AIM_SWORDAPPEAR]));
 
             _3rdPersonFollow = CameraManager.instance.VirtualCamera.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
             var tween = DOTween.To(
@@ -67,6 +70,17 @@ namespace Player
             cameraTweens.Add(tween);
         }
 
+        /// <summary>
+        /// Used to make entering and exiting stance more intuitive by checking if "Aim" is pressed after inputs are re-enabled at the end of the animation
+        /// </summary>
+        void CheckInputForStartupException()
+        {
+            if (!m_aimInputState)
+            {
+                GoToFreeMovementState();
+            }
+        }
+
         public void StateEnd()
         {
             //Debug.Log("Ending Aim State");
@@ -75,10 +89,10 @@ namespace Player
             m_manager.inputHandler.UseWeapon -= OnUseWeapon;
             m_manager.inputHandler.Guard -= OnGuard;
 
-            m_manager.StopCoroutine(swordRoutine);
-            m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => m_manager.eventBus.InvokeEvent(EventBus_Thea.EventId.SwordDisappear), 0));
-            //m_manager.Sword.GetComponent<Collider>().enabled = false;
-            //m_manager.SetSwordPosition(false);
+            m_manager.eventBus.GetEvent(EventBus_Thea.EventId.EnableMovement).RemoveListener(CheckInputForStartupException);
+
+            //m_manager.StopCoroutine(swordRoutine);
+            //m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => m_manager.eventBus.InvokeEvent(EventBus_Thea.EventId.SwordDisappear), 0));
 
             m_manager.Animator.SetBool("Guard", false);
 
@@ -112,7 +126,7 @@ namespace Player
 
         private void Move()
         {
-            if (!m_manager.aimProperties.canMove)
+            if (!m_manager.canMove)
             {
                 return;
             }
@@ -171,7 +185,7 @@ namespace Player
         void OnAim(InputAction.CallbackContext context)
         {
             m_aimInputState = context.performed;
-            if(!context.action.IsPressed() && !inStartUp)
+            if(!context.action.IsPressed() && m_manager.listeningForInputs)
             {
                 GoToFreeMovementState();
             }
@@ -181,28 +195,30 @@ namespace Player
         {
             m_manager.SetState(new FreeMovementState(m_manager));
             m_manager.Animator.SetBool("Aim", false);
+            m_manager.eventBus.InvokeEvent(EventBus_Thea.EventId.SwordDisappear);
         }
 
         void OnUseCurrentItem(InputAction.CallbackContext context)
         {
             if (context.performed)
             {
-                if (m_manager.aimProperties.canThrow)
-                {
-                    m_manager.aimProperties.canThrow = false;
-                    m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => m_manager.aimProperties.canThrow = true, m_manager.frameData.FrameDataDict[FrameDataAddresses.THEA_AIM_THROWCOOLDOWN]));
-                    m_manager.Animator.SetTrigger("UseItem");
-                    var itemToThrow = m_manager.inventory.GetCurrentItem();
+                m_manager.Animator.SetTrigger("UseItem");
+                var itemToThrow = m_manager.inventory.GetCurrentItem();
+                //if (m_manager.aimProperties.canThrow)
+                //{
+                //    m_manager.aimProperties.canThrow = false;
+                    //m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => m_manager.aimProperties.canThrow = true, m_manager.frameData.FrameDataDict[FrameDataAddresses.THEA_AIM_THROWCOOLDOWN]));
 
-                    m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() =>
-                        {
-                            Vector3 throwDir = (Camera.main.transform.forward.normalized * m_manager.aimProperties.throwStrength) - (m_manager.rigidbodyThrower.transform.right + -Camera.main.transform.right);
 
-                            itemToThrow.Throw(m_manager.rigidbodyThrower, throwDir, m_manager.aimProperties.throwStrength);
-                            return; 
-                        },
-                        m_manager.frameData.FrameDataDict[FrameDataAddresses.THEA_AIM_THROWSTARTUP]));
-                }
+                    //m_manager.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() =>
+                    //    {
+                    //        Vector3 throwDir = (Camera.main.transform.forward.normalized * m_manager.aimProperties.throwStrength) - (m_manager.rigidbodyThrower.transform.right + -Camera.main.transform.right);
+
+                    //        itemToThrow.Throw(m_manager.rigidbodyThrower, throwDir, m_manager.aimProperties.throwStrength);
+                    //        return; 
+                    //    },
+                    //    m_manager.frameData.FrameDataDict[FrameDataAddresses.THEA_AIM_THROWSTARTUP]));
+                //}
                 return;
             }
         }

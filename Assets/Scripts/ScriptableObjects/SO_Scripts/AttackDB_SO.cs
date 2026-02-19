@@ -4,14 +4,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AttackDB", menuName = "Scriptable Objects/Database/AttackDB")]
 public class AttackDB_SO : ScriptableObject
 {
-    [SerializeField] SerializableDictionaryBase<string, Hitbox.Args> DB = new();
+    [SerializeField] SerializableDictionaryBase<string, Hitbox.DamageType> DB = new();
 
-    public Hitbox.Args GetArgsByName(string s)
+    public Hitbox.DamageType GetArgsByName(string s)
     {
         if(!DB.ContainsKey(s))
         {
             Debug.LogError($"<color=yellow>{s}</color> was not found in <color=#90EE90>{this.name}</color>");
-            return null;
+            return default;
         }
         return DB[s];
     }

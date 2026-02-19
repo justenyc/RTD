@@ -42,10 +42,9 @@ public class Shambler : AI_Entity
     [Header("References")]
     [SerializeField] Transform m_mainTransform;
     [SerializeField] Animator m_animator;
-    [SerializeField] AnimationHooks m_animationHooks;
     [SerializeField] List<Transform> m_patrolPoints;
     [SerializeField] Detector m_detector;
-    [SerializeField] Health m_health;
+    //[SerializeField] Health m_health;
 
     #region Animation
 
@@ -105,8 +104,6 @@ public class Shambler : AI_Entity
         m_detector.OnTriggerStayPost += Search;
         m_detector.OnTriggerEnterPost += OnDetect;
         m_detector.OnTriggerExitPost += SearchLost;
-
-        m_animationHooks.AttackFinishedPost += OnAttackFinish;
 
         InitStandardAI();
     }

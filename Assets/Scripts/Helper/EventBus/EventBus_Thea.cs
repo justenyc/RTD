@@ -10,8 +10,21 @@ public class EventBus_Thea : EventBus
     public enum EventId
     {
         None,
+        DisableMovement,
+        EnableMovement,
+        DisableThrow,
+        EnableThrow,
+        DisableInputs,
+        EnableInputs,
         SwordAppear,
-        SwordDisappear
+        SwordDisappear,
+        CanCancel,
+        ThrowItem
+    }
+
+    public UnityEvent GetEvent(EventId id)
+    {
+        return eventContainer.ContainsKey(id) ? eventContainer[id] : null;
     }
 
     public void InvokeEvent(EventId id)

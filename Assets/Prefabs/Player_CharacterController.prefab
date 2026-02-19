@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6300727461370662461}
   - component: {fileID: 9156551623983819802}
   - component: {fileID: 1245169534290862827}
+  - component: {fileID: 8242008707736627800}
   m_Layer: 6
   m_Name: Hitbox
   m_TagString: Untagged
@@ -105,12 +106,40 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8242008707736627800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 659312120377878573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0a8d41dc90aecf4daff384c0555f4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Hitbox
+  OnHitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 361677365776527987}
+        m_TargetAssemblyTypeName: Player.PlayerController, Assembly-CSharp
+        m_MethodName: OnHit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  collisionExceptions: []
 --- !u!1 &1278038288742462615
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,6 +202,133 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1751370841582894034}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1832637078278619040
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2997381156298143245}
+  - component: {fileID: 735507776473751092}
+  - component: {fileID: 7855573890817679526}
+  m_Layer: 6
+  m_Name: Point Light (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2997381156298143245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832637078278619040}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1726903651256001842}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &735507776473751092
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832637078278619040}
+  m_Enabled: 1
+  serializedVersion: 11
+  m_Type: 2
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
+--- !u!114 &7855573890817679526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832637078278619040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalLightData
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_CustomShadowLayers: 0
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
 --- !u!1 &2070777405718413192
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,6 +340,7 @@ GameObject:
   - component: {fileID: 1726903651256001842}
   - component: {fileID: 4690249887211437896}
   - component: {fileID: 393652685395581747}
+  - component: {fileID: 2310791409441910849}
   m_Layer: 6
   m_Name: Player_CharacterController
   m_TagString: Untagged
@@ -205,6 +362,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1751370841582894034}
+  - {fileID: 2997381156298143245}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4690249887211437896
@@ -254,6 +412,195 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &2310791409441910849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070777405718413192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 456b18d5145066440a1e26ee2645d9e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EventBus_Thea
+  eventContainer:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 1
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+        m_TextWithWhitespace: "Keys\u200B"
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 1
+    _keyValues: 07000000080000000100000002000000030000000400000006000000050000000a000000
+    _keys: 07000000080000000100000002000000030000000400000006000000050000000a000000
+    _values:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5181988407373859523}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 6996342822502345994}
+          m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+          m_MethodName: Play
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5181988407373859523}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 6996342822502345994}
+          m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+          m_MethodName: Play
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 361677365776527987}
+          m_TargetAssemblyTypeName: Player.PlayerController, Assembly-CSharp
+          m_MethodName: SetCanMove
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 361677365776527987}
+          m_TargetAssemblyTypeName: Player.PlayerController, Assembly-CSharp
+          m_MethodName: SetCanMove
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 361677365776527987}
+          m_TargetAssemblyTypeName: Player.PlayerController, Assembly-CSharp
+          m_MethodName: SetCanThrow
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 361677365776527987}
+          m_TargetAssemblyTypeName: Player.PlayerController, Assembly-CSharp
+          m_MethodName: SetCanThrow
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 361677365776527987}
+          m_TargetAssemblyTypeName: Player.PlayerController, Assembly-CSharp
+          m_MethodName: SetListeningForInputs
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 361677365776527987}
+          m_TargetAssemblyTypeName: Player.PlayerController, Assembly-CSharp
+          m_MethodName: SetListeningForInputs
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 361677365776527987}
+          m_TargetAssemblyTypeName: Player.PlayerController, Assembly-CSharp
+          m_MethodName: ThrowCurrentItem
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &2377302507519122316
 GameObject:
   m_ObjectHideFlags: 0
@@ -5432,7 +5779,6 @@ GameObject:
   - component: {fileID: 1201555966412983173}
   - component: {fileID: 5724850283260637267}
   - component: {fileID: 4680991544709003436}
-  - component: {fileID: 128160113682451950}
   m_Layer: 6
   m_Name: PlayerController
   m_TagString: Untagged
@@ -5478,9 +5824,10 @@ MonoBehaviour:
   m_cameraTarget: {fileID: 3479568134241564491}
   m_throwPoint: {fileID: 202406637214590497}
   m_rigidbodyThrower: {fileID: 7775514776765739590}
+  m_status: {fileID: 4680991544709003436}
   m_attackDB: {fileID: 11400000, guid: da20339d9de81d0429f2f50177a0fc04, type: 2}
   m_frameData: {fileID: 11400000, guid: ad37e00ee2023ea4c844f465a6b43881, type: 2}
-  m_eventBus: {fileID: 128160113682451950}
+  m_eventBus: {fileID: 2310791409441910849}
   m_freeMovementProperties:
     moveSpeed: 1
     sprintSpeed: 4
@@ -5496,8 +5843,6 @@ MonoBehaviour:
   m_aimProperties:
     moveSpeed: 0.5
     rotateSpeed: 1
-    canMove: 0
-    canThrow: 1
     accelerationStrength: 1
     decelerationStrength: 5
     easeInAnimationStrength: 5
@@ -5509,6 +5854,9 @@ MonoBehaviour:
     currentAttackindex: -1
   m_sharedProperties:
     defaultCameraPos: {x: 0, y: 0, z: -0.5}
+  m_canMove: 1
+  m_listeningForInputs: 0
+  m_canThrow: 0
 --- !u!114 &4805579727986716901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5877,97 +6225,6 @@ MonoBehaviour:
   DeliverHitboxArgs:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &128160113682451950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9192141823788128780}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 456b18d5145066440a1e26ee2645d9e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EventBus_Thea
-  eventContainer:
-    reorderableList:
-      canAdd: 1
-      canRemove: 1
-      draggable: 1
-      expandable: 1
-      multipleSelection: 1
-      isExpanded: 1
-      label:
-        m_Text: Keys
-        m_Image: {fileID: 0}
-        m_Tooltip: 
-        m_TextWithWhitespace: "Keys\u200B"
-      headerHeight: 18
-      footerHeight: 13
-      slideEasing: 0.15
-      verticalSpacing: 2
-      showDefaultBackground: 1
-      elementDisplayType: 0
-      elementNameProperty: 
-      elementNameOverride: 
-      elementIcon: {fileID: 0}
-    reqReferences: {fileID: 0}
-    isExpanded: 1
-    _keyValues: 0100000002000000
-    _keys: 0100000002000000
-    _values:
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5181988407373859523}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-        - m_Target: {fileID: 6996342822502345994}
-          m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-          m_MethodName: Play
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5181988407373859523}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 6996342822502345994}
-          m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-          m_MethodName: Play
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1001 &2289139216421690425
 PrefabInstance:
   m_ObjectHideFlags: 0

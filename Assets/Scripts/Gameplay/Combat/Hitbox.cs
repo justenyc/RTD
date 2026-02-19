@@ -8,6 +8,8 @@ public class Hitbox : MonoBehaviour
     public UnityEvent<Hurtbox> OnHitEvent;
     public List<Collider> collisionExceptions;
 
+    Args args;
+
     [System.Serializable]
     public enum DamageType
     {
@@ -126,5 +128,10 @@ public class Hitbox : MonoBehaviour
     public void ProcessHurtbox(Action<Hurtbox> process, Hurtbox hurtbox)
     {
         process?.Invoke(hurtbox);
+    }
+
+    public void SetArgs(Args _args)
+    {
+        args = _args;
     }
 }

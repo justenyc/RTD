@@ -21,6 +21,7 @@ namespace Player
         [SerializeField] Transform m_cameraTarget;
         [SerializeField] Transform m_throwPoint;
         [SerializeField] RigidbodyThrower m_rigidbodyThrower;
+        [SerializeField] Status m_status;
         [SerializeField] AttackDB_SO m_attackDB;
         [SerializeField] FrameData m_frameData;
         [SerializeField] EventBus_Thea m_eventBus;
@@ -29,6 +30,9 @@ namespace Player
         [SerializeField] MovementProperties m_freeMovementProperties;
         [SerializeField] AimProperties m_aimProperties;
         [SerializeField] SharedProperties m_sharedProperties;
+        [SerializeField] bool m_canMove;
+        [SerializeField] bool m_listeningForInputs;
+        [SerializeField] bool m_canThrow;
 
         #region Public References
 
@@ -42,12 +46,15 @@ namespace Player
         public Transform cameraTarget => m_cameraTarget;
         public Transform throwPoint => m_throwPoint;
         public RigidbodyThrower rigidbodyThrower => m_rigidbodyThrower;
+        public Status status => m_status;
         public MovementProperties freeMovementProperties => m_freeMovementProperties;
         public AimProperties aimProperties => m_aimProperties;
         public SharedProperties sharedProperties => m_sharedProperties;
         public FrameData frameData => m_frameData;
         public EventBus_Thea eventBus => m_eventBus;
-
+        public bool canMove => m_canMove;
+        public bool listeningForInputs => m_listeningForInputs;
+        public bool canThrow => m_canThrow;
         #endregion
 
         #region State Properties
@@ -74,8 +81,6 @@ namespace Player
         {
             public float moveSpeed = 1;
             public float rotateSpeed = 1;
-            public bool canMove = false;
-            public bool canThrow = true;
             public float accelerationStrength = 1;
             public float decelerationStrength = 1;
             public float easeInAnimationStrength = 1;
@@ -114,6 +119,21 @@ namespace Player
             m_currentState.StateFixedUpdate();
         }
 
+        public void SetCanMove(bool b)
+        {
+            m_canMove = b;
+        }
+
+        public void SetListeningForInputs(bool b)
+        {
+            m_listeningForInputs = b;
+        }
+
+        public void SetCanThrow(bool b)
+        {
+            m_canThrow = b;
+        }
+
         public void SetState(IPlayerState newState)
         {
             m_currentState.StateEnd();
@@ -134,7 +154,7 @@ namespace Player
         public void OnHit(Hurtbox hurtbox)
         {
             var a = m_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
-            hurtbox.PostOnHurt(m_attackDB.GetArgsByName(a));
+            hurtbox.PostOnHurt(m_status.GenerateHbArgs(m_attackDB.GetArgsByName(a)));
         }
 
         void OnCanCancel()
@@ -145,6 +165,15 @@ namespace Player
         void ResetAnimParamsOnTransition()
         {
             m_animator.SetBool("CanCancel", false);
+        }
+
+        public void ThrowCurrentItem()
+        {
+            var itemToThrow = inventory.GetCurrentItem();
+            Vector3 throwDir = (Camera.main.transform.forward.normalized * aimProperties.throwStrength) - (rigidbodyThrower.transform.right + -Camera.main.transform.right);
+
+            itemToThrow.Throw(rigidbodyThrower, throwDir, aimProperties.throwStrength);
+            return;
         }
     }
 }
