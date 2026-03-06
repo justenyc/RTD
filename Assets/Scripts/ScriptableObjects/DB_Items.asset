@@ -45,12 +45,12 @@ MonoBehaviour:
     onCollisionEffects: 
   - itemName: Firebomb
     description: 
-    damageType: 5
-    potency: 5
+    damageType: 2
+    potency: 100
     size: 2
     consumptionRate: 1
     maxStacks: 99
     modelPrefab: {fileID: 6417772369610588347, guid: f5e018c7ae0437d439ad6fde20182dcc,
       type: 3}
     onUseEffect: 0
-    onCollisionEffects: 0300000001000000
+    onCollisionEffects: 01000000

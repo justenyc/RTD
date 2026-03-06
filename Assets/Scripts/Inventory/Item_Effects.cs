@@ -9,15 +9,16 @@ public static class Item_Effects
     public delegate void OnUseDelegate(GameObject go, Item item, Action<bool> callback);
     public delegate void OnCollisionDelegate(GameObject go, Item item, Action<bool> callback);
 
-    public static Dictionary<OnUseEffect, OnUseDelegate> onUseEffects = new Dictionary<OnUseEffect, OnUseDelegate>
+    public static Dictionary<OnUseEffect, OnUseDelegate> onUseEffects = new()
     {
         { OnUseEffect.Heal_Health, Heal_Health }
     };
 
-    public static Dictionary<OnCollisionEffect, OnCollisionDelegate> onCollisionEffects = new Dictionary<OnCollisionEffect, OnCollisionDelegate>()
+    public static Dictionary<OnCollisionEffect, OnCollisionDelegate> onCollisionEffects = new()
     {
         { OnCollisionEffect.AOE_Damage, AOE_Damage },
-        { OnCollisionEffect.AOE_Fire, AOE_Fire }
+        { OnCollisionEffect.AOE_Fire, AOE_Fire },
+        { OnCollisionEffect.AOE_Explosive, AOE_Explode }
     };
 
     public enum OnUseEffect
@@ -33,7 +34,8 @@ public static class Item_Effects
         None,
         AOE_Fire,
         AOE_Light,
-        AOE_Damage
+        AOE_Damage,
+        AOE_Explosive
     }
 
     public static void Heal_Health(GameObject go, Item item, Action<bool> callback = null)
@@ -52,12 +54,31 @@ public static class Item_Effects
 
     public static void AOE_Fire(GameObject go, Item item, Action<bool> callback = null)
     {
-        
+        // CONSIDER: Maybe scale hitbox args with Status?
+        Collider[] overlaps = Physics.OverlapBox(go.transform.position, go.transform.lossyScale * item.size / 2);
+        Hitbox.Args hitboxArgs = new Hitbox.ArgsBuilder()
+            .WithPower(1f)
+            .WithDamageType(Hitbox.DamageType.Fire)
+            .Build();
+
+        foreach (Collider collider in overlaps)
+        {
+            collider.GetComponent<Hurtbox>()?.PostOnHurt(hitboxArgs);
+        }
     }
 
     public static void AOE_Explode(GameObject go, Item item, Action<bool> callback = null)
     {
+        Collider[] overlaps = Physics.OverlapBox(go.transform.position, go.transform.lossyScale * item.size / 2);
+        Hitbox.Args hitboxArgs = new Hitbox.ArgsBuilder()
+            .WithPower(1f)
+            .WithDamageType(Hitbox.DamageType.Explosive)
+            .Build();
 
+        foreach (Collider collider in overlaps)
+        {
+            collider.GetComponent<Hurtbox>()?.PostOnHurt(hitboxArgs);
+        }
     }
 
     public static void AOE_Damage(GameObject go, Item item, Action<bool> callback = null)
@@ -65,6 +86,7 @@ public static class Item_Effects
         Collider[] overlaps = Physics.OverlapBox(go.transform.position, go.transform.lossyScale * item.size / 2);
 
         Hitbox.Args args = new Hitbox.ArgsBuilder()
+                    .WithPower(item.potency)
                     .WithSize(item.size)
                     .WithDamageType(item.damageType)
                     .Build();

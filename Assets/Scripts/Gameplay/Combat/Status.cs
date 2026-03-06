@@ -4,6 +4,7 @@ using UnityEngine.UIElements;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(Hurtbox))]
 public class Status : MonoBehaviour
 {
     [Header("References")]
@@ -24,6 +25,10 @@ public class Status : MonoBehaviour
     public int Level => m_level;
     public float MaxHealth => m_maxHealth;
     public float CurrentHealth => m_currentHealth;
+    public float PhysDef => m_physDef;
+    public float ElemDef => m_elemDef;
+    public float PhysAtk => m_physAtk;
+    public float ElemAtk => m_elemAtk;
     
     public UnityEvent HealthHitZero;
     public UnityEvent<Hitbox.Args> DeliverHitboxArgs;
@@ -31,6 +36,8 @@ public class Status : MonoBehaviour
     public void CalculateStats()
     {
         m_maxHealth = baseStatProfile.BaseHp * (1 + baseStatProfile.Constitution / 100 * m_level);
+
+        m_currentHealth = m_maxHealth;
 
         m_physDef = baseStatProfile.PhysDef * (1 + baseStatProfile.Toughness / 100 * m_level);
 
@@ -59,9 +66,22 @@ public class Status : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// To use when the actor attached to this component is the one RECEIVING damage
+    /// </summary>
+    /// <param name="args">The Hitbox Args being received to calcuate damage against</param>
     public void TakeDamage(Hitbox.Args args)
     {
-        ChangeCurrentHealth(-args.power);
+        float damageCalculation;
+        bool physicalDamageType = args.damageType == Hitbox.DamageType.Blunt || args.damageType == Hitbox.DamageType.Slash;
+        float defenseCheck = physicalDamageType ? m_physDef : m_elemDef;
+
+        damageCalculation = args.power - defenseCheck;
+        damageCalculation = Mathf.Clamp(damageCalculation, 0, damageCalculation);
+
+        DB_SO.instance.statusEffectsSO.ApplyEffect(args, this.gameObject);
+
+        ChangeCurrentHealth(-damageCalculation);
     }
 
     public void TakeDamage(float amount)
@@ -75,6 +95,11 @@ public class Status : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    /// <summary>
+    /// To use when the actor attached to this component is the one DEALING damage
+    /// </summary>
+    /// <param name="damageType">See "Hitbox" for list of damage types</param>
+    /// <returns></returns>
     public Hitbox.Args GenerateHbArgs(Hitbox.DamageType damageType)
     {
         float power = 0;
