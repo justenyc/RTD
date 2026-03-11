@@ -23,7 +23,6 @@ namespace Player
         [SerializeField] RigidbodyThrower m_rigidbodyThrower;
         [SerializeField] Status m_status;
         [SerializeField] AttackDB_SO m_attackDB;
-        [SerializeField] FrameData m_frameData;
         [SerializeField] EventBus_Thea m_eventBus;
 
         [Header("State Properties")]
@@ -50,7 +49,6 @@ namespace Player
         public MovementProperties freeMovementProperties => m_freeMovementProperties;
         public AimProperties aimProperties => m_aimProperties;
         public SharedProperties sharedProperties => m_sharedProperties;
-        public FrameData frameData => m_frameData;
         public EventBus_Thea eventBus => m_eventBus;
         public bool canMove => m_canMove;
         public bool listeningForInputs => m_listeningForInputs;
