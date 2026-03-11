@@ -123,3 +123,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DB_SO
   statusEffectsSO: {fileID: 11400000, guid: 2fa8c667738fc3640abb6647b160b7d7, type: 2}
+  vfxSO: {fileID: 11400000, guid: 562fdceac1ffae949a9605a4dcf25973, type: 2}
