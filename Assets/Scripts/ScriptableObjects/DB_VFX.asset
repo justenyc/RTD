@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f7ed71fb7db9704aaf905b8e10175f2, type: 3}
+  m_Name: DB_VFX
+  m_EditorClassIdentifier: Assembly-CSharp::DB_VFX
+  battleVfxPrefabs:
+  - {fileID: 2571983055590007465, guid: 3f6c0242d8a0bf44c8d7e5cc7dbb9957, type: 3}

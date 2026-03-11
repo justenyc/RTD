@@ -5,6 +5,13 @@ using UnityEngine;
 public class Destructable : MonoBehaviour
 {
     [SerializeField] float burnTime = 3f;
+    delegate void DestructableDelegate(GameObject affected);
+
+    Dictionary<Hitbox.DamageType, DestructableDelegate> dict = new Dictionary<Hitbox.DamageType, DestructableDelegate>()
+    {
+        { Hitbox.DamageType.Fire, Burn },
+        { Hitbox.DamageType.Explosive, Demolish }
+    };
 
     public void OverrideBurnTime(ref float newTime)
     {
@@ -13,29 +20,19 @@ public class Destructable : MonoBehaviour
 
     public void ProcessHurtbox(Hitbox.Args args)
     {
-        switch (args.damageType)
+        if(dict.TryGetValue(args.damageType, out var outDelegate))
         {
-            case Hitbox.DamageType.Fire:
-                Burn();
-                break;
-
-            case Hitbox.DamageType.Explosive:
-                Destroy(this.gameObject);
-                break;
+            outDelegate.Invoke(this.gameObject);
         }
     }
 
-    void Burn()
+    static void Burn(GameObject affected)
     {
-        DB_SO.instance.statusEffectsSO.ApplyEffect(Status_Effects.StatusEffect.Burn, gameObject);
+        DB_SO.instance.statusEffectsSO.ApplyEffect(Status_Effects.StatusEffect.Burn, affected);
     }
 
-    void Demolish(Hitbox.DamageType damageType)
+    static void Demolish(GameObject affected)
     {
-        if (damageType == Hitbox.DamageType.Explosive)
-        {
-            Debug.Log($"{gameObject.name} is being <color=red>DEMOLISHED!!!</color>");
-            Destroy(gameObject);
-        }
+        Destroy(affected);
     }
 }

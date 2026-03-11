@@ -6,8 +6,11 @@ public class Inventory : MonoBehaviour
     //[SerializeField] SerializableDictionaryBase<Item, int> inventory;
     [SerializeField] DB_Item ItemDB;
     [SerializeField] int maxInventorySize = 10;
+    [SerializeField] int m_currentInventoryIndex = 0;
     [SerializeField] List<InventorySlot> inventory = new List<InventorySlot>();
     [SerializeField] string m_currentItem = null;
+    
+    public int CurrentInventoryIndex => m_currentInventoryIndex;
     public string CurrentItem => m_currentItem;
 
     [System.Serializable]
@@ -40,11 +43,14 @@ public class Inventory : MonoBehaviour
         if (ItemDB != null)
         {
             AddOrRemoveItemFromInventory(ItemDB.GetItem("Firebomb"), 10);
+            AddOrRemoveItemFromInventory(ItemDB.GetItem("Torch"), 10);
         }
     }
 
     private void Start()
     {
+        m_currentInventoryIndex = Mathf.Clamp(m_currentInventoryIndex, 0, inventory.Count - 1);
+
         if (inventory.Count > 0)
         {
             m_currentItem = inventory[0].itemName;
@@ -96,9 +102,18 @@ public class Inventory : MonoBehaviour
         return 0;
     }
 
+    public int MoveCurrentItemIndex(int direction)
+    {
+        direction = Mathf.Clamp(direction, -1, 1);
+        m_currentInventoryIndex += direction;
+        m_currentInventoryIndex = m_currentInventoryIndex > inventory.Count - 1 ? 0 : m_currentInventoryIndex < 0 ? inventory.Count - 1 : m_currentInventoryIndex;
+        m_currentItem = inventory[m_currentInventoryIndex].itemName;
+        return m_currentInventoryIndex;
+    }
+
     public Item GetCurrentItem()
     {
-        return ItemDB.GetItem(CurrentItem);
+        return ItemDB.GetItem(inventory[CurrentInventoryIndex].itemName);
     }
 
     public Item RequestItem(Item item)

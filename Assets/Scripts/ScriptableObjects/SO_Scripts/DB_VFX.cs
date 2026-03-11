@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "VFX", menuName = "Scriptable Objects/Database/DB_VFX")]
+[CreateAssetMenu(fileName = "DB_VFX", menuName = "Scriptable Objects/Database/VFX DB")]
 public class DB_VFX : ScriptableObject
 {
     public List<GameObject> battleVfxPrefabs;

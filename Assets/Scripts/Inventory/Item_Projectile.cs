@@ -6,6 +6,9 @@ public class Item_Projectile : MonoBehaviour
     [Header("References")]
     [SerializeField] Collider colliderRef;
 
+    [Header("Settings")]
+    [SerializeField] bool destroyOnCollsion = true;
+
     GameObject thrower;
     Item item;
     Hitbox.Args args;
@@ -27,6 +30,8 @@ public class Item_Projectile : MonoBehaviour
             .WithPower(_item.potency)
             .WithDamageType(_item.damageType)
             .Build();
+
+        return;
     }
 
     //Set in Inspector
@@ -43,6 +48,11 @@ public class Item_Projectile : MonoBehaviour
     //Set in Inspector
     public void OnCollisionEffect(Hurtbox hurtbox)
     {
+        if(item.onCollisionEffects.Length < 1)
+        {
+            return;
+        }
+
         foreach (var collisionEffect in item.onCollisionEffects)
         {
             Item_Effects.onCollisionEffects[collisionEffect].Invoke(this.gameObject, item, null);
@@ -50,20 +60,29 @@ public class Item_Projectile : MonoBehaviour
         Debug.Log(hurtbox.gameObject.name);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject == thrower)
+        if (collision.gameObject == thrower)
         {
             return;
         }
 
-        foreach(var col in exceptions)
+        foreach (var col in exceptions)
         {
-            if(other == col)
+            if (collision.collider == col)
             {
                 return;
             }
         }
-        Destroy(gameObject);
+
+        if (item.onCollisionVfx != null)
+        {
+            Instantiate(item.onCollisionVfx, transform.position, Quaternion.identity);
+        }
+
+        if(destroyOnCollsion)
+        {
+            Destroy(gameObject);
+        }
     }
 }

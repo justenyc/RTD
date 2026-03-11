@@ -13,8 +13,8 @@ public class InputHandler : MonoBehaviour
     public Action<InputAction.CallbackContext> TurnAround;
     public Action<InputAction.CallbackContext> Aim;
     public Action<InputAction.CallbackContext> Sprint;
-    public Action<InputAction.CallbackContext> CycleItemLeft;
-    public Action<InputAction.CallbackContext> CycleItemRight;
+    public Action<InputAction.CallbackContext> CycleItemPrev;
+    public Action<InputAction.CallbackContext> CycleItemNext;
     public Action<InputAction.CallbackContext> Interact;
     public Action<InputAction.CallbackContext> UseCurrentItem;
     public Action<InputAction.CallbackContext> OrbInteract;
@@ -62,12 +62,12 @@ public class InputHandler : MonoBehaviour
 
     public void OnCycleCurrentItemLeft(InputAction.CallbackContext ctx)
     {
-        CycleItemLeft?.Invoke(ctx);
+        CycleItemPrev?.Invoke(ctx);
     }
 
     public void OnCycleCurrentItemRight(InputAction.CallbackContext ctx)
     {
-        CycleItemRight?.Invoke(ctx);
+        CycleItemNext?.Invoke(ctx);
     }
 
     public void OnInteract(InputAction.CallbackContext ctx)

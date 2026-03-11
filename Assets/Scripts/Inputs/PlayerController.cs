@@ -103,7 +103,9 @@ namespace Player
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
-            //m_animationHooks.CanCancel += OnCanCancel;
+            inputHandler.CycleItemNext += CycleItemNext;
+            inputHandler.CycleItemPrev += CycleItemPrev;
+
             m_currentState = new FreeMovementState(this);
         }
 
@@ -117,19 +119,38 @@ namespace Player
             m_currentState.StateFixedUpdate();
         }
 
+        // Set in inspector. Used by EventBus_Thea
         public void SetCanMove(bool b)
         {
             m_canMove = b;
         }
 
+        // Set in inspector. Used by EventBus_Thea
         public void SetListeningForInputs(bool b)
         {
             m_listeningForInputs = b;
         }
 
+        // Set in inspector. Used by EventBus_Thea
         public void SetCanThrow(bool b)
         {
             m_canThrow = b;
+        }
+
+        public void CycleItemPrev(InputAction.CallbackContext context)
+        {
+            if(context.performed)
+            {
+                inventory.MoveCurrentItemIndex(-1);
+            }
+        }
+
+        public void CycleItemNext(InputAction.CallbackContext context)
+        {
+            if(context.performed)
+            {
+                inventory.MoveCurrentItemIndex(1);
+            }
         }
 
         public void SetState(IPlayerState newState)

@@ -79,6 +79,12 @@ public static class Item_Effects
         {
             collider.GetComponent<Hurtbox>()?.PostOnHurt(hitboxArgs);
         }
+
+        //Refactor to "OnCollisionVFX"
+        var vfxSO = DB_SO.instance.vfxSO;
+        var prefab = vfxSO.GetVfxPrefab("VFX_Explosion_Small", vfxSO.battleVfxPrefabs);
+
+        MonoBehaviour.Instantiate(prefab, go.transform.position, Quaternion.identity);
     }
 
     public static void AOE_Damage(GameObject go, Item item, Action<bool> callback = null)

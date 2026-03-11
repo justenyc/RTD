@@ -70,19 +70,19 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "CycleCurrentItemLeft",
+                    "name": "CycleCurrentItemPrev",
                     "type": "Button",
                     "id": "59ac35e4-28ba-4e9a-8289-87e6f03a3de3",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "CycleCurrentItemRight",
+                    "name": "CycleCurrentItemNext",
                     "type": "Button",
                     "id": "b1af135b-4929-40fb-952f-5c4c141d2d2b",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -438,7 +438,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "CycleCurrentItemLeft",
+                    "action": "CycleCurrentItemPrev",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -449,7 +449,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "CycleCurrentItemLeft",
+                    "action": "CycleCurrentItemPrev",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -460,7 +460,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "CycleCurrentItemRight",
+                    "action": "CycleCurrentItemNext",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -471,7 +471,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "CycleCurrentItemRight",
+                    "action": "CycleCurrentItemNext",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

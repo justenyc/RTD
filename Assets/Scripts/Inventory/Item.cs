@@ -13,6 +13,7 @@ public class Item
     public int consumptionRate = 1;
     public int maxStacks = 99;
     public GameObject modelPrefab;
+    public GameObject onCollisionVfx;
 
     public Item_Effects.OnUseEffect onUseEffect;
     public Item_Effects.OnCollisionEffect[] onCollisionEffects;

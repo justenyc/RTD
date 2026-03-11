@@ -106,6 +106,7 @@ public class RigidbodyThrower : MonoBehaviour
         return collisionOverrides;
     }
 
+    // Deprecated?
     void AddCollisionOverrides()
     {
         if(rigidbodyToThrow.TryGetComponent(out OnCollisionHelper collisionHelper))
