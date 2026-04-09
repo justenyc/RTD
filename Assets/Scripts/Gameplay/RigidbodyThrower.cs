@@ -64,8 +64,11 @@ public class RigidbodyThrower : MonoBehaviour
             SetRigidbodyToThrow(goInstance.GetComponent<Rigidbody>());
             AddCollisionOverrides();
             CheckForHitbox(go);
+
+            Vector3 currentRot = transform.rotation.eulerAngles;
+            goInstance.transform.rotation = Quaternion.Euler(0, currentRot.y, 0);
             goInstance.SetActive(true);
-            
+
             ThrowRigidbody(direction, forceMode);
 
             var col = go.GetComponentInChildren<Collider>();

@@ -7,6 +7,7 @@ public class Item_Projectile : MonoBehaviour
     [SerializeField] Collider colliderRef;
 
     [Header("Settings")]
+    [SerializeField] int lifeTime = 300;
     [SerializeField] bool destroyOnCollsion = true;
 
     GameObject thrower;
@@ -83,6 +84,9 @@ public class Item_Projectile : MonoBehaviour
         if(destroyOnCollsion)
         {
             Destroy(gameObject);
+            return;
         }
+
+        Destroy(gameObject, lifeTime);
     }
 }

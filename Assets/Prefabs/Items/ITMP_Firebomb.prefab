@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item_Projectile
   colliderRef: {fileID: 7983205294663359763}
+  lifeTime: 300
   destroyOnCollsion: 1
 --- !u!114 &9205819315553707210
 MonoBehaviour:

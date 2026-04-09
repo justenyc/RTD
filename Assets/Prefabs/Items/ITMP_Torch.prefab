@@ -4850,6 +4850,7 @@ GameObject:
   - component: {fileID: 7468731327376504772}
   - component: {fileID: 9205819315553707210}
   - component: {fileID: -3103533394501971437}
+  - component: {fileID: 7486941302630621361}
   m_Layer: 0
   m_Name: ITMP_Torch
   m_TagString: Untagged
@@ -4913,6 +4914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item_Projectile
   colliderRef: {fileID: 1114456375824015935}
+  lifeTime: 300
   destroyOnCollsion: 0
 --- !u!114 &9205819315553707210
 MonoBehaviour:
@@ -4987,6 +4989,24 @@ MonoBehaviour:
   OnCollisionExitEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7486941302630621361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6417772369610588347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b1b09f13c48aa44092753f5b26e53d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TorqueApplicator
+  torqueAxis: {x: 1, y: 0, z: 0}
+  strength: 1000
+  bodyToAffect: {fileID: 5546660140624751385}
+  onEnable: 0
+  onStart: 1
+  onUpdate: 0
 --- !u!1 &6492673253340991040
 GameObject:
   m_ObjectHideFlags: 0

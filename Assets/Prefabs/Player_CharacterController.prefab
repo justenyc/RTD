@@ -5490,9 +5490,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3465259173781747583}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.59621096, y: -0.052156772, z: 0.8011293, w: -0.0020083294}
+  m_LocalRotation: {x: 0.1786158, y: 0.9513026, z: -0.01468249, w: -0.25080734}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.000032, y: 1.00001, z: 0.99995965}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7830586073853405627}
@@ -5651,6 +5651,7 @@ GameObject:
   - component: {fileID: 1201555966412983173}
   - component: {fileID: 5724850283260637267}
   - component: {fileID: 4680991544709003436}
+  - component: {fileID: 163190083760702170}
   m_Layer: 6
   m_Name: PlayerController
   m_TagString: Untagged
@@ -5698,7 +5699,6 @@ MonoBehaviour:
   m_rigidbodyThrower: {fileID: 7775514776765739590}
   m_status: {fileID: 4680991544709003436}
   m_attackDB: {fileID: 11400000, guid: da20339d9de81d0429f2f50177a0fc04, type: 2}
-  m_frameData: {fileID: 11400000, guid: ad37e00ee2023ea4c844f465a6b43881, type: 2}
   m_eventBus: {fileID: 2310791409441910849}
   m_freeMovementProperties:
     moveSpeed: 1
@@ -5757,6 +5757,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemDB: {fileID: 11400000, guid: bb4bc2997f0cc624888356067bd53c64, type: 2}
   maxInventorySize: 10
+  m_currentInventoryIndex: 0
   inventory: []
   m_currentItem: 
 --- !u!114 &5724850283260637267
@@ -6095,6 +6096,24 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   DeliverHitboxArgs:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &163190083760702170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9192141823788128780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8292518aec8d9e4fbcd5d977a51c5b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Hurtbox
+  OnHurt:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDamageTypeEffects:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1001 &2289139216421690425
