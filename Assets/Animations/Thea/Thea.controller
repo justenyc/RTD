@@ -344,9 +344,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Attack
     m_EventTreshold: 0
-  - m_ConditionMode: 1
-    m_ConditionEvent: CanCancel
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1663243474703216067}
   m_Solo: 0
@@ -383,8 +380,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -830558313268538629, guid: f1449ce05a0b57f4485074396518d5f9,
-    type: 3}
+  m_Motion: {fileID: 7400000, guid: c47fae3459026f54bbed118a7c8744e4, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -606,7 +602,7 @@ AnimatorStateMachine:
     m_Position: {x: 590, y: -180, z: 0}
   - serializedVersion: 1
     m_StateMachine: {fileID: -4048468415287653965}
-    m_Position: {x: 870, y: 280, z: 0}
+    m_Position: {x: 880, y: 280, z: 0}
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
@@ -773,12 +769,6 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: Attack
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
   - m_Name: CanCancel
     m_Type: 4
     m_DefaultFloat: 0
@@ -811,6 +801,12 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   - m_Name: UseItemAnimID
     m_Type: 3
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: Attack
+    m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -930,7 +926,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 499297319067850171, guid: f1449ce05a0b57f4485074396518d5f9, type: 3}
+  m_Motion: {fileID: 7400000, guid: 3c76b7e81ae47964d97a271e7f1f137a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -974,9 +970,6 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: Attack
-    m_EventTreshold: 0
-  - m_ConditionMode: 1
-    m_ConditionEvent: CanCancel
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5924820111975662774}
@@ -1054,8 +1047,7 @@ BlendTree:
   m_Name: Movement
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 1016377874844716794, guid: 007ab0ebc5c2b9f4da82a24924f060aa,
-      type: 3}
+    m_Motion: {fileID: 7400000, guid: 6706d692c153e844ea694794da51298d, type: 2}
     m_Threshold: 0.25
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -1162,8 +1154,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1708545277904534129, guid: 007ab0ebc5c2b9f4da82a24924f060aa,
-    type: 3}
+  m_Motion: {fileID: 7400000, guid: 490827079adab6e47b6f269b3e1e98e3, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

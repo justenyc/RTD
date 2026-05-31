@@ -325,21 +325,9 @@ MonoBehaviour:
     _values:
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5181988407373859523}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-        - m_Target: {fileID: 6996342822502345994}
-          m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-          m_MethodName: Play
+        - m_Target: {fileID: 9034656736582400242}
+          m_TargetAssemblyTypeName: SwordVfxHelper, Assembly-CSharp
+          m_MethodName: SwordAppear
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -351,21 +339,9 @@ MonoBehaviour:
           m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5181988407373859523}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 6996342822502345994}
-          m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-          m_MethodName: Play
+        - m_Target: {fileID: 9034656736582400242}
+          m_TargetAssemblyTypeName: SwordVfxHelper, Assembly-CSharp
+          m_MethodName: SwordDisappear
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -586,7 +562,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1954977735792296595
 Transform:
   m_ObjectHideFlags: 0
@@ -613,14 +589,14 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 1
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 1
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -5741,6 +5717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8928b12696f931f45aab84a0f88cc35d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerController: {fileID: 361677365776527987}
   moveVector: {x: 0, y: 0}
   lookVector: {x: 0, y: 0}
 --- !u!114 &1201555966412983173
@@ -6516,7 +6493,11 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1954977735792296595}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -2020707375787994086, guid: 007ab0ebc5c2b9f4da82a24924f060aa,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9034656736582400242}
   m_SourcePrefab: {fileID: 100100000, guid: 007ab0ebc5c2b9f4da82a24924f060aa, type: 3}
 --- !u!4 &1751370841582894034 stripped
 Transform:
@@ -6536,6 +6517,26 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2289139216421690425}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8949117158455904291 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2020707375787994086, guid: 007ab0ebc5c2b9f4da82a24924f060aa,
+    type: 3}
+  m_PrefabInstance: {fileID: 2289139216421690425}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9034656736582400242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8949117158455904291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 272808bf1545f3b46ba3a242e3c96fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SwordVfxHelper
+  swordObject: {fileID: 5181988407373859523}
+  particleObject: {fileID: 3235842700105938390}
 --- !u!1001 &5416553619811678098
 PrefabInstance:
   m_ObjectHideFlags: 0

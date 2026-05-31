@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
+    public Player.PlayerController PlayerController;
     public Vector2 moveVector;// { get; private set; }
     public Vector2 lookVector;// { get; private set; }
     public Action<InputAction.CallbackContext> UseWeapon;
@@ -35,7 +36,8 @@ public class InputHandler : MonoBehaviour
 
     public void OnUseWeapon(InputAction.CallbackContext ctx)
     {
-        UseWeapon?.Invoke(ctx);
+        if(PlayerController.listeningForInputs) 
+            UseWeapon?.Invoke(ctx);
     }
 
     public void OnGuard(InputAction.CallbackContext ctx)
@@ -77,7 +79,8 @@ public class InputHandler : MonoBehaviour
 
     public void OnUseCurrentItem(InputAction.CallbackContext ctx)
     {
-        UseCurrentItem?.Invoke(ctx);
+        if (PlayerController.listeningForInputs)
+            UseCurrentItem?.Invoke(ctx);
     }
 
     public void OnOrbInteract(InputAction.CallbackContext ctx)

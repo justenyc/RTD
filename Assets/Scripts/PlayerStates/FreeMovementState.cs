@@ -59,6 +59,11 @@ namespace Player
 
         private void Move()
         {
+            if (!m_manager.canMove)
+            {
+                return;
+            }
+
             Vector2 targetVector = m_manager.inputHandler.moveVector * m_manager.freeMovementProperties.moveSpeed;
             targetVector.y += m_sprintInputState && targetVector.y > 0 ? m_manager.freeMovementProperties.sprintSpeed - m_manager.freeMovementProperties.moveSpeed : 0;
 

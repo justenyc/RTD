@@ -176,7 +176,7 @@ namespace Player
         {
             m_manager.SetState(new FreeMovementState(m_manager));
             m_manager.Animator.SetBool("Aim", false);
-            m_manager.eventBus.InvokeEvent(EventBus_Thea.EventId.SwordDisappear);
+            //m_manager.eventBus.InvokeEvent(EventBus_Thea.EventId.SwordDisappear);
         }
 
         void OnUseCurrentItem(InputAction.CallbackContext context)
@@ -193,12 +193,7 @@ namespace Player
         {
             if (context.performed)
             {
-                m_manager.Animator.SetBool("Attack", true);
-            }
-
-            if (context.canceled)
-            {
-                m_manager.Animator.SetBool("Attack", false);
+                m_manager.Animator.SetTrigger("Attack");
             }
         }
 
