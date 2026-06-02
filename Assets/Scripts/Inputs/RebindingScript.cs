@@ -43,7 +43,7 @@ public class RebindingScript : MonoBehaviour
     public string GetCurrentBinding(string actionName, int bindingIndex)
     {
         var action = playerInput.actions.FindAction(actionName);
-        Debug.Log($"{actionName} : {bindingIndex}");
+        Logger.LogMessage($"{actionName} : {bindingIndex}");
         string s = InputControlPath.ToHumanReadableString(action.bindings[bindingIndex].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
         return s;
     }
@@ -88,7 +88,7 @@ public class RebindingScript : MonoBehaviour
     {
         if (ctx.performed)
         {
-            Debug.Log($"TestAction: {ctx.action.bindings[0].hasOverrides}");
+            Logger.LogMessage($"TestAction: {ctx.action.bindings[0].hasOverrides}");
         }
     }
 
@@ -96,7 +96,7 @@ public class RebindingScript : MonoBehaviour
     {
         if (ctx.performed)
         {
-            Debug.Log($"TestAction2: {ctx.action.bindings[0].hasOverrides}");
+            Logger.LogMessage($"TestAction2: {ctx.action.bindings[0].hasOverrides}");
         }
     }    
     
@@ -104,7 +104,7 @@ public class RebindingScript : MonoBehaviour
     {
         if (ctx.performed)
         {
-            Debug.Log($"TestAction3: {ctx.action.bindings[0].hasOverrides}");
+            Logger.LogMessage($"TestAction3: {ctx.action.bindings[0].hasOverrides}");
         }
     }
 

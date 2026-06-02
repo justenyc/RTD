@@ -15,7 +15,7 @@ public class DB_VFX : ScriptableObject
                 return vfx;
             }
         }
-        Debug.LogError($"No vfx was found in group {vfxGroup} with name {name}");
+        Logger.LogError($"No vfx was found in group {vfxGroup} with name {name}");
         return null;
     }
 }

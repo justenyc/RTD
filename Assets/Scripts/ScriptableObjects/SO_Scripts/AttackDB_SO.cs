@@ -10,7 +10,7 @@ public class AttackDB_SO : ScriptableObject
     {
         if(!DB.ContainsKey(s))
         {
-            Debug.LogError($"<color=yellow>{s}</color> was not found in <color=#90EE90>{this.name}</color>");
+            Logger.LogError($"<color=yellow>{s}</color> was not found in <color=#90EE90>{this.name}</color>");
             return default;
         }
         return DB[s];

@@ -43,7 +43,7 @@ public static class Item_Effects
         Status status = go.GetComponent<Status>();
         if (!go)
         {
-            Debug.LogError($"Did not find a Health component on {go.name}");
+            Logger.LogError($"Did not find a Health component on {go.name}");
             callback(false);
             return;
         }
@@ -97,7 +97,7 @@ public static class Item_Effects
                     .WithDamageType(item.damageType)
                     .Build();
 
-        Debug.Log($"<color=yellow>AOE_Damage</color> overlaps length: {overlaps.Length}");
+        Logger.LogMessage($"<color=yellow>AOE_Damage</color> overlaps length: {overlaps.Length}");
         foreach (Collider c in overlaps)
         {
             if (c.TryGetComponent(out Hurtbox hurtbox))

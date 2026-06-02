@@ -105,7 +105,7 @@ public class Hitbox : MonoBehaviour
 
         if (other.TryGetComponent(out Hurtbox hurtbox))
         {
-            Debug.Log($"{this.name} : {other.name}");
+            Logger.LogMessage($"{this.name} : {other.name}");
             if (OnHitEvent != null)
             {
                 OnHitEvent.Invoke(hurtbox);
@@ -117,7 +117,7 @@ public class Hitbox : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out Hurtbox hurtbox))
         {
-            Debug.Log($"{this.name} : {other.gameObject.name}");
+            Logger.LogMessage($"{this.name} : {other.gameObject.name}");
             if (OnHitEvent != null)
             {
                 OnHitEvent.Invoke(hurtbox);

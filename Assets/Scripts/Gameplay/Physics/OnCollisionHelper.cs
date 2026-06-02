@@ -12,8 +12,8 @@ public class OnCollisionHelper : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log($"CollisionEntered! {gameObject.name}");
-        //Debug.Log(OnCollisionEnterEvent.GetPersistentEventCount());
+        //Logger.LogMessage($"CollisionEntered! {gameObject.name}");
+        //Logger.LogMessage(OnCollisionEnterEvent.GetPersistentEventCount());
         OnCollisionEnterEvent.Invoke(collision);
     }
 

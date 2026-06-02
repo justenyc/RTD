@@ -42,7 +42,7 @@ public class RebindingButton : MonoBehaviour
             .OnComplete(
             operation =>
             {
-                Debug.Log($"Attempting to rebind '{action}' to '{operation.selectedControl}'");
+                Logger.LogMessage($"Attempting to rebind '{action}' to '{operation.selectedControl}'");
                 playerInput.SwitchCurrentActionMap("TestRebinding");
 
                 var bind = action.bindings[bindingIndex];
@@ -51,21 +51,21 @@ public class RebindingButton : MonoBehaviour
                 if (bind.effectivePath == "<Keyboard>/backspace" || bind.effectivePath == "<Gamepad>/start")
                 {
                     action.ApplyBindingOverride(bindingIndex, oldBinding);
-                    Debug.Log($"Binding restored to old binding: {oldBinding}");
+                    Logger.LogMessage($"Binding restored to old binding: {oldBinding}");
                 }
                 else if(!bind.effectivePath.Contains(pathMask.ToString()))
                 {
                     action.ApplyBindingOverride(bindingIndex, oldBinding);
-                    Debug.Log("Invalid input type");
+                    Logger.LogMessage("Invalid input type");
                 } 
                 else if (rebindingScript.CheckDuplicateBinding(bind.effectivePath, actionMapName, action, out ifBoundActionName))
                 {
                     action.ApplyBindingOverride(bindingIndex, oldBinding);
-                    Debug.Log($"{bind.effectivePath} is already bound to {ifBoundActionName}");
+                    Logger.LogMessage($"{bind.effectivePath} is already bound to {ifBoundActionName}");
                 }
                 else
                 {
-                    Debug.Log($"{action} bound to {bind.effectivePath}");
+                    Logger.LogMessage($"{action} bound to {bind.effectivePath}");
                 }
                 
                 Reset();

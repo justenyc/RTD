@@ -26,7 +26,7 @@ public static class Helper
         while (currentFrames < frames)
         {
             currentFrames++;
-            //Debug.Log($"{currentFrames} : {frames}");
+            //Logger.LogMessage($"{currentFrames} : {frames}");
             yield return new WaitForFixedUpdate();
         }
         action();

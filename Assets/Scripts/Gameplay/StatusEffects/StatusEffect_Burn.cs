@@ -88,7 +88,7 @@ public class StatusEffect_Burn : MonoBehaviour, IStatusEffect
         Collider[] cols = Physics.OverlapSphere(transform.position, spreadRadius);
         foreach(Collider col in cols)
         {
-            Debug.Log($"Found another burn effect on {col.name}: {col.transform.GetComponentInChildren<StatusEffect_Burn>() != null}");
+            Logger.LogMessage($"Found another burn effect on {col.name}: {col.transform.GetComponentInChildren<StatusEffect_Burn>() != null}");
             if (col.transform.GetComponentInChildren<StatusEffect_Burn>() != null)
             {
                 return;

@@ -25,13 +25,13 @@ public class InputHandler : MonoBehaviour
     public void OnMove(InputAction.CallbackContext ctx)
     {
         moveVector = ctx.ReadValue<Vector2>();
-        //Debug.Log(m_moveVector);
+        //Logger.LogMessage(m_moveVector);
     }
 
     public void OnLook(InputAction.CallbackContext ctx)
     {
         lookVector = ctx.ReadValue<Vector2>();
-        //Debug.Log(m_lookVector);
+        //Logger.LogMessage(m_lookVector);
     }
 
     public void OnUseWeapon(InputAction.CallbackContext ctx)
@@ -42,7 +42,7 @@ public class InputHandler : MonoBehaviour
 
     public void OnGuard(InputAction.CallbackContext ctx)
     {
-        //Debug.Log(ctx.phase);
+        //Logger.LogMessage(ctx.phase);
         Guard?.Invoke(ctx);
     }
 
@@ -53,7 +53,7 @@ public class InputHandler : MonoBehaviour
 
     public void OnAim(InputAction.CallbackContext ctx)
     {
-        //Debug.Log(ctx.phase);
+        //Logger.LogMessage(ctx.phase);
         Aim?.Invoke(ctx);
     }
 

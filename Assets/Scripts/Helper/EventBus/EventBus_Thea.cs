@@ -30,7 +30,7 @@ public class EventBus_Thea : EventBus
     public void InvokeEvent(EventId id)
     {
 #if UNITY_EDITOR
-        Debug.Log($"Invoking <color=yellow>{id}</color> from <color=cyan>{this}</color> located on <color=cyan>{this.name}</color>");
+        Logger.LogMessage($"Invoking <color=yellow>{id}</color> from <color=cyan>{this}</color> located on <color=cyan>{this.name}</color>");
 #endif
         if(eventContainer.ContainsKey(id))
         {

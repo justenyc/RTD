@@ -49,7 +49,7 @@ public class Status_Effects : ScriptableObject
     {
         check = Mathf.Clamp01(check);
         float chance = Random.Range(0.01f, 0.99f);
-        Debug.Log($"ApplicationCheck evaluated to {chance}(chance) against {check}(check)");
+        Logger.LogMessage($"ApplicationCheck evaluated to {chance}(chance) against {check}(check)");
         return check > chance;
     }
 }

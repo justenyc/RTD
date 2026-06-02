@@ -22,7 +22,7 @@ public class TorqueApplicator : MonoBehaviour
             {
                 bodyToAffect = rb;
             }
-            Debug.LogError($"No <color=cyan>Rigidbody</color> found on {gameObject}'s <color=cyan>TorqueApplicator</color>");
+            Logger.LogError($"No <color=cyan>Rigidbody</color> found on {gameObject}'s <color=cyan>TorqueApplicator</color>");
         }
     }
 
@@ -30,7 +30,7 @@ public class TorqueApplicator : MonoBehaviour
     {
         if(onStart)
         {
-            Debug.Log($"{transform.right} + {torqueAxis} = {transform.right + torqueAxis}");
+            Logger.LogMessage($"{transform.right} + {torqueAxis} = {transform.right + torqueAxis}");
             bodyToAffect.AddRelativeTorque(torqueAxis * strength);
         }
     }

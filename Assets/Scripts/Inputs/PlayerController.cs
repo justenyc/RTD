@@ -163,7 +163,7 @@ namespace Player
         {
             if(index < 0 || index >= m_attackDB.GetDbLength())
             {
-                Debug.LogError($"Invalid index: {index} - SCAI110");
+                Logger.LogError($"Invalid index: {index} - SCAI110");
                 return;
             }
 

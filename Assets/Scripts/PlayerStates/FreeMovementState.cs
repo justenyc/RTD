@@ -28,7 +28,7 @@ namespace Player
 
         public void StateStart()
         {
-            //Debug.Log("Starting FreeMovement State");
+            //Logger.LogMessage("Starting FreeMovement State");
             m_manager.currentState = "FreeMovement";
 
             m_manager.inputHandler.Sprint += OnSprint;
@@ -39,7 +39,7 @@ namespace Player
 
         public void StateEnd()
         {
-            //Debug.Log("Ending FreeMovement State");
+            //Logger.LogMessage("Ending FreeMovement State");
             m_manager.inputHandler.Sprint -= OnSprint;
             m_manager.inputHandler.Aim -= OnAim;
             m_manager.inputHandler.UseCurrentItem -= OnUseCurrentItem;
@@ -123,7 +123,7 @@ namespace Player
 
             Vector3 currentCameraFollowRot = m_manager.cameraFollow.rotation.eulerAngles;
             Vector3 newCameraFollowRot = currentCameraFollowRot + Vector3.right * -inputVector.y * rotateSpeed * Time.fixedDeltaTime;
-            //Debug.Log(newCameraFollowRot);
+            //Logger.LogMessage(newCameraFollowRot);
             newCameraFollowRot.x = (newCameraFollowRot.x > 180) ? newCameraFollowRot.x - 360 : newCameraFollowRot.x;
             newCameraFollowRot.x = Mathf.Clamp(newCameraFollowRot.x, m_manager.freeMovementProperties.minCameraVert, m_manager.freeMovementProperties.maxCameraVert);
             m_manager.cameraFollow.rotation = Quaternion.Euler(newCameraFollowRot);

@@ -40,7 +40,7 @@ public class Item_Projectile : MonoBehaviour
     {
         if (args == null)
         {
-            Debug.LogError($"<color=cyan>{gameObject.name}</color> Hitbox.Args is <color=red>null</color>");
+            Logger.LogError($"<color=cyan>{gameObject.name}</color> Hitbox.Args is <color=red>null</color>");
             return;
         }
         hurtbox.PostOnHurt(args);
@@ -58,7 +58,7 @@ public class Item_Projectile : MonoBehaviour
         {
             Item_Effects.onCollisionEffects[collisionEffect].Invoke(this.gameObject, item, null);
         }
-        Debug.Log(hurtbox.gameObject.name);
+        Logger.LogMessage(hurtbox.gameObject.name);
     }
 
     private void OnCollisionEnter(Collision collision)

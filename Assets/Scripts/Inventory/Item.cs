@@ -32,7 +32,7 @@ public class Item
                     return;
                 }
 
-                Debug.Log($"<color=yellow>{go}</color> Failed to use <color=cyan>{itemName}</color>");
+                Logger.LogMessage($"<color=yellow>{go}</color> Failed to use <color=cyan>{itemName}</color>");
             });
     }
 
@@ -41,7 +41,7 @@ public class Item
         var rb = modelPrefab?.GetComponent<Rigidbody>();
         if (rb == null)
         {
-            Debug.LogError($"A <color=cyan>Rigidbody</color> was not found on the Model Prefab: <color=yellow>{modelPrefab.name}</color>");
+            Logger.LogError($"A <color=cyan>Rigidbody</color> was not found on the Model Prefab: <color=yellow>{modelPrefab.name}</color>");
             return;
         }
 

@@ -29,7 +29,7 @@ namespace Player
 
         public void StateStart()
         {
-            //Debug.Log("Starting Aim State");
+            //Logger.LogMessage("Starting Aim State");
 
             m_manager.currentState = "Aim";
             //inStartUp = true;
@@ -157,7 +157,7 @@ namespace Player
 
             Vector3 currentCameraFollowRot = m_manager.cameraFollow.rotation.eulerAngles;
             Vector3 newCameraFollowRot = currentCameraFollowRot + Vector3.right * -inputVector.y * m_manager.aimProperties.rotateSpeed * Time.fixedDeltaTime;
-            //Debug.Log(newCameraFollowRot);
+            //Logger.LogMessage(newCameraFollowRot);
             newCameraFollowRot.x = (newCameraFollowRot.x > 180) ? newCameraFollowRot.x - 360 : newCameraFollowRot.x;
             newCameraFollowRot.x = Mathf.Clamp(newCameraFollowRot.x, m_manager.aimProperties.minCameraVert, m_manager.aimProperties.maxCameraVert);
             m_manager.cameraFollow.rotation = Quaternion.Euler(newCameraFollowRot);

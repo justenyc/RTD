@@ -34,7 +34,7 @@ public class Inventory : MonoBehaviour
     {
         if (ItemDB == null)
         {
-            Debug.LogWarning($"<color=cyan>Inventory</color> component on <color=green>{gameObject.name}</color> is missing a reference to an <color=yellow>DB_Item</color>!");
+            Logger.LogWarning($"<color=cyan>Inventory</color> component on <color=green>{gameObject.name}</color> is missing a reference to an <color=yellow>DB_Item</color>!");
         }
     }
 
@@ -66,7 +66,7 @@ public class Inventory : MonoBehaviour
                 return slot;
             }
         }
-        Debug.Log($"Item <color=cyan>{item.itemName}</color> was not found in the Inventory component of <color=green>{gameObject.name}</color>");
+        Logger.LogMessage($"Item <color=cyan>{item.itemName}</color> was not found in the Inventory component of <color=green>{gameObject.name}</color>");
         return null;
     }
 
@@ -94,7 +94,7 @@ public class Inventory : MonoBehaviour
 
         if(inventory.Count >= maxInventorySize)
         {
-            Debug.Log($"<color=cyan>Inventory</color> on <color=green>{gameObject.name}</color> exceeded max number of slots");
+            Logger.LogMessage($"<color=cyan>Inventory</color> on <color=green>{gameObject.name}</color> exceeded max number of slots");
             return 2;
         }
 
@@ -136,7 +136,7 @@ public class Inventory : MonoBehaviour
     {
         if (IsInInventory(item) == null)
         {
-            Debug.Log($"<color=cyan>{item.itemName}</color> was not found when attempting <color=yellow>UseItem()</color>");
+            Logger.LogMessage($"<color=cyan>{item.itemName}</color> was not found when attempting <color=yellow>UseItem()</color>");
             return;
         }
 

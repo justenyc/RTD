@@ -10,7 +10,7 @@ public class Detector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log(other.name);
+        //Logger.LogMessage(other.name);
         if(OnTriggerEnterPost != null)
         {
             OnTriggerEnterPost(other);

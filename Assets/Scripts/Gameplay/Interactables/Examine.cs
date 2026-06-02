@@ -9,6 +9,6 @@ public class Examine : Interactable
 
     public override void Interact(PlayerController player)
     {
-        Debug.Log(m_message);
+        Logger.LogMessage(m_message);
     }
 }

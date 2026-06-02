@@ -33,7 +33,7 @@ public class FloatRandomizer : MonoBehaviour
             float max = randomMin;
             randomMin = randomMax;
             randomMax = max;
-            Debug.LogWarning($"<color=yellow>Warning!</color> Reassigning Random Min and Random Max because Min was bigger than Max!");
+            Logger.LogWarning($"<color=yellow>Warning!</color> Reassigning Random Min and Random Max because Min was bigger than Max!");
         }
     }
     
