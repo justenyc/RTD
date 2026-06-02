@@ -181,13 +181,8 @@ namespace Player
 
         void OnUseCurrentItem(InputAction.CallbackContext context)
         {
-            if (context.performed)
-            {
-                m_manager.Animator.SetTrigger("UseItem");
-                var itemToThrow = m_manager.inventory.GetCurrentItem();
-                return;
-            }
-        }
+			m_manager.Animator.SetBool("UseItem", context.control.IsPressed());
+		}
 
         void OnUseWeapon(InputAction.CallbackContext context)
         {

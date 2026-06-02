@@ -46,7 +46,7 @@
                     "name": "TurnAround",
                     "type": "Button",
                     "id": "d75882e0-cec4-4a5a-b838-3868091a9d75",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -100,9 +100,9 @@
                     "name": "UseCurrentItem",
                     "type": "Button",
                     "id": "df45eaef-8ff2-451d-9cb5-686bab3f119e",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press(behavior=2)",
                     "initialStateCheck": false
                 },
                 {
@@ -127,7 +127,7 @@
                     "name": "OpenMenu",
                     "type": "Button",
                     "id": "6d1bc1c1-2e20-440e-a287-6eaf12572a77",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
