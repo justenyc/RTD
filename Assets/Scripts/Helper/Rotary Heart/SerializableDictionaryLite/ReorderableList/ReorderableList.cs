@@ -1934,7 +1934,7 @@ namespace RotaryHeart.Lib.SerializableDictionary
             {
                 appendDragDropParams = GetParams(ref appendDragDropParams, 1);
 
-                Logger.LogMessage(appendDragDropParams.Length);
+                Logger.LogMessage(appendDragDropParams.Length.ToString());
 
                 appendDragDropParams[0] = obj;
                 appendDragDrop.Invoke(list, appendDragDropParams);

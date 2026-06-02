@@ -353,7 +353,7 @@ namespace RotaryHeart.Lib.SerializableDictionary
                             //We need the reference to the reference holder class
                             if (reqReferences == null)
                             {
-                                Logger.LogMessageError("A key of type: " + tKeyType + " requires to have a valid RequiredReferences reference");
+                                Logger.LogError("A key of type: " + tKeyType + " requires to have a valid RequiredReferences reference");
                                 continue;
                             }
 
@@ -371,7 +371,7 @@ namespace RotaryHeart.Lib.SerializableDictionary
                             //References class is missing the field, skip the element
                             if (_keys[i] == null)
                             {
-                                Logger.LogMessageError("Couldn't find " + tKeyType + " reference.");
+                                Logger.LogError("Couldn't find " + tKeyType + " reference.");
                                 continue;
                             }
                         }
@@ -416,7 +416,7 @@ namespace RotaryHeart.Lib.SerializableDictionary
                             //We need the reference to the reference holder class
                             if (reqReferences == null)
                             {
-                                Logger.LogMessageError("A key of type: " + tKeyType + " requires to have a valid RequiredReferences reference");
+                                Logger.LogError("A key of type: " + tKeyType + " requires to have a valid RequiredReferences reference");
                                 continue;
                             }
 
@@ -434,7 +434,7 @@ namespace RotaryHeart.Lib.SerializableDictionary
                             //References class is missing the field, skip the element
                             if (_keys[i] == null)
                             {
-                                Logger.LogMessageError("Couldn't find " + tKeyType + " reference.");
+                                Logger.LogError("Couldn't find " + tKeyType + " reference.");
                                 continue;
                             }
                         }
