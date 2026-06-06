@@ -6,6 +6,9 @@ public class EventBus_Thea : EventBus
 {
     [SerializeField] SerializableDictionaryBase<EventId, UnityEvent> eventContainer;
 
+    [Header("Debug")]
+    [SerializeField] bool logEvents = false;
+
     [System.Serializable]
     public enum EventId
     {
@@ -19,7 +22,9 @@ public class EventBus_Thea : EventBus
         SwordAppear,
         SwordDisappear,
         CanCancel,
-        ThrowItem
+        ThrowItem,
+        SwordHitboxActive,
+        SwordHitboxInactive
     }
 
     public UnityEvent GetEvent(EventId id)
@@ -29,9 +34,8 @@ public class EventBus_Thea : EventBus
 
     public void InvokeEvent(EventId id)
     {
-#if UNITY_EDITOR
-        Logger.LogMessage($"Invoking <color=yellow>{id}</color> from <color=cyan>{this}</color> located on <color=cyan>{this.name}</color>");
-#endif
+        if(logEvents) Logger.LogMessage($"Invoking <color=yellow>{id}</color> from <color=cyan>{this}</color> located on <color=cyan>{this.name}</color>");
+
         if(eventContainer.ContainsKey(id))
         {
             eventContainer[id]?.Invoke();

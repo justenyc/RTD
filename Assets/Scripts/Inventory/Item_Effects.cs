@@ -93,7 +93,7 @@ public static class Item_Effects
 
         Hitbox.Args args = new Hitbox.ArgsBuilder()
                     .WithPower(item.potency)
-                    .WithSize(item.size)
+                    //.WithSize(item.size)
                     .WithDamageType(item.damageType)
                     .Build();
 

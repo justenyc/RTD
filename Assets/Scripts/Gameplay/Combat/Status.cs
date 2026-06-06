@@ -1,6 +1,4 @@
 using UnityEditor;
-using UnityEditor.UIElements;
-using UnityEngine.UIElements;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,6 +6,7 @@ using UnityEngine.Events;
 public class Status : MonoBehaviour
 {
     [Header("References")]
+    [Tooltip("The StatProfile which this Actor will use as a foundation to calculate its stats per level")]
     [SerializeField] BaseStatProfile baseStatProfile;
 
     [Header("Dynamic Stats")]
@@ -21,6 +20,8 @@ public class Status : MonoBehaviour
     [SerializeField] float m_elemDef;
     [SerializeField] float m_physAtk;
     [SerializeField] float m_elemAtk;
+    [SerializeField] float m_physAtkScl = 1;
+    [SerializeField] float m_elemAtkScl = 1;
 
     public int Level => m_level;
     public float MaxHealth => m_maxHealth;
@@ -81,6 +82,7 @@ public class Status : MonoBehaviour
 
         DB_SO.instance.statusEffectsSO.ApplyEffect(args, this.gameObject);
 
+        Logger.LogMessage($"{gameObject.name} received <color=red>{damageCalculation}</color> damage");
         ChangeCurrentHealth(-damageCalculation);
     }
 
@@ -100,19 +102,18 @@ public class Status : MonoBehaviour
     /// </summary>
     /// <param name="damageType">See "Hitbox" for list of damage types</param>
     /// <returns></returns>
-    public Hitbox.Args GenerateHbArgs(Hitbox.DamageType damageType)
+    public Hitbox.Args GenerateHbArgs(Hitbox.Args baseArgs)
     {
-        float power = 0;
-
         CalculateStats();
+        float power = baseArgs.damageType == Hitbox.DamageType.Slash || baseArgs.damageType == Hitbox.DamageType.Blunt ? baseArgs.power + m_physAtk * m_physAtkScl : baseArgs.power + m_elemAtk * m_elemAtkScl;
+        float knockback = baseArgs.knockback * baseArgs.power / 10;
 
-        power = damageType == Hitbox.DamageType.Slash || damageType == Hitbox.DamageType.Blunt ? m_physAtk : m_elemAtk;
+        //power = damageType == Hitbox.DamageType.Slash || damageType == Hitbox.DamageType.Blunt ? m_physAtk : m_elemAtk;
 
-        //Hitbox.Args args = new Hitbox.Args(power, power / 10, _damageType: damageType);
         Hitbox.Args args = new Hitbox.ArgsBuilder()
             .WithPower(power)
             .WithKnockback(power / 10)
-            .WithDamageType(damageType)
+            .WithDamageType(baseArgs.damageType)
             .Build();
 
         DeliverHitboxArgs.Invoke(args);

@@ -28,9 +28,9 @@ public class Hitbox : MonoBehaviour
         public string name = "";
         public float power = 0;
         public float knockback = 0;
-        public Vector3 position = Vector3.zero;
-        public float size = 0;
-        public Vector3 rotation = Vector3.zero;
+        //public Vector3 position = Vector3.zero;
+        //public float size = 0;
+        //public Vector3 rotation = Vector3.zero;
         public DamageType damageType = DamageType.Blunt;
         public List<GameObject> exceptions;
     }
@@ -57,23 +57,23 @@ public class Hitbox : MonoBehaviour
             return this;
         }
 
-        public ArgsBuilder WithPosition(Vector3 _position)
-        {
-            args.position = _position;
-            return this;
-        }
+        //public ArgsBuilder WithPosition(Vector3 _position)
+        //{
+        //    args.position = _position;
+        //    return this;
+        //}
 
-        public ArgsBuilder WithSize(float _size)
-        {
-            args.size = _size;
-            return this;
-        }
+        //public ArgsBuilder WithSize(float _size)
+        //{
+        //    args.size = _size;
+        //    return this;
+        //}
 
-        public ArgsBuilder WithRotation(Vector3 _rotation)
-        {
-            args.rotation = _rotation;
-            return this;
-        }
+        //public ArgsBuilder WithRotation(Vector3 _rotation)
+        //{
+        //    args.rotation = _rotation;
+        //    return this;
+        //}
 
         public ArgsBuilder WithDamageType(DamageType _damageType)
         {

@@ -173,6 +173,7 @@ namespace Player
         public void OnHit(Hurtbox hurtbox)
         {
             var a = m_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+            Logger.LogMessage(a);
             hurtbox.PostOnHurt(m_status.GenerateHbArgs(m_attackDB.GetArgsByName(a)));
         }
 

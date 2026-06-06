@@ -1500,6 +1500,8 @@ MonoBehaviour:
   m_elemDef: 0
   m_physAtk: 0
   m_elemAtk: 0
+  m_physAtkScl: 0
+  m_elemAtkScl: 0
   HealthHitZero:
     m_PersistentCalls:
       m_Calls:
@@ -3309,6 +3311,8 @@ MonoBehaviour:
   m_elemDef: 0
   m_physAtk: 0
   m_elemAtk: 0
+  m_physAtkScl: 0
+  m_elemAtkScl: 0
   HealthHitZero:
     m_PersistentCalls:
       m_Calls: []
@@ -3885,6 +3889,8 @@ MonoBehaviour:
   m_elemDef: 0
   m_physAtk: 0
   m_elemAtk: 0
+  m_physAtkScl: 0
+  m_elemAtkScl: 0
   HealthHitZero:
     m_PersistentCalls:
       m_Calls: []
@@ -4216,6 +4222,8 @@ MonoBehaviour:
   m_elemDef: 0
   m_physAtk: 0
   m_elemAtk: 0
+  m_physAtkScl: 0
+  m_elemAtkScl: 0
   HealthHitZero:
     m_PersistentCalls:
       m_Calls: []
@@ -4705,6 +4713,8 @@ MonoBehaviour:
   m_elemDef: 0
   m_physAtk: 0
   m_elemAtk: 0
+  m_physAtkScl: 0
+  m_elemAtkScl: 0
   HealthHitZero:
     m_PersistentCalls:
       m_Calls:
@@ -5241,6 +5251,8 @@ MonoBehaviour:
   m_elemDef: 0
   m_physAtk: 0
   m_elemAtk: 0
+  m_physAtkScl: 0
+  m_elemAtkScl: 0
   HealthHitZero:
     m_PersistentCalls:
       m_Calls: []

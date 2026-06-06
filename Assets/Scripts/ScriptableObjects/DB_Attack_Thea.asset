@@ -38,10 +38,25 @@ MonoBehaviour:
     isExpanded: 1
     _keyValues:
     - Armature_Thea_Sword_1B
-    - Armature|Thea_Sword_2
-    - Armature|Thea_Sword_3
+    - Armature_Thea_Sword_2
+    - Armature_Thea_Sword_3
     _keys:
     - Armature_Thea_Sword_1B
-    - Armature|Thea_Sword_2
-    - Armature|Thea_Sword_3
-    _values: 000000000000000000000000
+    - Armature_Thea_Sword_2
+    - Armature_Thea_Sword_3
+    _values:
+    - name: Neck Slash
+      power: 2
+      knockback: 2
+      damageType: 0
+      exceptions: []
+    - name: Stepping Slash
+      power: 2
+      knockback: 2
+      damageType: 0
+      exceptions: []
+    - name: Turning Rising Slash
+      power: 6
+      knockback: 3
+      damageType: 0
+      exceptions: []
