@@ -112,6 +112,8 @@ namespace Player
                 return;
             }
 
+            m_manager.interactionHub.HighlightInteractable(m_manager.interactionHub.GetNearestInteractable());
+
             Vector2 targetVector = m_manager.inputHandler.moveVector;
 
             isMoving = m_manager.inputHandler.moveVector != Vector2.zero;

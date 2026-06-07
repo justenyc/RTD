@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InteractionHub : MonoBehaviour
 {
+    [SerializeField] MeshFilter highlighterMF;
     [SerializeField] List<Interactable> interactables = new List<Interactable>();
     [SerializeField] Collider detector;
 
@@ -12,6 +13,7 @@ public class InteractionHub : MonoBehaviour
         if(other.TryGetComponent(out Interactable interactable))
         {
             interactables.Add(interactable);
+            HighlightInteractable(GetNearestInteractable());
         }
     }
 
@@ -20,11 +22,21 @@ public class InteractionHub : MonoBehaviour
         if (other.TryGetComponent(out Interactable interactable))
         {
             interactables.Remove(interactable);
+
+            if(interactables.Count < 1)
+            {
+                highlighterMF.gameObject.SetActive(false);
+                return;
+            }
+
+            HighlightInteractable(GetNearestInteractable());
         }
     }
 
     public Interactable GetNearestInteractable()
     {
+        if (interactables.Count < 1) return null;
+
         Interactable nearest = null;
         if(interactables.Count > 0)
         {
@@ -35,5 +47,26 @@ public class InteractionHub : MonoBehaviour
             }
         }
         return nearest;
+    }
+
+    public void HighlightInteractable(Interactable interactable)
+    {
+        if (interactable == null) return;
+
+        MeshFilter interactableMeshFilter = interactable.GetComponentInAll<MeshFilter>();
+
+        if(interactableMeshFilter == null)
+        {
+            Logger.LogError($"No mesh filter found on interactable: {interactable.gameObject.name}");
+            return;
+        }
+
+        highlighterMF.mesh = interactableMeshFilter.mesh;
+        highlighterMF.transform.parent = interactable.transform;
+        highlighterMF.transform.localPosition = Vector3.zero;
+        highlighterMF.transform.localRotation = Quaternion.identity;
+        highlighterMF.transform.localScale = Vector3.one;
+
+        highlighterMF.gameObject.SetActive(true);
     }
 }

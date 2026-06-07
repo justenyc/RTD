@@ -64,6 +64,8 @@ namespace Player
                 return;
             }
 
+            m_manager.interactionHub.HighlightInteractable(m_manager.interactionHub.GetNearestInteractable());
+
             Vector2 targetVector = m_manager.inputHandler.moveVector * m_manager.freeMovementProperties.moveSpeed;
             targetVector.y += m_sprintInputState && targetVector.y > 0 ? m_manager.freeMovementProperties.sprintSpeed - m_manager.freeMovementProperties.moveSpeed : 0;
 
