@@ -1,11 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public abstract class Interactable : MonoBehaviour
+public class Interactable : MonoBehaviour
 {
+    [SerializeField] GameObject highlightObject;
+    [SerializeField] UnityEvent<Player.PlayerController> OnPlayerInteractEvent;
+
+    public GameObject HighlightObject => highlightObject;
+
     public virtual void Interact(Player.PlayerController player)
     {
-
+        OnPlayerInteractEvent?.Invoke(player);
     }
 }

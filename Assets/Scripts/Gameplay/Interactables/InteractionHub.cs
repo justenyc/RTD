@@ -53,7 +53,8 @@ public class InteractionHub : MonoBehaviour
     {
         if (interactable == null) return;
 
-        MeshFilter interactableMeshFilter = interactable.GetComponentInAll<MeshFilter>();
+        Transform transformToHighlight = interactable.HighlightObject == null ? interactable.transform : interactable.HighlightObject.transform;
+        MeshFilter interactableMeshFilter = transformToHighlight.GetComponent<MeshFilter>();
 
         if(interactableMeshFilter == null)
         {
@@ -62,7 +63,7 @@ public class InteractionHub : MonoBehaviour
         }
 
         highlighterMF.mesh = interactableMeshFilter.mesh;
-        highlighterMF.transform.parent = interactable.transform;
+        highlighterMF.transform.parent = transformToHighlight;
         highlighterMF.transform.localPosition = Vector3.zero;
         highlighterMF.transform.localRotation = Quaternion.identity;
         highlighterMF.transform.localScale = Vector3.one;

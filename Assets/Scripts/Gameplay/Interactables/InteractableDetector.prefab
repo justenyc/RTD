@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5041436657887482126}
   - component: {fileID: 5208902777219185565}
   - component: {fileID: 546737908004792130}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Highlighter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 5332638973240886191}
   - component: {fileID: 3480162085996253251}
   - component: {fileID: 7925755978241051358}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: InteractableDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
