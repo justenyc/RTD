@@ -196,6 +196,11 @@ namespace Player
 
         void OnGuard(InputAction.CallbackContext context)
         {
+            if (!m_manager.listeningForInputs)
+            {
+                return;
+            }
+
             if (context.performed)
             {
                 m_manager.Animator.SetBool("Guard", true);

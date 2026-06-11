@@ -6637,6 +6637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwordVfxHelper
   swordObject: {fileID: 5181988407373859523}
   particleObject: {fileID: 3235842700105938390}
+  particleObjectSystem: {fileID: 6996342822502345994}
 --- !u!1001 &3902183844164216880
 PrefabInstance:
   m_ObjectHideFlags: 0
