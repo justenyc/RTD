@@ -55,7 +55,7 @@
                     "name": "Aim",
                     "type": "Button",
                     "id": "19427663-2225-47fd-8d7a-24bfa64e2cdc",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press(behavior=2)",
                     "initialStateCheck": false
