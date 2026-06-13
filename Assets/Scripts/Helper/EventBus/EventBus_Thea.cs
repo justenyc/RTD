@@ -24,7 +24,9 @@ public class EventBus_Thea : EventBus
         CanCancel,
         ThrowItem,
         SwordHitboxActive,
-        SwordHitboxInactive
+        SwordHitboxInactive,
+        EnableRootMotion,
+        DisableRootMotion
     }
 
     public UnityEvent GetEvent(EventId id)
