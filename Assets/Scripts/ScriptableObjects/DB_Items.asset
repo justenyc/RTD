@@ -15,6 +15,7 @@ MonoBehaviour:
   Items:
   - itemName: Nectar
     description: 
+    uiThumbnail: {fileID: 0}
     damageType: 1
     potency: 10
     size: 1
@@ -26,6 +27,7 @@ MonoBehaviour:
     onCollisionEffects: 
   - itemName: Torch
     description: 
+    uiThumbnail: {fileID: 21300000, guid: 5aa35f4b985298e4a946264c6dd8c05b, type: 3}
     damageType: 2
     potency: 1
     size: 2
@@ -38,6 +40,7 @@ MonoBehaviour:
     onCollisionEffects: 
   - itemName: Soul
     description: 
+    uiThumbnail: {fileID: 0}
     damageType: 0
     potency: 0
     size: 1
@@ -49,6 +52,7 @@ MonoBehaviour:
     onCollisionEffects: 
   - itemName: Firebomb
     description: 
+    uiThumbnail: {fileID: 21300000, guid: 3ab6b6781f0bb1e4fb864e853877be33, type: 3}
     damageType: 2
     potency: 100
     size: 2
