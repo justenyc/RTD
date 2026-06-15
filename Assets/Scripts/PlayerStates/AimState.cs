@@ -170,6 +170,7 @@ namespace Player
             m_aimInputState = context.performed;
             if(!context.action.IsPressed() && m_manager.listeningForInputs)
             {
+                m_manager.Animator.ResetTrigger("Attack");
                 GoToFreeMovementState();
             }
         }
@@ -209,6 +210,7 @@ namespace Player
             if (context.canceled)
             {
                 m_manager.Animator.SetBool("Guard", false);
+                m_manager.Animator.ResetTrigger("Attack");
             }
         }
         #endregion
