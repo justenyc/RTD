@@ -1,9 +1,10 @@
 using Cinemachine;
+using DG.Tweening;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using DG.Tweening;
-using System.Runtime.InteropServices.WindowsRuntime;
+using UnityEngine.InputSystem.XR;
 
 namespace Player
 {
@@ -107,7 +108,7 @@ namespace Player
 
         private void Move()
         {
-            if (!m_manager.canMove)
+            if (!m_manager.canMove || m_manager.useRootMotion)
             {
                 return;
             }

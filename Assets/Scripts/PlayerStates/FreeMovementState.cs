@@ -59,7 +59,7 @@ namespace Player
 
         private void Move()
         {
-            if (!m_manager.canMove)
+            if (!m_manager.canMove || m_manager.useRootMotion)
             {
                 return;
             }

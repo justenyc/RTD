@@ -30,6 +30,7 @@ namespace Player
         [SerializeField] AimProperties m_aimProperties;
         [SerializeField] SharedProperties m_sharedProperties;
         [SerializeField] bool m_canMove;
+        [SerializeField] bool m_useRootMotion;
         [SerializeField] bool m_listeningForInputs;
         [SerializeField] bool m_canThrow;
 
@@ -51,6 +52,7 @@ namespace Player
         public SharedProperties sharedProperties => m_sharedProperties;
         public EventBus_Thea eventBus => m_eventBus;
         public bool canMove => m_canMove;
+        public bool useRootMotion => m_useRootMotion;
         public bool listeningForInputs => m_listeningForInputs;
         public bool canThrow => m_canThrow;
         #endregion
@@ -119,6 +121,25 @@ namespace Player
             m_currentState.StateFixedUpdate();
         }
 
+        public void OnAnimatorMove()
+        {
+            // Check if the animator has valid root motion data this frame
+            if (m_animator && m_useRootMotion)
+            {
+                // Extract the velocity calculated by the animation
+                Vector3 velocity = m_animator.deltaPosition / Time.deltaTime;
+
+                // Add gravity manually if your script doesn't handle it elsewhere
+                velocity.y += Physics.gravity.y * Time.deltaTime;
+
+                // Move the controller using the animation's exact speed
+                m_controller.Move(velocity * Time.deltaTime);
+
+                // Match the rotation change from the animation
+                //transform.rotation *= anim.deltaRotation;
+            }
+        }
+
         // Set in inspector. Used by EventBus_Thea
         public void SetCanMove(bool b)
         {
@@ -135,6 +156,11 @@ namespace Player
         public void SetCanThrow(bool b)
         {
             m_canThrow = b;
+        }
+
+        public void SetUseRootMotion(bool b)
+        {
+            m_useRootMotion = b;
         }
 
         public void CycleItemPrev(InputAction.CallbackContext context)

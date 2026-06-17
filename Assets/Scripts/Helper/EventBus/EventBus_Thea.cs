@@ -26,7 +26,9 @@ public class EventBus_Thea : EventBus
         SwordHitboxActive,
         SwordHitboxInactive,
         EnableRootMotion,
-        DisableRootMotion
+        DisableRootMotion,
+        DisableAnimatorRootMotion,
+        EnableAnimatorRootMotion
     }
 
     public UnityEvent GetEvent(EventId id)
