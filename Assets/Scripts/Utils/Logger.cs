@@ -20,4 +20,16 @@ public static class Logger
     {
         UnityEngine.Debug.LogError(message);
     }
+
+    [Conditional("UNITY_EDITOR")]
+    public static void DrawRay(Vector3 start, Vector3 dir)
+    {
+        UnityEngine.Debug.DrawRay(start, dir);
+    }
+
+    [Conditional("UNITY_EDITOR")]
+    public static void DrawRay(Vector3 start, Vector3 dir, Color color)
+    {
+        UnityEngine.Debug.DrawRay(start, dir, color);
+    }
 }
