@@ -2966,7 +2966,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &916157922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9492,7 +9492,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1837309184
 Transform:
   m_ObjectHideFlags: 0
@@ -10250,7 +10250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2139096561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10459,6 +10459,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Particle System (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8984253990830315961, guid: 855c8ed68ca3ad141a941d2b42513d7e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10472,6 +10477,43 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1281282592256743648, guid: e4e0184e4e5894d418bde805a5c6bd0d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 560ce7474c7d83a43925c57ec41d7e89,
+        type: 3}
+    - target: {fileID: 1898581231823495300, guid: e4e0184e4e5894d418bde805a5c6bd0d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a0a12547d448ca846b965fe0085f049b,
+        type: 3}
+    - target: {fileID: 3783346763034121368, guid: e4e0184e4e5894d418bde805a5c6bd0d,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 3783346763034121368, guid: e4e0184e4e5894d418bde805a5c6bd0d,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 3893478493889706486, guid: e4e0184e4e5894d418bde805a5c6bd0d,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3893478493889706486, guid: e4e0184e4e5894d418bde805a5c6bd0d,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4573867030762056596, guid: e4e0184e4e5894d418bde805a5c6bd0d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5216271100392603199, guid: e4e0184e4e5894d418bde805a5c6bd0d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10522,6 +10564,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5857103848272111705, guid: e4e0184e4e5894d418bde805a5c6bd0d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 29e2ebe848cce664bb4087660fd89f34,
+        type: 3}
+    - target: {fileID: 6608448944445872964, guid: e4e0184e4e5894d418bde805a5c6bd0d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 81d5b8528aa3c6b49b22657e3cfb1cd9,
+        type: 3}
     - target: {fileID: 8947398557172261023, guid: e4e0184e4e5894d418bde805a5c6bd0d,
         type: 3}
       propertyPath: m_Name
@@ -10530,7 +10584,7 @@ PrefabInstance:
     - target: {fileID: 8947398557172261023, guid: e4e0184e4e5894d418bde805a5c6bd0d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10600,6 +10654,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Point Light
       objectReference: {fileID: 0}
+    - target: {fileID: 7713917763704881457, guid: 95c8f811a33c9a2439dd2b7370c60a00,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10631,12 +10690,12 @@ PrefabInstance:
     - target: {fileID: 7283202026797485877, guid: 3436c7328ec6e934eb2810731959dffd,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7802099157864244324, guid: 3436c7328ec6e934eb2810731959dffd,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7915113516035590091, guid: 3436c7328ec6e934eb2810731959dffd,
         type: 3}
@@ -11434,6 +11493,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LightReceiver
+      objectReference: {fileID: 0}
+    - target: {fileID: 2353663287146139640, guid: bc45025d801f3ec479b13f1bbc7478d3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5962032466227257917, guid: bc45025d801f3ec479b13f1bbc7478d3,
         type: 3}
