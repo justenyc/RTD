@@ -36,8 +36,9 @@ public class LightingManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         Instance = this;
-        singletonComplete.Invoke();
+        singletonComplete?.Invoke();
     }
 
     void OnDisable()

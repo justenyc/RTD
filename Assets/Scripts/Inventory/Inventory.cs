@@ -110,7 +110,7 @@ public class Inventory : MonoBehaviour
         m_currentInventoryIndex += direction;
         m_currentInventoryIndex = m_currentInventoryIndex > inventory.Count - 1 ? 0 : m_currentInventoryIndex < 0 ? inventory.Count - 1 : m_currentInventoryIndex;
         m_currentItem = inventory[m_currentInventoryIndex].itemName;
-        PlayerStatusHudController.Instance.SetCurrentItemThumbnail(GetCurrentItem().uiThumbnail);
+        PlayerStatusHudController.Instance?.SetCurrentItemThumbnail(GetCurrentItem().uiThumbnail);
         return m_currentInventoryIndex;
     }
 
