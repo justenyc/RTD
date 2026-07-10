@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -74,7 +72,11 @@ public class InputHandler : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext ctx)
     {
-        Interact?.Invoke(ctx);
+        Logger.LogMessage(ctx.performed.ToString());
+        if (ctx.performed)
+        {
+            Interact?.Invoke(ctx);
+        }
     }
 
     public void OnUseCurrentItem(InputAction.CallbackContext ctx)

@@ -119,8 +119,8 @@ namespace Player
 
             isMoving = m_manager.inputHandler.moveVector != Vector2.zero;
             float easeTime = isMoving ?
-                Time.fixedDeltaTime * m_manager.aimProperties.accelerationStrength :
-                Time.fixedDeltaTime * m_manager.aimProperties.decelerationStrength;
+                Time.deltaTime * m_manager.aimProperties.accelerationStrength :
+                Time.deltaTime * m_manager.aimProperties.decelerationStrength;
 
             Vector3 cameraForward = Camera.main.transform.forward;
             Vector3 cameraRight = Camera.main.transform.right;
@@ -135,14 +135,14 @@ namespace Player
             Vector3 rightRelative = cameraRight * movementVector.x;
 
             Vector3 moveVector = forwardRelative + rightRelative;
-            m_manager.controller.Move(moveVector * Time.fixedDeltaTime);
+            m_manager.controller.Move(moveVector * Time.deltaTime);
 
             AnimateMovement();
         }
 
         void AnimateMovement()
         {
-            float easeTime = isMoving ? Time.fixedDeltaTime * m_manager.aimProperties.easeInAnimationStrength : Time.fixedDeltaTime * m_manager.aimProperties.easeOutAnimationStrength;
+            float easeTime = isMoving ? Time.deltaTime * m_manager.aimProperties.easeInAnimationStrength : Time.deltaTime * m_manager.aimProperties.easeOutAnimationStrength;
             animationVector.x = Mathf.Lerp(animationVector.x, m_manager.inputHandler.moveVector.x, easeTime);
             animationVector.y = Mathf.Lerp(animationVector.y, m_manager.inputHandler.moveVector.y, easeTime);
 
@@ -155,11 +155,11 @@ namespace Player
         {
             Vector2 inputVector = m_manager.inputHandler.lookVector;
             Vector3 currentPlayerRot = m_manager.playerTransform.rotation.eulerAngles;
-            Vector3 newPlayerRot = currentPlayerRot + Vector3.up * inputVector.x * m_manager.aimProperties.rotateSpeed * Time.fixedDeltaTime;
+            Vector3 newPlayerRot = currentPlayerRot + Vector3.up * inputVector.x * m_manager.aimProperties.rotateSpeed * Time.deltaTime;
             m_manager.playerTransform.rotation = Quaternion.Euler(newPlayerRot);
 
             Vector3 currentCameraFollowRot = m_manager.cameraFollow.rotation.eulerAngles;
-            Vector3 newCameraFollowRot = currentCameraFollowRot + Vector3.right * -inputVector.y * m_manager.aimProperties.rotateSpeed * Time.fixedDeltaTime;
+            Vector3 newCameraFollowRot = currentCameraFollowRot + Vector3.right * -inputVector.y * m_manager.aimProperties.rotateSpeed * Time.deltaTime;
             //Logger.LogMessage(newCameraFollowRot);
             newCameraFollowRot.x = (newCameraFollowRot.x > 180) ? newCameraFollowRot.x - 360 : newCameraFollowRot.x;
             newCameraFollowRot.x = Mathf.Clamp(newCameraFollowRot.x, m_manager.aimProperties.minCameraVert, m_manager.aimProperties.maxCameraVert);
