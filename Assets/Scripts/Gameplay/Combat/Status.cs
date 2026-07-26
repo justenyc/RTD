@@ -91,6 +91,15 @@ public class Status : MonoBehaviour
         ChangeCurrentHealth(-amount);
     }
 
+    public void DealDamageDefault(Hurtbox hurtbox)
+    {
+        Hitbox.Args args = new Hitbox.ArgsBuilder()
+            .WithDamageType(Hitbox.DamageType.Blunt)
+            .WithPower(10)
+            .Build();
+        hurtbox.PostOnHurt(GenerateHbArgs(args));
+    }
+
     public void GenericDie()
     {
         HealthHitZero.RemoveAllListeners();

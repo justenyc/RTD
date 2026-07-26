@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: StatProfile_Default
   m_EditorClassIdentifier: Assembly-CSharp::BaseStatProfile
   baseHp: 100
-  physDef: 0
-  elemDef: 0
-  physAtk: 0
-  elemAtk: 0
-  constitution: 0
-  toughness: 0
-  spirit: 0
-  strength: 0
-  mysticism: 0
+  physDef: 1
+  elemDef: 1
+  physAtk: 1
+  elemAtk: 1
+  constitution: 1
+  toughness: 1
+  spirit: 1
+  strength: 1
+  mysticism: 1
   resistances:
     reorderableList:
       canAdd: 1
