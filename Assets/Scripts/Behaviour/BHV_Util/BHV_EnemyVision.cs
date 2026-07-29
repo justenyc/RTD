@@ -16,8 +16,10 @@ public class BHV_EnemyVision : MonoBehaviour
     [SerializeField] LayerMask visionMask;
 
     Color debugColor = Color.white;
-    [SerializeField] List<Collider> collidersInRadius = new();
+    [Header("Debug")]
+    [SerializeField] HashSet<Collider> collidersInRadius = new();
     [SerializeField] float searchTick;
+    [SerializeField] Transform stalkTarget;
 
     private void OnValidate()
     {
@@ -41,6 +43,11 @@ public class BHV_EnemyVision : MonoBehaviour
 
         foreach (Collider c in collidersInRadius)
         {
+            if (stalkTarget != null)
+            {
+                return;
+            }
+
             CheckVision(c);
         }
         searchTick = searchInterval;
@@ -53,14 +60,17 @@ public class BHV_EnemyVision : MonoBehaviour
         if (Physics.Raycast(transform.position + dir.normalized, dir, out hit, dir.magnitude, visionMask))
         {
             Logger.LogMessage($"{hit.collider} : {check}");
-            if (hit.collider != check)
+            if (hit.collider == check)
             {
-                Logger.DrawRay(transform.position, hit.point - transform.position, Color.red);
-                bGraph.BlackboardReference.SetVariableValue<Transform>(bGraphVarName, null);
+                Logger.DrawRay(transform.position, dir, Color.green);
+                stalkTarget = hit.collider.transform;
+                bGraph.BlackboardReference.SetVariableValue(bGraphVarName, stalkTarget);
                 return;
             }
-            Logger.DrawRay(transform.position, dir, Color.green);
-            bGraph.BlackboardReference.SetVariableValue(bGraphVarName, hit.collider.transform);
+
+            Logger.DrawRay(transform.position, hit.point - transform.position, Color.red);
+            stalkTarget = null;
+            bGraph.BlackboardReference.SetVariableValue<Transform>(bGraphVarName, null);
         }
     }
 

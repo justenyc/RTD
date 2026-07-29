@@ -103,7 +103,8 @@ public class Hitbox : MonoBehaviour
             }
         }
 
-        if (other.TryGetComponent(out Hurtbox hurtbox))
+        Hurtbox hurtbox = other.GetComponentInAll<Hurtbox>();
+        if (hurtbox != null)
         {
             Logger.LogMessage($"{this.name} : {other.name}");
             if (OnHitEvent != null)
