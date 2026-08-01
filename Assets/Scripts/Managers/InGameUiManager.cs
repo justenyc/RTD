@@ -30,7 +30,14 @@ public class InGameUiManager : MonoBehaviour
         }
 
         instance = this;
+        Init();
     }
+
+    void Init()
+    {
+        messageTMP.text = "";
+    }
+
 
     public void DisplayMessage(List<string> message, System.Action _onMessageComplete = null)
     {
