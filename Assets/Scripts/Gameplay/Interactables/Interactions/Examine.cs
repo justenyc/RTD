@@ -1,23 +1,19 @@
 using Player;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class Examine : Interactable
 {
-    [SerializeField] string m_message;
+    [SerializeField] List<string> m_message;
+
+    Queue<string> messageQueue = new();
 
     public override void Interact(PlayerController player)
     {
-        Logger.LogMessage(m_message);
+        if (isInteracting) return;
 
-        if(GameStateManager.instance.IsPaused == true)
-        {
-            GameStateManager.instance.IsPaused = false;
-            InGameUiManager.instance.DisplayMessage("");
-            return;
-        }
-
-        InGameUiManager.instance.DisplayMessage(m_message);
-        GameStateManager.instance.IsPaused = true;
+        isInteracting = true;
+        InGameUiManager.instance.DisplayMessage(m_message, () => isInteracting = false);
+        return;
     }
 }

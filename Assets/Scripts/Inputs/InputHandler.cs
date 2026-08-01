@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
+    public static InputHandler instance;
+
     public Player.PlayerController PlayerController;
     public Vector2 moveVector;// { get; private set; }
     public Vector2 lookVector;// { get; private set; }
@@ -19,6 +21,16 @@ public class InputHandler : MonoBehaviour
     public Action<InputAction.CallbackContext> OrbInteract;
     public Action<InputAction.CallbackContext> Burst;
     public Action<InputAction.CallbackContext> OpenMenu;
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(this.gameObject);
+        }
+
+        instance = this;
+    }
 
     public void OnMove(InputAction.CallbackContext ctx)
     {
@@ -72,7 +84,7 @@ public class InputHandler : MonoBehaviour
 
     public void OnInteract(InputAction.CallbackContext ctx)
     {
-        Logger.LogMessage(ctx.performed.ToString());
+        //Logger.LogMessage(ctx.performed.ToString());
         if (ctx.performed)
         {
             Interact?.Invoke(ctx);
