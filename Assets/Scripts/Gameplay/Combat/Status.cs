@@ -20,6 +20,8 @@ public class Status : MonoBehaviour
     [SerializeField] float m_elemDef;
     [SerializeField] float m_physAtk;
     [SerializeField] float m_elemAtk;
+
+    // For when we want other stuff other than the character's stats to affect damage. IE) Equipment, buffs, etc.
     [SerializeField] float m_physAtkScl = 1;
     [SerializeField] float m_elemAtkScl = 1;
 
@@ -91,6 +93,7 @@ public class Status : MonoBehaviour
         ChangeCurrentHealth(-amount);
     }
 
+    // Currently just for debugging. Don't use for anything else
     public void DealDamageDefault(Hurtbox hurtbox)
     {
         Hitbox.Args args = new Hitbox.ArgsBuilder()

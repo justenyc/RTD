@@ -140,7 +140,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  collisionExceptions: []
+  collisionExceptions:
+  - {fileID: 393652685395581747}
+  - {fileID: 3265216948698605860}
 --- !u!54 &1338866080156007008
 Rigidbody:
   m_ObjectHideFlags: 0

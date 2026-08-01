@@ -97,7 +97,7 @@ public class Hitbox : MonoBehaviour
     {
         for (int i = 0; i < collisionExceptions.Count; i++)
         {
-            if (other.gameObject == collisionExceptions[i])
+            if (other == collisionExceptions[i])
             {
                 return;
             }
