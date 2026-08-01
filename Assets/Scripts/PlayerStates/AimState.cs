@@ -153,7 +153,7 @@ namespace Player
 
         private void ControlCamera()
         {
-            Vector2 inputVector = m_manager.inputHandler.lookVector;
+            Vector2 inputVector = m_manager.inputHandler.lookVector.normalized;
             Vector3 currentPlayerRot = m_manager.playerTransform.rotation.eulerAngles;
             Vector3 newPlayerRot = currentPlayerRot + Vector3.up * inputVector.x * m_manager.aimProperties.rotateSpeed * Time.deltaTime;
             m_manager.playerTransform.rotation = Quaternion.Euler(newPlayerRot);

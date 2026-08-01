@@ -116,7 +116,7 @@ namespace Player
 
         private void ControlCamera()
         {
-            Vector2 inputVector = m_manager.inputHandler.lookVector;
+            Vector2 inputVector = m_manager.inputHandler.lookVector.normalized;
             float rotateSpeed = m_sprintInputState ? m_manager.freeMovementProperties.cameraRotateSpeedDuringSprint : m_manager.freeMovementProperties.cameraRotateSpeed;
 
             Vector3 currentPlayerRot = m_manager.playerTransform.rotation.eulerAngles;
