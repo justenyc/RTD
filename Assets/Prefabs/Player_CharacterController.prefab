@@ -5829,20 +5829,19 @@ MonoBehaviour:
   m_freeMovementProperties:
     moveSpeed: 1
     sprintSpeed: 4
-    cameraRotateSpeed: 1
-    cameraRotateSpeedDuringSprint: 1
+    cameraRotateSpeed: 50
     leonShuffleThreshold: 100
     accelerationStrength: 5
     decelerationStrength: 3
     easeInAnimationStrength: 5
-    easeOutAnimationStrength: 1
+    easeOutAnimationStrength: 5
     maxCameraVert: 75
     minCameraVert: -75
   m_aimProperties:
     moveSpeed: 0.5
-    rotateSpeed: 1
+    rotateSpeed: 25
     accelerationStrength: 1
-    decelerationStrength: 5
+    decelerationStrength: 3
     easeInAnimationStrength: 5
     easeOutAnimationStrength: 3
     cameraPos: {x: 0, y: 0, z: 0}
@@ -5850,12 +5849,17 @@ MonoBehaviour:
     minCameraVert: -75
     throwStrength: 20
     currentAttackindex: -1
+  m_sprintProperties:
+    cameraResetSpeed: 0.1
   m_sharedProperties:
     defaultCameraPos: {x: 0, y: 0, z: -0.5}
   m_canMove: 1
   m_useRootMotion: 0
   m_listeningForInputs: 0
   m_canThrow: 0
+  animationVector: {x: 0, y: 0}
+  movementVector: {x: 0, y: 0}
+  isMoving: 1
 --- !u!114 &4805579727986716901
 MonoBehaviour:
   m_ObjectHideFlags: 0

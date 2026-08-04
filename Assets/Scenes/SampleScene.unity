@@ -152,12 +152,12 @@ Transform:
   m_GameObject: {fileID: 28172619}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5999999, y: 0, z: -15.52}
+  m_LocalPosition: {x: 7.18, y: 0, z: -16.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 670156082}
-  m_Father: {fileID: 1837309184}
+  m_Father: {fileID: 2062556222}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &28172621
 CapsuleCollider:
@@ -254,7 +254,9 @@ MonoBehaviour:
   OnPlayerInteractEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_message: Cylinder 3 was examined!
+  m_message:
+  - Quack
+  - Quack!
 --- !u!114 &28172625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -461,7 +463,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &237472321
 Transform:
   m_ObjectHideFlags: 0
@@ -1052,7 +1054,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 1.4, z: -9.919001}
+  m_LocalPosition: {x: 1, y: 1.5879999, z: -9.919001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1454,7 +1456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &670156082
 Transform:
   m_ObjectHideFlags: 0
@@ -2074,7 +2076,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1837309184}
+  m_Father: {fileID: 2062556222}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &789921333
 CapsuleCollider:
@@ -2171,7 +2173,7 @@ MonoBehaviour:
   OnPlayerInteractEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_message: Cylinder 2 was examined!
+  m_message: []
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2311,6 +2313,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1097334254 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4680991544709003436, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
+    type: 3}
+  m_PrefabInstance: {fileID: 8032035456848838652}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2129105fcc343b4ea4580dbe5a2f7cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
 --- !u!1 &1138911744
 GameObject:
   m_ObjectHideFlags: 0
@@ -7214,7 +7228,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1837309184}
+  m_Father: {fileID: 2062556222}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1172675456
 CapsuleCollider:
@@ -7311,7 +7325,7 @@ MonoBehaviour:
   OnPlayerInteractEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_message: Cylinder 1 was examined!
+  m_message: []
 --- !u!114 &1172675460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7957,7 +7971,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 3479568134080364832}
+  m_LookAt: {fileID: 0}
   m_Follow: {fileID: 6030407838508246952}
   m_Lens:
     FieldOfView: 60.000004
@@ -7987,7 +8001,7 @@ Transform:
   m_GameObject: {fileID: 1454894497}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 1.4, z: -9.919001}
+  m_LocalPosition: {x: 1, y: 1.5879999, z: -9.919001}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8027,6 +8041,7 @@ Transform:
   - {fileID: 1775864590}
   - {fileID: 2016100682}
   - {fileID: 1837309184}
+  - {fileID: 2062556222}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1673384732
@@ -8044,7 +8059,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1673384733
 Transform:
   m_ObjectHideFlags: 0
@@ -8265,7 +8280,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1837309184}
+  m_Father: {fileID: 2062556222}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1737332939
 CapsuleCollider:
@@ -8362,7 +8377,7 @@ MonoBehaviour:
   OnPlayerInteractEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_message: Cylinder 0 was examined!
+  m_message: []
 --- !u!1 &1775864589
 GameObject:
   m_ObjectHideFlags: 0
@@ -8511,10 +8526,6 @@ Transform:
   - {fileID: 303160261}
   - {fileID: 560129093}
   - {fileID: 1208856793}
-  - {fileID: 1737332938}
-  - {fileID: 1172675455}
-  - {fileID: 789921332}
-  - {fileID: 28172620}
   - {fileID: 2018328098}
   m_Father: {fileID: 1662705892}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9036,6 +9047,41 @@ MonoBehaviour:
   DeliverHitboxArgs:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &2062556221
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2062556222}
+  m_Layer: 9
+  m_Name: Examineables
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2062556222
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062556221}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1737332938}
+  - {fileID: 1172675455}
+  - {fileID: 789921332}
+  - {fileID: 28172620}
+  m_Father: {fileID: 1662705892}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2139096560
 GameObject:
   m_ObjectHideFlags: 0
@@ -9502,12 +9548,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3436c7328ec6e934eb2810731959dffd, type: 3}
---- !u!4 &3479568134080364832 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3479568134241564491, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-    type: 3}
-  m_PrefabInstance: {fileID: 8032035456848838652}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4420974933023975964
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9619,10 +9659,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1673384733}
     m_Modifications:
+    - target: {fileID: 3335753976627562286, guid: 386b0ee1f056bc643ae633269efc8d08,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4430649974335657681, guid: 386b0ee1f056bc643ae633269efc8d08,
         type: 3}
       propertyPath: m_Name
       value: NPC_EnemyBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430649974335657681, guid: 386b0ee1f056bc643ae633269efc8d08,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5867041694470260125, guid: 386b0ee1f056bc643ae633269efc8d08,
         type: 3}
@@ -9693,6 +9743,36 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 163190083760702170, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
+        type: 3}
+      propertyPath: OnHurt.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 163190083760702170, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
+        type: 3}
+      propertyPath: OnHurt.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1097334254}
+    - target: {fileID: 163190083760702170, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
+        type: 3}
+      propertyPath: OnHurt.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 163190083760702170, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
+        type: 3}
+      propertyPath: OnHurt.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TakeDamage
+      objectReference: {fileID: 0}
+    - target: {fileID: 163190083760702170, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
+        type: 3}
+      propertyPath: OnHurt.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Status, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 163190083760702170, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
+        type: 3}
+      propertyPath: OnHurt.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1726903651256001842, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9701,7 +9781,7 @@ PrefabInstance:
     - target: {fileID: 1726903651256001842, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.188
       objectReference: {fileID: 0}
     - target: {fileID: 1726903651256001842, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
         type: 3}
@@ -9750,13 +9830,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2070777405718413192, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
         type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2070777405718413192, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
+        type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2310791409441910849, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
         type: 3}
       propertyPath: eventContainer.isExpanded
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2310791409441910849, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
         type: 3}

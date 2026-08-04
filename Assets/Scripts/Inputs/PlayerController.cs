@@ -28,11 +28,15 @@ namespace Player
         [Header("State Properties")]
         [SerializeField] MovementProperties m_freeMovementProperties;
         [SerializeField] AimProperties m_aimProperties;
+        [SerializeField] SprintProperties m_sprintProperties;
         [SerializeField] SharedProperties m_sharedProperties;
         [SerializeField] bool m_canMove;
         [SerializeField] bool m_useRootMotion;
         [SerializeField] bool m_listeningForInputs;
         [SerializeField] bool m_canThrow;
+        public Vector2 animationVector;
+        public Vector2 movementVector;
+        public bool isMoving = true;
 
         #region Public References
 
@@ -50,6 +54,7 @@ namespace Player
         public MovementProperties freeMovementProperties => m_freeMovementProperties;
         public AimProperties aimProperties => m_aimProperties;
         public SharedProperties sharedProperties => m_sharedProperties;
+        public SprintProperties sprintProperties => m_sprintProperties;
         public EventBus_Thea eventBus => m_eventBus;
         public bool canMove => m_canMove;
         public bool useRootMotion => m_useRootMotion;
@@ -65,7 +70,6 @@ namespace Player
             public float moveSpeed = 1;
             public float sprintSpeed = 1;
             public float cameraRotateSpeed = 1;
-            public float cameraRotateSpeedDuringSprint = 0f;
             [Tooltip("How strong the rotation of the camera needs to be before the player stops moving and only rotates. A.K.A \"The Leon Shuffle\"")]
             public float leonShuffleThreshold = 100f;
             public float accelerationStrength = 1;
@@ -93,6 +97,12 @@ namespace Player
         }
 
         [System.Serializable]
+        public class SprintProperties
+        {
+            public float cameraResetSpeed = 0.1f;
+        }
+
+        [System.Serializable]
         public class SharedProperties
         {
             public Vector3 defaultCameraPos = new Vector3(1, -0.4f, -0.5f);
@@ -111,13 +121,14 @@ namespace Player
             m_currentState = new FreeMovementState(this);
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             m_controller.Move(-Vector3.up * 9.81f);
-            if(m_animator.IsInTransition(0))
-            {
-                ResetAnimParamsOnTransition();
-            }
+            m_currentState.StateUpdate();
+        }
+
+        private void FixedUpdate()
+        {
             m_currentState.StateFixedUpdate();
         }
 
@@ -210,7 +221,7 @@ namespace Player
 
         void ResetAnimParamsOnTransition()
         {
-            m_animator.SetBool("CanCancel", false);
+            
         }
 
         public void ThrowCurrentItem()
