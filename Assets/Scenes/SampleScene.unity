@@ -2313,18 +2313,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1097334254 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4680991544709003436, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-    type: 3}
-  m_PrefabInstance: {fileID: 8032035456848838652}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2129105fcc343b4ea4580dbe5a2f7cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
 --- !u!1 &1138911744
 GameObject:
   m_ObjectHideFlags: 0
@@ -9743,41 +9731,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 163190083760702170, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: OnHurt.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 163190083760702170, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: OnHurt.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1097334254}
-    - target: {fileID: 163190083760702170, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: OnHurt.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 163190083760702170, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: OnHurt.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TakeDamage
-      objectReference: {fileID: 0}
-    - target: {fileID: 163190083760702170, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: OnHurt.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Status, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 163190083760702170, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: OnHurt.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 361677365776527987, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: m_freeMovementProperties.cameraRotateSpeed
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 1726903651256001842, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9832,26 +9785,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player_CharacterController
-      objectReference: {fileID: 0}
-    - target: {fileID: 2070777405718413192, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2070777405718413192, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2310791409441910849, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: eventContainer.isExpanded
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2310791409441910849, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
-        type: 3}
-      propertyPath: eventContainer.reorderableList.isExpanded
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
