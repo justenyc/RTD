@@ -1723,7 +1723,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be291b01751f604aaa6ee1c6e455664, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::JustenTest
-  graph: {fileID: 0}
+  target: {fileID: 0}
 --- !u!54 &690866096
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9772,6 +9772,11 @@ PrefabInstance:
         type: 3}
       propertyPath: OnHurt.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 361677365776527987, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
+        type: 3}
+      propertyPath: m_freeMovementProperties.cameraRotateSpeed
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1726903651256001842, guid: f8f99ea496b3aa246b64b213a8d3b5dd,
         type: 3}

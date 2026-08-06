@@ -99,7 +99,9 @@ namespace Player
         [System.Serializable]
         public class SprintProperties
         {
+            public float cameraRotateSpeed = 50f;
             public float cameraResetSpeed = 0.1f;
+            public float sprintRotateSpeed = 1;
         }
 
         [System.Serializable]
@@ -214,14 +216,10 @@ namespace Player
             hurtbox.PostOnHurt(m_status.GenerateHbArgs(m_attackDB.GetArgsByName(a)));
         }
 
-        void OnCanCancel()
+        public void ResetAnimParams()
         {
-            m_animator.SetBool("CanCancel", true);
-        }
-
-        void ResetAnimParamsOnTransition()
-        {
-            
+            movementVector = Vector2.zero;
+            animationVector = Vector2.zero;
         }
 
         public void ThrowCurrentItem()

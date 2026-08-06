@@ -21,6 +21,7 @@ namespace Player
         {
             //Logger.LogMessage("Starting FreeMovement State");
             m_manager.currentState = "FreeMovement";
+            m_manager.Animator.SetBool("Aim", false);
 
             m_manager.inputHandler.Sprint += OnSprint;
             m_manager.inputHandler.Aim += OnAim;
@@ -105,16 +106,16 @@ namespace Player
 
         private void ControlCamera()
         {
-            Vector2 inputVector = m_manager.inputHandler.lookVector.normalized;
+            Vector2 lookVector = m_manager.inputHandler.lookVector.normalized;
             float rotateSpeed = m_manager.freeMovementProperties.cameraRotateSpeed;
 
             Vector3 currentPlayerRot = m_manager.playerTransform.rotation.eulerAngles;
-            Vector3 newPlayerRot = currentPlayerRot + Vector3.up * inputVector.x * rotateSpeed * Time.deltaTime;
+            Vector3 newPlayerRot = currentPlayerRot + Vector3.up * lookVector.x * rotateSpeed * Time.deltaTime;
             m_manager.playerTransform.rotation = Quaternion.Euler(newPlayerRot);
 
             //Logger.LogMessage(newCameraFollowRot);
             Vector3 currentCameraFollowRot = m_manager.cameraFollow.rotation.eulerAngles;
-            Vector3 newCameraFollowRot = currentCameraFollowRot + Vector3.right * -inputVector.y * rotateSpeed * Time.deltaTime;
+            Vector3 newCameraFollowRot = currentCameraFollowRot + Vector3.right * -lookVector.y * rotateSpeed * Time.deltaTime;
             newCameraFollowRot.x = (newCameraFollowRot.x > 180) ? newCameraFollowRot.x - 360 : newCameraFollowRot.x;
             newCameraFollowRot.x = Mathf.Clamp(newCameraFollowRot.x, m_manager.freeMovementProperties.minCameraVert, m_manager.freeMovementProperties.maxCameraVert);
             m_manager.cameraFollow.rotation = Quaternion.Euler(newCameraFollowRot);

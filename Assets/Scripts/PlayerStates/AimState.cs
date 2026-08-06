@@ -35,6 +35,7 @@ namespace Player
             m_manager.currentState = "Aim";
             //inStartUp = true;
             m_manager.Animator.SetBool("Aim", true);
+            m_manager.ResetAnimParams();
             
             m_manager.inputHandler.Aim += OnAim;
             m_manager.inputHandler.UseCurrentItem += OnUseCurrentItem;
@@ -53,6 +54,10 @@ namespace Player
             tween.Play();
 
             cameraTweens.Add(tween);
+            if (!m_manager.GetComponent<PlayerInput>().currentActionMap.FindAction("Aim").IsPressed())
+            {
+                GoToFreeMovementState();
+            }
         }
 
         /// <summary>
@@ -95,13 +100,13 @@ namespace Player
 
         public void StateUpdate()
         {
-            
+            Move();
+            ControlCamera();
         }
 
         public void StateFixedUpdate()
         {
-            Move();
-            ControlCamera();
+
         }
 
         #region State Inputs

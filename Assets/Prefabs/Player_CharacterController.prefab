@@ -244,7 +244,7 @@ GameObject:
   - component: {fileID: 4690249887211437896}
   - component: {fileID: 393652685395581747}
   - component: {fileID: 2310791409441910849}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: Player_CharacterController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5850,7 +5850,9 @@ MonoBehaviour:
     throwStrength: 20
     currentAttackindex: -1
   m_sprintProperties:
+    cameraRotateSpeed: 50
     cameraResetSpeed: 0.1
+    sprintRotateSpeed: 5
   m_sharedProperties:
     defaultCameraPos: {x: 0, y: 0, z: -0.5}
   m_canMove: 1
@@ -6246,7 +6248,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Hurtbox
   OnHurt:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4680991544709003436}
+        m_TargetAssemblyTypeName: Status, Assembly-CSharp
+        m_MethodName: TakeDamage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDamageTypeEffects:
     m_PersistentCalls:
       m_Calls: []

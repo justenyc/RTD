@@ -34,15 +34,22 @@ namespace Player
             m_manager.inputHandler.Aim += OnAim;
 
             m_manager.cameraFollow.DOLocalRotate(Vector3.zero, m_manager.sprintProperties.cameraResetSpeed);
+            m_manager.isMoving = true;
         }
 
         public void StateEnd()
         {
             m_manager.Animator.SetBool("Sprint", false);
-            m_manager.cameraFollow.DOLocalRotate(Vector3.zero, m_manager.sprintProperties.cameraResetSpeed);
+            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 10, Color.yellow, 300f);
+            Vector3 currentPlayerRot = m_manager.playerTransform.rotation.eulerAngles;
+            Vector3 newPlayerRot = currentPlayerRot + Vector3.up * Vector3.SignedAngle(m_manager.playerTransform.forward, Camera.main.transform.forward, Vector3.up);
+            Logger.LogMessage(newPlayerRot.ToString());
+            m_manager.playerTransform.rotation = Quaternion.Euler(newPlayerRot);
+            m_manager.cameraFollow.localRotation = Quaternion.identity;
 
             m_manager.inputHandler.Sprint -= OnSprint;
             m_manager.inputHandler.Aim -= OnAim;
+
         }
 
         public void StateFixedUpdate()
@@ -70,18 +77,28 @@ namespace Player
                 m_manager.SetState(new FreeMovementState(m_manager));
             }
 
-            Vector2 targetVector = m_manager.inputHandler.moveVector.normalized * m_manager.freeMovementProperties.sprintSpeed;
             m_manager.interactionHub.HighlightInteractable(m_manager.interactionHub.GetNearestInteractable());
+            
+            Vector2 targetVector = m_manager.inputHandler.moveVector.normalized * m_manager.freeMovementProperties.sprintSpeed;
+            float rotateSpeed = m_manager.sprintProperties.sprintRotateSpeed;
 
+            m_manager.movementVector.x = Mathf.Lerp(m_manager.movementVector.x, targetVector.x, Time.deltaTime * m_manager.freeMovementProperties.accelerationStrength);
             m_manager.movementVector.y = Mathf.Lerp(m_manager.movementVector.y, targetVector.y, Time.deltaTime * m_manager.freeMovementProperties.accelerationStrength);
+            m_manager.movementVector.y = Mathf.Clamp(m_manager.movementVector.y, 0, targetVector.y);
+
+            Vector3 currentPlayerRot = m_manager.playerTransform.rotation.eulerAngles;
+            Vector3 newPlayerRot = currentPlayerRot + Vector3.up * targetVector.x * rotateSpeed * Time.deltaTime;
+            m_manager.playerTransform.rotation = Quaternion.Euler(newPlayerRot);
+
             m_manager.controller.Move(m_manager.transform.forward * m_manager.movementVector.y * Time.deltaTime);
+
             AnimateMovement();
         }
 
         void ControlCamera()
         {
             Vector2 inputVector = m_manager.inputHandler.lookVector.normalized;
-            float rotateSpeed = m_manager.freeMovementProperties.cameraRotateSpeed;
+            float rotateSpeed = m_manager.sprintProperties.cameraRotateSpeed;
 
             Vector3 currentCameraFollowRot = m_manager.cameraFollow.rotation.eulerAngles;
             Vector3 newCameraFollowRot = currentCameraFollowRot + Vector3.up * inputVector.x * rotateSpeed * Time.deltaTime;
@@ -103,12 +120,12 @@ namespace Player
 
         void OnSprint(InputAction.CallbackContext context)
         {
-            if (context.canceled) m_manager.SetState(new FreeMovementState(m_manager));
+            //if (context.canceled) m_manager.SetState(new FreeMovementState(m_manager));
         }
 
         void OnAim(InputAction.CallbackContext context)
         {
-            if (context.canceled) m_manager.SetState(new AimState(m_manager));
+            if (context.performed) m_manager.SetState(new AimState(m_manager));
         }
     }
 }
