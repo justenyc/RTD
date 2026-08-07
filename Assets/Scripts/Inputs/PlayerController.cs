@@ -68,7 +68,6 @@ namespace Player
         public class MovementProperties
         {
             public float moveSpeed = 1;
-            public float sprintSpeed = 1;
             public float cameraRotateSpeed = 1;
             [Tooltip("How strong the rotation of the camera needs to be before the player stops moving and only rotates. A.K.A \"The Leon Shuffle\"")]
             public float leonShuffleThreshold = 100f;
@@ -99,6 +98,7 @@ namespace Player
         [System.Serializable]
         public class SprintProperties
         {
+            public float sprintSpeed = 4f;
             public float cameraRotateSpeed = 50f;
             public float cameraResetSpeed = 0.1f;
             public float sprintRotateSpeed = 1;

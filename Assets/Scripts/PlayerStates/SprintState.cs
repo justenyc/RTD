@@ -40,10 +40,8 @@ namespace Player
         public void StateEnd()
         {
             m_manager.Animator.SetBool("Sprint", false);
-            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 10, Color.yellow, 300f);
             Vector3 currentPlayerRot = m_manager.playerTransform.rotation.eulerAngles;
             Vector3 newPlayerRot = currentPlayerRot + Vector3.up * Vector3.SignedAngle(m_manager.playerTransform.forward, Camera.main.transform.forward, Vector3.up);
-            Logger.LogMessage(newPlayerRot.ToString());
             m_manager.playerTransform.rotation = Quaternion.Euler(newPlayerRot);
             m_manager.cameraFollow.localRotation = Quaternion.identity;
 
@@ -70,7 +68,7 @@ namespace Player
                 return;
             }
 
-            m_manager.isMoving = m_manager.inputHandler.moveVector != Vector2.zero;
+            m_manager.isMoving = m_manager.movementVector != Vector2.zero;
 
             if (!m_manager.isMoving)
             {
@@ -79,18 +77,18 @@ namespace Player
 
             m_manager.interactionHub.HighlightInteractable(m_manager.interactionHub.GetNearestInteractable());
             
-            Vector2 targetVector = m_manager.inputHandler.moveVector.normalized * m_manager.freeMovementProperties.sprintSpeed;
+            Vector2 targetVector = m_manager.inputHandler.moveVector.normalized;
             float rotateSpeed = m_manager.sprintProperties.sprintRotateSpeed;
 
-            m_manager.movementVector.x = Mathf.Lerp(m_manager.movementVector.x, targetVector.x, Time.deltaTime * m_manager.freeMovementProperties.accelerationStrength);
-            m_manager.movementVector.y = Mathf.Lerp(m_manager.movementVector.y, targetVector.y, Time.deltaTime * m_manager.freeMovementProperties.accelerationStrength);
-            m_manager.movementVector.y = Mathf.Clamp(m_manager.movementVector.y, 0, targetVector.y);
+            m_manager.movementVector.y = Mathf.Ceil(targetVector.y);
+            //m_manager.movementVector.y = Mathf.Lerp(m_manager.movementVector.y, targetVector.y, Time.deltaTime * m_manager.freeMovementProperties.accelerationStrength);
+            //m_manager.movementVector.y = Mathf.Clamp(m_manager.movementVector.y, 0, targetVector.y);
 
             Vector3 currentPlayerRot = m_manager.playerTransform.rotation.eulerAngles;
             Vector3 newPlayerRot = currentPlayerRot + Vector3.up * targetVector.x * rotateSpeed * Time.deltaTime;
             m_manager.playerTransform.rotation = Quaternion.Euler(newPlayerRot);
 
-            m_manager.controller.Move(m_manager.transform.forward * m_manager.movementVector.y * Time.deltaTime);
+            m_manager.controller.Move(m_manager.transform.forward * m_manager.movementVector.y * m_manager.sprintProperties.sprintSpeed * Time.deltaTime);
 
             AnimateMovement();
         }
@@ -110,7 +108,7 @@ namespace Player
         {
             float easeTime = m_manager.isMoving ? Time.deltaTime * m_manager.freeMovementProperties.easeInAnimationStrength : Time.deltaTime * m_manager.freeMovementProperties.easeOutAnimationStrength * 2;
 
-            float yFloat = m_manager.movementVector.y;
+            float yFloat = m_manager.movementVector.y * m_manager.sprintProperties.sprintSpeed;
             yFloat = Mathf.Clamp(yFloat, 0, 2);
             m_manager.animationVector.y = Mathf.Lerp(m_manager.animationVector.y, yFloat, easeTime);
 
