@@ -32,6 +32,7 @@ namespace Player
 
             m_manager.inputHandler.Sprint += OnSprint;
             m_manager.inputHandler.Aim += OnAim;
+            m_manager.inputHandler.Interact += OnInteract;
 
             m_manager.cameraFollow.DOLocalRotate(Vector3.zero, m_manager.sprintProperties.cameraResetSpeed);
             m_manager.isMoving = true;
@@ -47,7 +48,7 @@ namespace Player
 
             m_manager.inputHandler.Sprint -= OnSprint;
             m_manager.inputHandler.Aim -= OnAim;
-
+            m_manager.inputHandler.Interact -= OnInteract;
         }
 
         public void StateFixedUpdate()
@@ -124,6 +125,15 @@ namespace Player
         void OnAim(InputAction.CallbackContext context)
         {
             if (context.performed) m_manager.SetState(new AimState(m_manager));
+        }
+
+        void OnInteract(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                var nearest = m_manager.interactionHub.GetNearestInteractable();
+                nearest?.Interact(m_manager);
+            }
         }
     }
 }

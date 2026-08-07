@@ -6,7 +6,7 @@ public class Interactable : MonoBehaviour
     [SerializeField] GameObject highlightObject;
     [SerializeField] UnityEvent<Player.PlayerController> OnPlayerInteractEvent;
 
-    protected bool isInteracting;
+    [SerializeField] protected bool isInteracting;
 
     public GameObject HighlightObject => highlightObject;
 
