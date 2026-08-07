@@ -182,6 +182,9 @@ MonoBehaviour:
   highlighterMF: {fileID: 5041436657887482126}
   interactables: []
   detector: {fileID: 5332638973240886191}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!54 &7925755978241051358
 Rigidbody:
   m_ObjectHideFlags: 0

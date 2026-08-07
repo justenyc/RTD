@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InteractionHub : MonoBehaviour
@@ -7,13 +8,14 @@ public class InteractionHub : MonoBehaviour
     [SerializeField] MeshFilter highlighterMF;
     [SerializeField] List<Interactable> interactables = new List<Interactable>();
     [SerializeField] Collider detector;
+    [SerializeField] LayerMask layerMask;
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.TryGetComponent(out Interactable interactable))
         {
             interactables.Add(interactable);
-            HighlightInteractable(GetNearestInteractable());
+            //HighlightInteractable(GetNearestInteractable());
         }
     }
 
@@ -29,7 +31,7 @@ public class InteractionHub : MonoBehaviour
                 return;
             }
 
-            HighlightInteractable(GetNearestInteractable());
+            //HighlightInteractable(GetNearestInteractable());
         }
     }
 
