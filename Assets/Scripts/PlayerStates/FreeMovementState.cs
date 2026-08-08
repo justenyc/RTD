@@ -1,9 +1,6 @@
-using Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
+using DG.Tweening;
 
 namespace Player
 {
@@ -27,6 +24,7 @@ namespace Player
             m_manager.inputHandler.Aim += OnAim;
             m_manager.inputHandler.UseCurrentItem += OnUseCurrentItem;
             m_manager.inputHandler.Interact += OnInteract;
+            m_manager.inputHandler.OrbInteract += OnOrbInteract;
         }
 
         public void StateEnd()
@@ -36,6 +34,7 @@ namespace Player
             m_manager.inputHandler.Aim -= OnAim;
             m_manager.inputHandler.UseCurrentItem -= OnUseCurrentItem;
             m_manager.inputHandler.Interact -= OnInteract;
+            m_manager.inputHandler.OrbInteract -= OnOrbInteract;
         }
 
         public void StateUpdate()
@@ -85,6 +84,7 @@ namespace Player
             m_manager.controller.Move(moveVector * Time.deltaTime);
 
             AnimateMovement(leonShuffle);
+            m_manager.orb.SetInteractPromptActive(CheckOrbDistance());
         }
 
         void AnimateMovement(bool leonShuffle)
@@ -119,6 +119,11 @@ namespace Player
             newCameraFollowRot.x = (newCameraFollowRot.x > 180) ? newCameraFollowRot.x - 360 : newCameraFollowRot.x;
             newCameraFollowRot.x = Mathf.Clamp(newCameraFollowRot.x, m_manager.freeMovementProperties.minCameraVert, m_manager.freeMovementProperties.maxCameraVert);
             m_manager.cameraFollow.rotation = Quaternion.Euler(newCameraFollowRot);
+        }
+
+        bool CheckOrbDistance()
+        {
+            return Vector3.Distance(m_manager.orb.transform.position, m_manager.playerTransform.position) < m_manager.freeMovementProperties.orbInteractRange;
         }
 
         #region State Input Listeners
@@ -157,6 +162,32 @@ namespace Player
                 var nearest = m_manager.interactionHub.GetNearestInteractable();
                 nearest?.Interact(m_manager);
             }
+        }
+
+        void OnOrbInteract(InputAction.CallbackContext context)
+        {
+            if (!context.performed)
+            {
+                return;
+            }
+
+            if(m_manager.hasOrb)
+            {
+                m_manager.orb.transform.parent = null;
+                m_manager.hasOrb = false;
+                m_manager.orb.meshRenderer.enabled = true;
+                return;
+            }
+
+            if(Vector3.Distance(m_manager.orb.transform.position, m_manager.playerTransform.position) > m_manager.freeMovementProperties.orbInteractRange)
+            {
+                return;
+            }
+
+            //TODO: This is temporary and will be refactored. Just need to know if we want enemies to be able to pick up the orb
+            m_manager.hasOrb = true;
+            m_manager.orb.GetComponent<JustenTest>().StartMoveTween(m_manager.transform.position + Vector3.up, 1f,
+                () => m_manager.orb.transform.parent = m_manager.playerTransform);
         }
 
         #endregion

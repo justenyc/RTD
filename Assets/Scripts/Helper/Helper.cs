@@ -31,4 +31,16 @@ public static class Helper
         }
         action();
     }
+
+    public static IEnumerator DelayActionByFrames(System.Action action, int frames)
+    {
+        int currentFrames = 0;
+        while (currentFrames < frames)
+        {
+            currentFrames++;
+            //Logger.LogMessage($"{currentFrames} : {frames}");
+            yield return new WaitForFixedUpdate();
+        }
+        action();
+    }
 }

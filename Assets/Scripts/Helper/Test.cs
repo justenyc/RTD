@@ -5,38 +5,51 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    protected Animator animator;
+
+    public bool ikActive = false;
+    public Transform rightHandObj = null;
+    public Transform lookObj = null;
+
+    void Start()
     {
-        Debug.Log($"State {stateInfo.shortNameHash} finished on layer {layerIndex}");
+        animator = GetComponent<Animator>();
     }
 
-    /***
-     * using UnityEngine;
-
-public class MyStateExitBehaviour : StateMachineBehaviour
-{
-    // Called when the state is about to exit (e.g., animation finishing and transitioning)
-    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    //a callback for calculating IK
+    void OnAnimatorIK()
     {
-        Debug.Log($"Exited state: {stateInfo.shortNameHash} on layer {layerIndex} (normalized time: {stateInfo.normalizedTime})");
-        
-        // Your custom logic here, e.g.:
-        // HandleAnimationFinished();
-    }
-
-    // Optional: For debugging entry
-    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        Debug.Log($"Entered state: {stateInfo.shortNameHash}");
-    }
-
-    // Optional: Check progress every frame
-    public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        if (stateInfo.normalizedTime >= 0.95f) // Near end
+        if (animator)
         {
-            Debug.Log("Animation nearing completion");
+
+            //if the IK is active, set the position and rotation directly to the goal.
+            if (ikActive)
+            {
+
+                // Set the look target position, if one has been assigned
+                if (lookObj != null)
+                {
+                    animator.SetLookAtWeight(1);
+                    animator.SetLookAtPosition(lookObj.position);
+                }
+
+                // Set the right hand target position and rotation, if one has been assigned
+                if (rightHandObj != null)
+                {
+                    animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
+                    animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
+                    animator.SetIKPosition(AvatarIKGoal.RightHand, rightHandObj.position);
+                    animator.SetIKRotation(AvatarIKGoal.RightHand, rightHandObj.rotation);
+                }
+            }
+
+            //if the IK is not active, set the position and rotation of the hand and head back to the original position
+            else
+            {
+                animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
+                animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 0);
+                animator.SetLookAtWeight(0);
+            }
         }
     }
-}***/
 }
