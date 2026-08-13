@@ -24,7 +24,7 @@ namespace Player
         [SerializeField] Status m_status;
         [SerializeField] AttackDB_SO m_attackDB;
         [SerializeField] EventBus_Thea m_eventBus;
-        [SerializeField] JustenTest m_orb;
+        [SerializeField] Orb m_orb;
 
         [Header("State Properties")]
         [SerializeField] MovementProperties m_freeMovementProperties;
@@ -57,7 +57,7 @@ namespace Player
         public SharedProperties sharedProperties => m_sharedProperties;
         public SprintProperties sprintProperties => m_sprintProperties;
         public EventBus_Thea eventBus => m_eventBus;
-        public JustenTest orb => m_orb;
+        public Orb orb => m_orb;
         public bool canMove => m_canMove;
         public bool useRootMotion => m_useRootMotion;
         public bool listeningForInputs => m_listeningForInputs;

@@ -5816,7 +5816,7 @@ GameObject:
   - component: {fileID: 5749384551023807063}
   - component: {fileID: 9020042717883265158}
   - component: {fileID: 5357265565354973579}
-  - component: {fileID: 6800361289742394397}
+  - component: {fileID: 7978295145978714793}
   m_Layer: 0
   m_Name: Orb
   m_TagString: Untagged
@@ -5918,7 +5918,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6800361289742394397
+--- !u!114 &7978295145978714793
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5927,9 +5927,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4609445040481688412}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1be291b01751f604aaa6ee1c6e455664, type: 3}
+  m_Script: {fileID: 11500000, guid: d636876cdd30a114290e552d74f20674, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::JustenTest
+  m_EditorClassIdentifier: Assembly-CSharp::Orb
   interactPrompt: {fileID: 5455883715719906393}
   m_meshRenderer: {fileID: 9020042717883265158}
 --- !u!1 &5455883715719906393
@@ -6236,7 +6236,7 @@ MonoBehaviour:
   m_status: {fileID: 4680991544709003436}
   m_attackDB: {fileID: 11400000, guid: da20339d9de81d0429f2f50177a0fc04, type: 2}
   m_eventBus: {fileID: 2310791409441910849}
-  m_orb: {fileID: 6800361289742394397}
+  m_orb: {fileID: 7978295145978714793}
   m_freeMovementProperties:
     moveSpeed: 1
     cameraRotateSpeed: 50
