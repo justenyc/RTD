@@ -18,7 +18,9 @@ namespace Player
         {
             //Logger.LogMessage("Starting FreeMovement State");
             m_manager.currentState = "FreeMovement";
-            m_manager.Animator.SetBool("Aim", false);
+            m_manager.Animator.SetBool("Aim", false); 
+            m_manager.Animator.SetBool("UseItem", false);
+
 
             m_manager.inputHandler.Sprint += OnSprint;
             m_manager.inputHandler.Aim += OnAim;
@@ -149,7 +151,7 @@ namespace Player
             {
                 var inventory = m_manager.inventory;
                 var currentItem = inventory.GetCurrentItem();
-                m_manager.Animator.SetTrigger("UseItem");
+                m_manager.Animator.SetBool("UseItem", context.control.IsPressed());
                 m_manager.Animator.SetInteger("UseItemAnimID", 0);
                 inventory.UseCurrentItem(m_manager.gameObject);
             }
@@ -187,7 +189,11 @@ namespace Player
             //TODO: This is temporary and will be refactored. Just need to know if we want enemies to be able to pick up the orb
             m_manager.hasOrb = true;
             m_manager.orb.GetComponent<Orb>().StartMoveTween(m_manager.transform.position + Vector3.up, 1f,
-                () => m_manager.orb.transform.parent = m_manager.playerTransform);
+                () =>
+                {
+                    m_manager.orb.transform.parent = m_manager.playerTransform;
+                    m_manager.orb.transform.localPosition = Vector3.zero;
+                });
         }
 
         #endregion

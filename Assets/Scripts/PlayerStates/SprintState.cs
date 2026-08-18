@@ -81,7 +81,7 @@ namespace Player
             Vector2 targetVector = m_manager.inputHandler.moveVector.normalized;
             float rotateSpeed = m_manager.sprintProperties.sprintRotateSpeed;
 
-            m_manager.movementVector.y = Mathf.Ceil(targetVector.y);
+            m_manager.movementVector.y = Mathf.Abs(Mathf.Ceil(targetVector.y));
             //m_manager.movementVector.y = Mathf.Lerp(m_manager.movementVector.y, targetVector.y, Time.deltaTime * m_manager.freeMovementProperties.accelerationStrength);
             //m_manager.movementVector.y = Mathf.Clamp(m_manager.movementVector.y, 0, targetVector.y);
 

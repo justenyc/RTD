@@ -8,6 +8,8 @@ public class SwordVfxHelper : MonoBehaviour
 
     public void SwordAppear()
     {
+        if (swordObject.activeSelf) return;
+
         swordObject.SetActive(true);
         particleObject.SetActive(true);
         particleObjectSystem.Stop();
@@ -16,12 +18,11 @@ public class SwordVfxHelper : MonoBehaviour
 
     public void SwordDisappear()
     {
-        if(swordObject.activeSelf)
-        {
-            swordObject.SetActive(false);
-            particleObject.SetActive(true);
-            particleObjectSystem.Stop();
-            particleObjectSystem.Play();
-        }
+        if (!swordObject.activeSelf) return;
+
+        swordObject.SetActive(false);
+        particleObject.SetActive(true);
+        particleObjectSystem.Stop();
+        particleObjectSystem.Play();
     }
 }
