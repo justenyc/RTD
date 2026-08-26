@@ -132,7 +132,7 @@ namespace Player
 
         void OnSprint(InputAction.CallbackContext context)
         {
-            if (context.performed) m_manager.SetState(new SprintState(m_manager));
+            if (context.performed && Mathf.Abs(m_manager.inputHandler.moveVector.x) < 1f) m_manager.SetState(new SprintState(m_manager));
         }
 
         void OnAim(InputAction.CallbackContext context)

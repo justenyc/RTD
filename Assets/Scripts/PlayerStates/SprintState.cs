@@ -24,7 +24,7 @@ namespace Player
         public void StateStart()
         {
             m_manager.currentState = "Sprint";
-            m_manager.animationVector.x = 0;
+            //m_manager.animationVector.x = 0;
             m_manager.movementVector.x = 0;
 
             m_manager.Animator.SetBool("Sprint", true);
@@ -70,18 +70,18 @@ namespace Player
             }
 
             m_manager.isMoving = m_manager.movementVector != Vector2.zero;
+            Vector2 targetVector = m_manager.inputHandler.moveVector.normalized;
+            m_manager.movementVector.y = Mathf.Ceil(targetVector.y);
 
-            if (!m_manager.isMoving)
+            if (!m_manager.isMoving || m_manager.movementVector.y < 0)
             {
                 m_manager.SetState(new FreeMovementState(m_manager));
             }
 
             m_manager.interactionHub.HighlightInteractable(m_manager.interactionHub.GetNearestInteractable());
             
-            Vector2 targetVector = m_manager.inputHandler.moveVector.normalized;
             float rotateSpeed = m_manager.sprintProperties.sprintRotateSpeed;
 
-            m_manager.movementVector.y = Mathf.Abs(Mathf.Ceil(targetVector.y));
             //m_manager.movementVector.y = Mathf.Lerp(m_manager.movementVector.y, targetVector.y, Time.deltaTime * m_manager.freeMovementProperties.accelerationStrength);
             //m_manager.movementVector.y = Mathf.Clamp(m_manager.movementVector.y, 0, targetVector.y);
 
