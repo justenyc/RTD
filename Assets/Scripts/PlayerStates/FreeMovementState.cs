@@ -125,7 +125,7 @@ namespace Player
 
         bool CheckOrbDistance()
         {
-            return Vector3.Distance(m_manager.orb.transform.position, m_manager.playerTransform.position) < m_manager.freeMovementProperties.orbInteractRange;
+            return Vector3.Distance(m_manager.orb.transform.position, m_manager.playerTransform.position) < m_manager.freeMovementProperties.orbInteractRange && !m_manager.hasOrb;
         }
 
         #region State Input Listeners
@@ -192,7 +192,7 @@ namespace Player
                 () =>
                 {
                     m_manager.orb.transform.parent = m_manager.playerTransform;
-                    m_manager.orb.transform.localPosition = Vector3.zero;
+                    m_manager.orb.transform.localPosition = Vector3.zero + Vector3.up;
                 });
         }
 
