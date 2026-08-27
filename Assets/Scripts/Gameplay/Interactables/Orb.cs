@@ -13,6 +13,7 @@ public class Orb : MonoBehaviour
     {
         if (moveTween == null)
         {
+            SetInteractPromptActive(false);
             moveTween = transform.DOMove(position, time);
             moveTween.onComplete += onCompleteCallback;
             moveTween.onComplete += OnTweenComplete;
