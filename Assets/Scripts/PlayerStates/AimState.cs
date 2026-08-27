@@ -173,7 +173,7 @@ namespace Player
 
         void OnAim(InputAction.CallbackContext context)
         {
-            m_aimInputState = context.performed;
+            m_aimInputState = context.action.IsPressed();
             if(!context.action.IsPressed() && m_manager.listeningForInputs)
             {
                 m_manager.Animator.ResetTrigger("Attack");
