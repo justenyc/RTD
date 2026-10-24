@@ -10,13 +10,15 @@ public partial class BHVA_EnemyAttackAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
     [SerializeReference] public BlackboardVariable<GameObject> Hitbox;
+    [SerializeReference] public BlackboardVariable<Animator> Animator;
     [SerializeReference] public BlackboardVariable<float> ActiveTime = new(1f);
 
     float timeTilEnd;
 
     protected override Status OnStart()
     {
-        Hitbox.Value.SetActive(true);
+        Animator.Value.SetTrigger("Attack");
+        //Hitbox.Value.SetActive(true);
         timeTilEnd = ActiveTime;
         return Status.Running;
     }
@@ -34,7 +36,8 @@ public partial class BHVA_EnemyAttackAction : Action
 
     protected override void OnEnd()
     {
-        Hitbox.Value.SetActive(false);
+        Animator.Value.SetTrigger("TEMP_Return");
+        //Hitbox.Value.SetActive(false);
     }
 }
 

@@ -12,6 +12,7 @@ public partial class BHVA_WanderWithinRangeAction : Action
     [SerializeReference] public BlackboardVariable<NavMeshAgent> Agent;
     [SerializeReference] public BlackboardVariable<BoxCollider> Bounds;
     [SerializeReference] public BlackboardVariable<float> Speed = new BlackboardVariable<float>(1.0f);
+    [SerializeReference] public BlackboardVariable<float> TurnSpeed = new BlackboardVariable<float>(120f);
     [SerializeReference] public BlackboardVariable<float> DistanceThreshold = new BlackboardVariable<float>(0.2f);
     [SerializeReference] public BlackboardVariable<string> AnimatorSpeedParam = new BlackboardVariable<string>("SpeedMagnitude");
 
@@ -19,6 +20,7 @@ public partial class BHVA_WanderWithinRangeAction : Action
     private Animator m_Animator;
     [CreateProperty] private float m_OriginalStoppingDistance = -1f;
     [CreateProperty] private float m_OriginalSpeed = -1f;
+    [CreateProperty] private float m_OriginalTurnSpeed = -1f;
     private float m_CurrentSpeed;
     private Vector3 randomPositionWithinBounds;
 
@@ -92,7 +94,9 @@ public partial class BHVA_WanderWithinRangeAction : Action
             //}
 
             m_OriginalSpeed = m_NavMeshAgent.speed;
-            m_NavMeshAgent.speed = Speed;
+            m_OriginalTurnSpeed = m_NavMeshAgent.angularSpeed;
+            m_NavMeshAgent.speed = Speed.Value;
+            m_NavMeshAgent.angularSpeed = TurnSpeed.Value;
             m_OriginalStoppingDistance = m_NavMeshAgent.stoppingDistance;
             m_NavMeshAgent.stoppingDistance = DistanceThreshold;
             //bool result = m_NavMeshAgent.SetDestination(locationPosition);
@@ -119,5 +123,17 @@ public partial class BHVA_WanderWithinRangeAction : Action
 
     protected override void OnEnd()
     {
+        //UpdateAnimatorSpeed(0f);
+
+        if (m_NavMeshAgent != null)
+        {
+            if (m_NavMeshAgent.isOnNavMesh)
+            {
+                m_NavMeshAgent.ResetPath();
+            }
+            m_NavMeshAgent.speed = m_OriginalSpeed;
+            m_NavMeshAgent.angularSpeed = m_OriginalTurnSpeed;
+            m_NavMeshAgent.stoppingDistance = m_OriginalStoppingDistance;
+        }
     }
 }
