@@ -15,7 +15,8 @@ public class Status_Effects : ScriptableObject
     public enum StatusEffect
     {
         Burn,
-        Stun
+        Stun,
+        Heal
     }
 
     public GameObject GetEffectPrefab(StatusEffect effect)
@@ -36,6 +37,16 @@ public class Status_Effects : ScriptableObject
     }
 
     public void ApplyEffect(StatusEffect effect, GameObject target)
+    {
+        if(effects.TryGetValue(effect, out GameObject obj))
+        {
+            var effectPrefab = Instantiate(obj, target.transform.position, Quaternion.identity, target.transform);
+            IStatusEffect effectComponent = effectPrefab.GetComponent<IStatusEffect>();
+            effectComponent.Apply(target);
+        }
+    }
+
+    public void ApplyEffect(StatusEffect effect, Renderer target)
     {
         if(effects.TryGetValue(effect, out GameObject obj))
         {

@@ -13,7 +13,10 @@ public class Item
     public float size = 1;
     public int consumptionRate = 1;
     public int maxStacks = 99;
-    public GameObject modelPrefab;
+    //TEMP: TODO: Refactor this into a dict instead
+    public int onUseAnimID = 0;
+    public GameObject onUsePrefab;
+    public GameObject projectilePrefab;
     public GameObject onCollisionVfx;
 
     public Item_Effects.OnUseEffect onUseEffect;
@@ -27,9 +30,9 @@ public class Item
         Item_Effects.onUseEffects[onUseEffect].Invoke(go, this,
             (b) =>
             {
-                if (OnUseSuccess != null && b)
+                if (b)
                 {
-                    OnUseSuccess(go);
+                    OnUseSuccess?.Invoke(go);
                     return;
                 }
 
@@ -39,14 +42,14 @@ public class Item
 
     public void Throw(RigidbodyThrower thrower, Vector3 direction, float throwStrength, int framesToDelayThrow = 0)
     {
-        var rb = modelPrefab?.GetComponent<Rigidbody>();
+        var rb = projectilePrefab?.GetComponent<Rigidbody>();
         if (rb == null)
         {
-            Logger.LogError($"A <color=cyan>Rigidbody</color> was not found on the Model Prefab: <color=yellow>{modelPrefab.name}</color>");
+            Logger.LogError($"A <color=cyan>Rigidbody</color> was not found on the Model Prefab: <color=yellow>{projectilePrefab.name}</color>");
             return;
         }
 
-        var projectile = thrower.Prewarm(modelPrefab);
+        var projectile = thrower.Prewarm(projectilePrefab);
         projectile.GetComponentInChildren<Item_Projectile>().InitProtocol(this, thrower.gameObject, thrower.transform.root.GetComponentsInChildren<Collider>());
         thrower.StartCoroutine(Helper.DelayActionByFixedTimeFrames(() => thrower.ThrowGameObject(projectile, direction.normalized * throwStrength + Vector3.up * throwStrength * 0.1f), framesToDelayThrow));
     }

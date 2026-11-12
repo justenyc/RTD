@@ -4,7 +4,6 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     //[SerializeField] SerializableDictionaryBase<Item, int> inventory;
-    [SerializeField] DB_Item ItemDB;
     [SerializeField] int maxInventorySize = 10;
     [SerializeField] int m_currentInventoryIndex = 0;
     [SerializeField] List<InventorySlot> inventory = new List<InventorySlot>();
@@ -30,20 +29,13 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private void OnValidate()
-    {
-        if (ItemDB == null)
-        {
-            Logger.LogWarning($"<color=cyan>Inventory</color> component on <color=green>{gameObject.name}</color> is missing a reference to an <color=yellow>DB_Item</color>!");
-        }
-    }
-
     private void OnEnable()
     {
-        if (ItemDB != null)
+        if (DB_SO.instance.itemSO != null)
         {
-            AddOrRemoveItemFromInventory(ItemDB.GetItem("Firebomb"), 10);
-            AddOrRemoveItemFromInventory(ItemDB.GetItem("Torch"), 10);
+            AddOrRemoveItemFromInventory(DB_SO.instance.itemSO.GetItem("Firebomb"), 10);
+            AddOrRemoveItemFromInventory(DB_SO.instance.itemSO.GetItem("Torch"), 10);
+            AddOrRemoveItemFromInventory(DB_SO.instance.itemSO.GetItem("Nectar"), 10);
         }
     }
 
@@ -116,7 +108,7 @@ public class Inventory : MonoBehaviour
 
     public Item GetCurrentItem()
     {
-        return ItemDB.GetItem(inventory[CurrentInventoryIndex].itemName);
+        return DB_SO.instance.itemSO.GetItem(inventory[CurrentInventoryIndex].itemName);
     }
 
     public Item RequestItem(Item item)

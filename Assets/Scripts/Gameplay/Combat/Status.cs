@@ -8,6 +8,7 @@ public class Status : MonoBehaviour
     [Header("References")]
     [Tooltip("The StatProfile which this Actor will use as a foundation to calculate its stats per level")]
     [SerializeField] BaseStatProfile baseStatProfile;
+    [SerializeField] Renderer m_renderer;
 
     [Header("Dynamic Stats")]
     [SerializeField] float m_currentHealth;
@@ -58,7 +59,13 @@ public class Status : MonoBehaviour
 
     public void ChangeCurrentHealth(float value)
     {
+        //TODO: if value is positive then apply healing VFX
         m_currentHealth = Mathf.Clamp(m_currentHealth + value, 0, m_maxHealth);
+
+        if (value > 0 && m_renderer != null)
+        {
+            DB_SO.instance.statusEffectsSO.ApplyEffect(Status_Effects.StatusEffect.Heal, m_renderer);
+        }
 
         if (m_currentHealth <= 0)
         {

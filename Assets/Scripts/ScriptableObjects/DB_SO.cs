@@ -8,6 +8,7 @@ public class DB_SO : MonoBehaviour
 
     public Status_Effects statusEffectsSO;
     public DB_VFX vfxSO;
+    public DB_Item itemSO;
 
     private void Awake()
     {

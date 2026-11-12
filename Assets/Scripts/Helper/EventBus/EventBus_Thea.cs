@@ -25,10 +25,13 @@ public class EventBus_Thea : EventBus
         ThrowItem,
         SwordHitboxActive,
         SwordHitboxInactive,
-        EnableRootMotion,
-        DisableRootMotion,
+        EnableAnimatorRootMotion,
         DisableAnimatorRootMotion,
-        EnableAnimatorRootMotion
+        EnableSwapItem,
+        DisableSwapItem,
+        UseCurrentItem,
+        SpawnTorch,
+        LightTorch
     }
 
     public UnityEvent GetEvent(EventId id)

@@ -1,10 +1,13 @@
+using System;
 using System.Transactions;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Item_Projectile : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] Collider colliderRef;
+    [SerializeField] GameObject vfx;
 
     [Header("Settings")]
     [SerializeField] int lifeTime = 300;
@@ -20,17 +23,20 @@ public class Item_Projectile : MonoBehaviour
         exceptions = cols;
     }
 
-    public void InitProtocol(Item _item, GameObject _thrower = null, Collider[] _exceptions = null)
+    public void InitProtocol(Item _item, GameObject _thrower = null, Collider[] _exceptions = null, bool vfxOnStart = true, Action callback = null)
     {
         item = _item;
         thrower = _thrower;
         exceptions = _exceptions;
         colliderRef.gameObject.transform.localScale *= _item.size;
+        vfx.SetActive(vfxOnStart);
 
         args = new Hitbox.ArgsBuilder()
             .WithPower(_item.potency)
             .WithDamageType(_item.damageType)
             .Build();
+
+        callback?.Invoke();
 
         return;
     }
@@ -68,15 +74,18 @@ public class Item_Projectile : MonoBehaviour
             return;
         }
 
-        foreach (var col in exceptions)
+        if (!exceptions.IsUnityNull())
         {
-            if (collision.collider == col)
+            foreach (var col in exceptions)
             {
-                return;
+                if (collision.collider == col)
+                {
+                    return;
+                }
             }
         }
 
-        if (item.onCollisionVfx != null)
+        if (!item.onCollisionVfx.IsUnityNull())
         {
             Instantiate(item.onCollisionVfx, transform.position, Quaternion.identity);
         }

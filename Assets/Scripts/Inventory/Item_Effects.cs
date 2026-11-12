@@ -11,7 +11,8 @@ public static class Item_Effects
 
     public static Dictionary<OnUseEffect, OnUseDelegate> onUseEffects = new()
     {
-        { OnUseEffect.Heal_Health, Heal_Health }
+        { OnUseEffect.Heal_Health, Heal_Health },
+        { OnUseEffect.Torch_Ignite, Torch_Ignite}
     };
 
     public static Dictionary<OnCollisionEffect, OnCollisionDelegate> onCollisionEffects = new()
@@ -43,12 +44,31 @@ public static class Item_Effects
         Status status = go.GetComponent<Status>();
         if (!go)
         {
-            Logger.LogError($"Did not find a Health component on {go.name}");
+            Logger.LogError($"Did not find a <color=cyan>Status</color> component on {go.name}");
             callback(false);
             return;
         }
 
         status.ChangeCurrentHealth(item.potency);
+        callback(true);
+    }
+
+    public static void Torch_Ignite(GameObject go, Item item, Action<bool> callback = null)
+    {
+        Logger.LogMessage("Just let the animator handle it for now, Fuck");
+            return;
+        if (item == null)
+        {
+            Logger.LogError($"On use <color=orange>Torch</color> failed miserably! <color=yellow>-TOR123</color>");
+            return;
+        }
+
+        Transform t = go.transform.root.Find("SwordParent");
+        Logger.LogMessage(t.name);
+        GameObject torchPrefab = MonoBehaviour.Instantiate(item.onUsePrefab);
+        torchPrefab.transform.parent = t;
+        torchPrefab.transform.localPosition = Vector3.zero;
+        torchPrefab.transform.localRotation = Quaternion.identity;
         callback(true);
     }
 

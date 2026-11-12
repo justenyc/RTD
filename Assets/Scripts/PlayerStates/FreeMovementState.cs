@@ -149,11 +149,8 @@ namespace Player
         {
             if (context.performed)
             {
-                var inventory = m_manager.inventory;
-                var currentItem = inventory.GetCurrentItem();
                 m_manager.Animator.SetBool("UseItem", context.control.IsPressed());
-                m_manager.Animator.SetInteger("UseItemAnimID", 0);
-                inventory.UseCurrentItem(m_manager.gameObject);
+                m_manager.Animator.SetInteger("UseItemAnimID", m_manager.inventory.GetCurrentItem().onUseAnimID);
             }
         }
 

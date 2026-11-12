@@ -34,6 +34,7 @@ namespace Player
         [SerializeField] bool m_canMove;
         [SerializeField] bool m_useRootMotion;
         [SerializeField] bool m_listeningForInputs;
+        [SerializeField] bool m_canItemSwap = true;
         [SerializeField] bool m_canThrow;
         public Vector2 animationVector;
         public Vector2 movementVector;
@@ -141,7 +142,7 @@ namespace Player
         public void OnAnimatorMove()
         {
             // Check if the animator has valid root motion data this frame
-            if (m_animator && m_useRootMotion)
+            if (m_animator)
             {
                 // Extract the velocity calculated by the animation
                 Vector3 velocity = m_animator.deltaPosition / Time.deltaTime;
@@ -157,32 +158,40 @@ namespace Player
             }
         }
 
+
+        #region EventBus Methods
         // Set in inspector. Used by EventBus_Thea
+
         public void SetCanMove(bool b)
         {
             m_canMove = b;
         }
 
-        // Set in inspector. Used by EventBus_Thea
         public void SetListeningForInputs(bool b)
         {
             m_listeningForInputs = b;
         }
 
-        // Set in inspector. Used by EventBus_Thea
         public void SetCanThrow(bool b)
         {
             m_canThrow = b;
         }
 
-        public void SetUseRootMotion(bool b)
+        //public void SetUseRootMotion(bool b)
+        //{
+        //    m_useRootMotion = b;
+        //}
+
+        public void SetCanItemSwap(bool b)
         {
-            m_useRootMotion = b;
+            m_canItemSwap = b;
         }
+        #endregion
+
 
         public void CycleItemPrev(InputAction.CallbackContext context)
         {
-            if(context.performed)
+            if(context.performed && m_canItemSwap)
             {
                 inventory.MoveCurrentItemIndex(-1);
             }
@@ -190,7 +199,7 @@ namespace Player
 
         public void CycleItemNext(InputAction.CallbackContext context)
         {
-            if(context.performed)
+            if(context.performed && m_canItemSwap)
             {
                 inventory.MoveCurrentItemIndex(1);
             }
@@ -226,12 +235,27 @@ namespace Player
             animationVector = Vector2.zero;
         }
 
+        public void ResetInputListeners()
+        {
+            m_listeningForInputs = true;
+            m_canItemSwap = true;
+            m_canMove = true;
+            m_canThrow = true;
+        }
+
         public void ThrowCurrentItem()
         {
             var itemToThrow = inventory.GetCurrentItem();
             Vector3 throwDir = (Camera.main.transform.forward.normalized * aimProperties.throwStrength) - (rigidbodyThrower.transform.right + -Camera.main.transform.right);
 
             itemToThrow.Throw(rigidbodyThrower, throwDir, aimProperties.throwStrength);
+            return;
+        }
+
+        public void UseCurrentItem()
+        {
+            var itemToUse = inventory.GetCurrentItem();
+            itemToUse.Use(this.gameObject);
             return;
         }
     }

@@ -40,8 +40,20 @@ public class StatusEffect_Burn : MonoBehaviour, IStatusEffect
 
     void InitVfx(GameObject target)
     {
+        Renderer r = target.GetComponent<Renderer>();
         var shape = fireParticles.shape;
-        shape.mesh = target.GetComponent<MeshFilter>().mesh;
+
+        if (r is SkinnedMeshRenderer s)
+        {
+            shape.shapeType = ParticleSystemShapeType.SkinnedMeshRenderer;
+            shape.meshShapeType = ParticleSystemMeshShapeType.Vertex;
+            shape.skinnedMeshRenderer = s;
+            return;
+        }
+
+        shape.shapeType = ParticleSystemShapeType.MeshRenderer;
+        shape.meshShapeType = ParticleSystemMeshShapeType.Triangle;
+        shape.meshRenderer = r as MeshRenderer;
 
         fireParticles.Play();
     }
