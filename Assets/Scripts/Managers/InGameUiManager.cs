@@ -10,6 +10,8 @@ public class InGameUiManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] TextMeshProUGUI messageTMP;
+    [SerializeField] RectTransform healthBar;
+    [SerializeField] RectTransform lightMeter;
 
     [Header("Settings")]
     [SerializeField] float nextCharDelayTime = 0.1f;
@@ -38,6 +40,17 @@ public class InGameUiManager : MonoBehaviour
         messageTMP.text = "";
     }
 
+    public void UpdateHealthBar(Status s)
+    {
+        float f = Mathf.Clamp01(s.CurrentHealth / s.MaxHealth);
+        healthBar.localScale = new Vector3(f, 1, 1);
+    }
+
+    public void UpdateLightMeter(Status s)
+    {
+        float f = Mathf.Clamp01(s.CurrentHealth / s.MaxHealth);
+        healthBar.localScale = new Vector3(1, f, 1);
+    }
 
     public void DisplayMessage(List<string> message, System.Action _onMessageComplete = null)
     {

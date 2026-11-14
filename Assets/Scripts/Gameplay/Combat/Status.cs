@@ -67,6 +67,8 @@ public class Status : MonoBehaviour
             DB_SO.instance.statusEffectsSO.ApplyEffect(Status_Effects.StatusEffect.Heal, m_renderer);
         }
 
+        InGameUiManager.instance.UpdateHealthBar(this);
+
         if (m_currentHealth <= 0)
         {
             if (HealthHitZero != null)

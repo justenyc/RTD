@@ -7,6 +7,9 @@ public class Hitbox : MonoBehaviour
 {
     public UnityEvent<Hurtbox> OnHitEvent;
     public List<Collider> collisionExceptions;
+    
+    [Tooltip("Hitbox.Args for quick testing")]
+    [SerializeField] Args testArgs;
 
     Args args;
 
@@ -124,6 +127,17 @@ public class Hitbox : MonoBehaviour
                 OnHitEvent.Invoke(hurtbox);
             }
         }
+    }
+
+    public void Testing_Hitbox(Hurtbox hb)
+    {
+        Args a = new ArgsBuilder()
+            .WithName("TEST")
+            .WithPower(11)
+            .WithDamageType(DamageType.Blunt)
+            .Build();
+
+        hb.PostOnHurt(testArgs);
     }
 
     public void ProcessHurtbox(Action<Hurtbox> process, Hurtbox hurtbox)

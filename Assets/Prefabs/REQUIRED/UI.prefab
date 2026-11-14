@@ -1092,6 +1092,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InGameUiManager
   messageTMP: {fileID: 1923665624625410899}
+  healthBar: {fileID: 3241091948652354884}
+  lightMeter: {fileID: 1564821670694839596}
   nextCharDelayTime: 0.05
   messageIndex: 0
   messageToDisplay: []
