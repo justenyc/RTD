@@ -29,7 +29,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    private void Start()
     {
         if (DB_SO.instance.itemSO != null)
         {
@@ -37,10 +37,7 @@ public class Inventory : MonoBehaviour
             AddOrRemoveItemFromInventory(DB_SO.instance.itemSO.GetItem("Torch"), 10);
             AddOrRemoveItemFromInventory(DB_SO.instance.itemSO.GetItem("Nectar"), 10);
         }
-    }
 
-    private void Start()
-    {
         m_currentInventoryIndex = Mathf.Clamp(m_currentInventoryIndex, 0, inventory.Count - 1);
 
         if (inventory.Count > 0)

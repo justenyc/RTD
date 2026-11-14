@@ -29,7 +29,7 @@ public class Item_Projectile : MonoBehaviour
         thrower = _thrower;
         exceptions = _exceptions;
         colliderRef.gameObject.transform.localScale *= _item.size;
-        vfx.SetActive(vfxOnStart);
+        if(vfx != null) vfx.SetActive(vfxOnStart);
 
         args = new Hitbox.ArgsBuilder()
             .WithPower(_item.potency)
