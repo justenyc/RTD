@@ -5974,6 +5974,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Orb
   interactPrompt: {fileID: 5455883715719906393}
   m_meshRenderer: {fileID: 9020042717883265158}
+  targetToFollow: {fileID: 4006053161945249521}
+  followPlayer: 0
+  moveSpeed: 1
+  distanceToParent: 0.2
 --- !u!1 &5455883715719906393
 GameObject:
   m_ObjectHideFlags: 0
@@ -6345,7 +6349,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605de69224da6054d8cc270473b4c57a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemDB: {fileID: 11400000, guid: bb4bc2997f0cc624888356067bd53c64, type: 2}
   maxInventorySize: 10
   m_currentInventoryIndex: 0
   inventory: []

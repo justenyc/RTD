@@ -1,32 +1,40 @@
-using DG.Tweening;
 using UnityEngine;
 
 public class Orb : MonoBehaviour
 {
     [SerializeField] GameObject interactPrompt;
     [SerializeField] MeshRenderer m_meshRenderer;
-    Tween moveTween;
-
+    [SerializeField] Transform targetToFollow;
+    [SerializeField] bool followPlayer;
+    [SerializeField] float moveSpeed = 1f;
+    [Tooltip("The min distance required to parent itself to the followTarget")]
+    [SerializeField] float distanceToParent = 0.2f;
+    System.Action onParentCallback;
     public MeshRenderer meshRenderer => m_meshRenderer;
 
-    public Tween StartMoveTween(Vector3 position, float time, TweenCallback onCompleteCallback)
+    public void SetFollow(bool b)
     {
-        if (moveTween == null)
-        {
-            SetInteractPromptActive(false);
-            moveTween = transform.DOMove(position, time);
-            moveTween.onComplete += onCompleteCallback;
-            moveTween.onComplete += OnTweenComplete;
-            return moveTween.Play();
-        }
-
-        return moveTween;
+        followPlayer = b;
+        this.enabled = b;
+        transform.parent = null;
     }
 
-    void OnTweenComplete()
+    private void Update()
     {
-        meshRenderer.enabled = false;
-        moveTween = null;
+        if(!followPlayer || transform.parent != null)
+        {
+            return;
+        }
+
+        transform.position = Vector3.MoveTowards(transform.position, targetToFollow.position, moveSpeed * Time.deltaTime);
+
+        if (Vector3.Distance(transform.position, targetToFollow.position) < distanceToParent)
+        {
+            transform.parent = targetToFollow;
+            this.enabled = false;
+            m_meshRenderer.enabled = false;
+            return;
+        }
     }
 
     public void SetInteractPromptActive(bool b)

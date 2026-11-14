@@ -175,6 +175,7 @@ namespace Player
                 m_manager.orb.transform.parent = null;
                 m_manager.hasOrb = false;
                 m_manager.orb.meshRenderer.enabled = true;
+                m_manager.orb.GetComponent<Orb>().SetFollow(m_manager.hasOrb);
                 return;
             }
 
@@ -185,12 +186,7 @@ namespace Player
 
             //TODO: This is temporary and will be refactored. Just need to know if we want enemies to be able to pick up the orb
             m_manager.hasOrb = true;
-            m_manager.orb.GetComponent<Orb>().StartMoveTween(m_manager.transform.position + Vector3.up, 1f,
-                () =>
-                {
-                    m_manager.orb.transform.parent = m_manager.playerTransform;
-                    m_manager.orb.transform.localPosition = Vector3.zero + Vector3.up;
-                });
+            m_manager.orb.GetComponent<Orb>().SetFollow(m_manager.hasOrb);
         }
 
         #endregion
